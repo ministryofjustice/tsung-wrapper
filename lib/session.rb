@@ -14,7 +14,8 @@ module TsungWrapper
 
 		def initialize(session_name)
 			@session_name = session_name
-			filename = "#{::TsungWrapper.root}/config/sessions/#{@session_name}.yml"
+			filename = "#{::TsungWrapper.config_dir}/sessions/#{@session_name}.yml"
+			
 			unless File.exist?(filename)
 				raise ArgumentError.new("No session found with name '#{@session_name}'")
 			end
@@ -33,7 +34,7 @@ module TsungWrapper
 
 
 		def build_snippet(snippet)
-			filename = "#{TsungWrapper.root}/config/snippets/#{snippet}.yml"
+			filename = "#{TsungWrapper.config_dir}/snippets/#{snippet}.yml"
 			unless File.exist?(filename)
 				raise ArgumentError.new("The session '#{@session_name}' refers to a snippet '#{snippet}' which cannot be found.")
 			end

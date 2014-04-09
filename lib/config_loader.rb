@@ -14,7 +14,7 @@ module TsungWrapper
 			@arrivalphases = []
 			@user_agents   = []
 
-		  filename = File.expand_path(File.join('config', 'environments', "#{env}.yml"))
+		  filename = File.expand_path(File.join(TsungWrapper.config_dir, 'environments', "#{env}.yml"))
 		  unless File.exist?(filename)
 		  	raise ArgumentError.new("Configuration file for environment '#{env}' does not exist.")
 		  end

@@ -2,6 +2,7 @@
 require 'builder'
 require 'tsung_wrapper'
 require 'config_loader'
+require 'session'
 
 
 module TsungWrapper

@@ -15,10 +15,10 @@ module TsungWrapper
 
 
 			it 'should raise an exception if the session contains non-existent snippets' do
-				filename = "#{TsungWrapper.root}/config/sessions/my_session.yml"
-				snippet_1_filename = "#{TsungWrapper.root}/config/snippets/hit_landing_page.yml"
-				snippet_2_filename = "#{TsungWrapper.root}/config/snippets/non_existent_snippet.yml"
-				snippet_3_filename = "#{TsungWrapper.root}/config/snippets/hit_register_page.yml"
+				filename = "#{TsungWrapper.config_dir}/sessions/my_session.yml"
+				snippet_1_filename = "#{TsungWrapper.config_dir}/snippets/hit_landing_page.yml"
+				snippet_2_filename = "#{TsungWrapper.config_dir}/snippets/non_existent_snippet.yml"
+				snippet_3_filename = "#{TsungWrapper.config_dir}/snippets/hit_register_page.yml"
 				session_hash = {"session"=>{"snippets"=>["hit_landing_page", "non_existent_snippet", "hit_register_page"]}}
 
 				expect(File).to receive(:exist?).with(filename).and_return(true)
