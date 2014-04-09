@@ -1,0 +1,12 @@
+# YAML config file used by config builder to create a tsung xml config
+
+options:
+	max_users: 1000
+	server_base_url: ec2-54-229-53-8.eu-west-1.compute.amazonaws.com
+	server_port: 80
+	type: tcp
+
+
+arrival_phases:
+	name: Average Load
+	number: 

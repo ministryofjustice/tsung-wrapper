@@ -1,0 +1,6 @@
+
+request:
+  name: Hit Register Page
+  url: '/user/register'
+  http_method: GET
+

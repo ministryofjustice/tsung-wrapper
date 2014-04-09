@@ -1,0 +1,10 @@
+# this is a session definition
+
+# it defines the name of the session, and then a series of snippets to include.
+
+
+session:
+  snippets:
+    - hit_landing_page
+    - hit_register_page
+    

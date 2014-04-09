@@ -1,0 +1,7 @@
+#Global configuration variables for tsung_wrapper in development environment
+
+server_host: lastingpowerofattorney.service.gov.uk
+base_url: http://ec2-54-229-53-8.eu-west-1.compute.amazonaws.com
+maxusers: 1000
+server_port: 80
+http_version: 1.1
