@@ -38,6 +38,7 @@ module TsungWrapper
 
 			it 'should load the session and component snippets' do
 				session = Session.new('hit_landing_page')
+				session.session_name.should == 'hit_landing_page'
 				session.snippets.size.should == 2
 
 				snippet = session.snippets.first

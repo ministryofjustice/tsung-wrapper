@@ -1,6 +1,6 @@
 
 server_host: test_server_host
-base_url: http://test_base_url
+base_url: http://test_base_url.com
 maxusers: 40
 server_port: 8080
 http_version: 1.1

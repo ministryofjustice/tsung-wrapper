@@ -25,6 +25,7 @@ module TsungWrapper
 				add_standard_server_element
 				add_load_element
 				add_user_agent_element
+				add_sessions
 			end
 			@xml
 		end		
@@ -34,8 +35,40 @@ module TsungWrapper
 
 		private
 
+		def formatted_time
+			Time.now.strftime('%Y%m%d-%H%M%S')
+		end
 
 
+		def make_url(config, snippet)
+			url = nil
+			if snippet.url.nil?
+				url = config.base_url
+			else
+				protocol, resource = config.base_url.split('://')
+				resource = resource + '/' + snippet.url
+				url = protocol + '://' + resource.gsub('//', '/')
+			end
+			url
+		end
+
+
+
+
+
+
+		def add_sessions
+			@builder.sessions do
+				@builder.session(:name => "#{@session.session_name}-#{formatted_time}", :probability => 100, :type => 'ts_http') do 
+					@session.snippets.each do |snippet|
+						@builder.comment! snippet.name
+						@builder.request do 
+							@builder.http(:url => make_url(@config, snippet), :version => @config.http_version, :method => snippet.http_method)
+						end
+					end
+				end
+			end
+		end
 
 
 		def add_user_agent_element

@@ -14,11 +14,13 @@ module TsungWrapper
 
 
       it 'should produce a skeleton xml file if given nothing to wrap' do
-        expected = empty_xml
+
+        expected = simple_session
 
         
-
-        actual = Wrapper.new('hit_landing_page', 'test').wrap
+        wrapper = Wrapper.new('hit_landing_page', 'test')
+        expect(wrapper).to receive(:formatted_time).and_return('20140409-140305')
+        actual = wrapper.wrap
 
         # puts "++++++ expected ++++++ #{__FILE__}::#__LINE__)} ++++\n"
         # puts expected
@@ -36,7 +38,7 @@ end
 
 
 
-def empty_xml
+def simple_session
   str = <<-EOXML
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tsung SYSTEM "#{TsungWrapper.dtd}">
@@ -70,6 +72,18 @@ def empty_xml
       <user_agent probability="20">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</user_agent>
     </option>
   </options>
+  <sessions>
+    <session name="hit_landing_page-20140409-140305" probability="100" type="ts_http">
+      <!-- Hit Landing Page -->
+      <request>
+        <http url="http://test_base_url.com" version="1.1" method="GET"/>
+      </request>
+      <!-- Hit Register Page -->
+      <request>
+        <http url="http://test_base_url.com/user/register" version="1.1" method="GET"/>
+      </request>
+    </session>
+  </sessions>
 </tsung>
 EOXML
 end

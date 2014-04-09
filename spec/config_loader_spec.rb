@@ -16,7 +16,7 @@ module TsungWrapper
 			it 'should load the appropriate file and return the correct variables' do
 				config = ConfigLoader.new('test')
 				config.server_host.should == 'test_server_host'
-				config.base_url.should == 'http://test_base_url'
+				config.base_url.should == 'http://test_base_url.com'
 				config.maxusers.should == 40
 				config.server_port.should == 8080
 				config.arrivalphases.size.should == 3

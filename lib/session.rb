@@ -10,7 +10,7 @@ module TsungWrapper
 
 	class Session
 
-		attr_reader :snippets
+		attr_reader :snippets, :session_name
 
 		def initialize(session_name)
 			@session_name = session_name
