@@ -1,8 +1,8 @@
 
 require 'builder'
-require 'tsung_wrapper'
-require 'config_loader'
-require 'session'
+require_relative 'tsung_wrapper.rb'
+require_relative 'config_loader'
+require_relative 'session'
 
 
 module TsungWrapper
