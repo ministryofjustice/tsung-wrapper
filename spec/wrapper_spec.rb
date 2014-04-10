@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'timecop'
+require 'cgi'
 require_relative '../lib/wrapper'
 
 module TsungWrapper
@@ -56,8 +57,51 @@ module TsungWrapper
     end
 
 
+    context 'post_request_with_parameters' do
+      it 'should produce an xml snippet for a post request with parameters' do |variable|
+        xml = Wrapper.xml_for_snippet('login_with_think_time')
+        puts "++++++ expected ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+        puts login_snippet_xml
+        puts "++++++ actual ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+        puts xml
+        
+        
+        xml.should == login_snippet_xml
+      end
+    end
+
   end
 end
+
+
+
+def encode_params(params)
+  param_pairs = []
+  params.each do |key, value|
+    param_pairs << "#{key}=#{CGI.escape(value)}"
+  end
+  param_pairs.join('&amp;')
+end
+
+
+def login_snippet_xml
+  params = {
+    'email'    => 'test@test.com',
+    'password' => 'Abc123123',
+    'submit'   => 'Sign in'
+  }
+  content_string = "#{encode_params(params)}"
+
+  # params = contents='email=test3%40test.com&amp;password=Abc123123&amp;submit=Sign+in' content_type='application/x-www-form-urlencoded'
+  str = <<-EOXML
+<!-- Login -->
+<thinktime random="true" value="6"/>
+<request>
+  <http url="http://test_base_url.com/user/login" version="1.1" contents="#{content_string}" content_type="application/x-www-form-urlencoded" method='POST'/>
+</request>
+EOXML
+end
+
 
 
 def hit_register_page_with_thinktime_snippet_xml

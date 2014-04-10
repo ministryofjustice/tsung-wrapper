@@ -43,6 +43,18 @@ module TsungWrapper
 		end
 
 
+		describe '#has_params?' do
+			it 'should return true for snippets with params' do
+				snippet = Snippet.new('login_with_think_time')
+				snippet.has_params?.should be_true
+			end
+
+			it 'should return false for snippets without params' do
+				snippet = Snippet.new('hit_landing_page')
+				snippet.has_params?.should be_false
+			end
+		end 
+
 
 		describe '#params' do
 			it 'should return a list of parameter names' do
@@ -76,7 +88,12 @@ module TsungWrapper
 			end
 		end
 
-
+		describe '#content_string' do
+			it 'should return an encoded parameter string' do
+				snippet = Snippet.new('login_with_think_time')
+				snippet.content_string.should == 'email=test%40test.com&amp;password=Abc123123&amp;submit=Sign+in'
+			end
+		end
 
 
 
