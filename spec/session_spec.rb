@@ -32,7 +32,7 @@ module TsungWrapper
 
 				expect{
 					Session.new('my_session')
-				}.to raise_error ArgumentError, "The session 'my_session' refers to a snippet 'non_existent_snippet' which cannot be found."
+				}.to raise_error ArgumentError, "No Snippet with the name 'non_existent_snippet' can be found."
 			end
 
 
