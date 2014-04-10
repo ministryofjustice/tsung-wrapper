@@ -10,9 +10,10 @@ module TsungWrapper
 	class Wrapper
 
 		def initialize(session, env = nil)
-			@session = Session.new(session)
 			@env     = env.nil? ? 'development' : env
+			TsungWrapper.env = @env
 			@config  = ConfigLoader.new(@env)
+			@session = Session.new(session)
 			@xml     = ""
 		  @builder = Builder::XmlMarkup.new(:target => @xml, :indent => 2)
 		  @builder.instruct! :xml, :encoding => "UTF-8"

@@ -17,15 +17,15 @@ module TsungWrapper
 				config = ConfigLoader.new('test')
 				config.server_host.should == 'test_server_host'
 				config.base_url.should == 'http://test_base_url.com'
-				config.maxusers.should == 40
-				config.server_port.should == 8080
+				config.maxusers.should == 1500
+				config.server_port.should == 80
 				config.arrivalphases.size.should == 3
 				config.http_version.should == 1.1
 
 				ap = config.arrivalphases.first
 				ap.name.should == 'Average Load'
 				ap.sequence.should == 1
-				ap.duration.should == 10
+				ap.duration.should == 2
 				ap.duration_unit.should == 'minute'
 				ap.arrival_interval.should == 30
 				ap.arrival_interval_unit.should == 'second'
@@ -33,7 +33,7 @@ module TsungWrapper
 				ap = config.arrivalphases.last
 				ap.name.should == 'Very High Load'
 				ap.sequence.should == 3
-				ap.duration.should == 5
+				ap.duration.should == 1
 				ap.duration_unit.should == 'minute'
 				ap.arrival_interval.should == 2
 				ap.arrival_interval_unit.should == 'second'

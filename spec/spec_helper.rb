@@ -1,3 +1,8 @@
+require 'simplecov'
+SimpleCov.start
+
+
+
 require 'yaml'
 require 'pp'
 require 'awesome_print'

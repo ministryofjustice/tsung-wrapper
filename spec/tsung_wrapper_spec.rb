@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'timecop'
 require_relative '../lib/tsung_wrapper'
 
 describe 'TsungWrapper module methods' do
@@ -14,6 +15,12 @@ describe 'TsungWrapper module methods' do
 				TsungWrapper.config_dir.should == "#{root}/spec/config"
 				TsungWrapper.dtd.should == "#{root}/spec/config/tsung-1.0.dtd"
 			end
+
+
+			it 'test_env? and development_env? should return as expected ' do
+				TsungWrapper.test_env?.should	be_true
+				TsungWrapper.development_env?.should	be_false
+			end
 		end
 
 		context 'development environment' do
@@ -24,6 +31,21 @@ describe 'TsungWrapper module methods' do
 				TsungWrapper.config_dir.should == "#{root}/config"
 				TsungWrapper.dtd.should == "#{root}/config/tsung-1.0.dtd"
 			end
+
+			it 'test_env? and development_env? should return as expected ' do
+				allow(TsungWrapper).to receive(:env).and_return('development')
+				TsungWrapper.test_env?.should	be_false
+				TsungWrapper.development_env?.should	be_true
+			end
+
+			it 'should set the environment to development if not already set'  do
+				saved_env = ENV['TSUNG_WRAPPER_ENV']
+				ENV['TSUNG_WRAPPER_ENV'] = nil
+				TsungWrapper.env.should == 'development'
+				ENV['TSUNG_WRAPPER_ENV'].should == 'development'
+				ENV['TSUNG_WRAPPER_ENV'] = saved_env
+			end
+
 		end
 
 	end
@@ -43,4 +65,29 @@ describe 'TsungWrapper module methods' do
 			TsungWrapper.dtd.should == File.expand_path(File.join(File.dirname(__FILE__), 'config', 'tsung-1.0.dtd'))
 		end
 	end
+
+
+	describe '.tmpfilename' do 
+		it 'should generate a tempfile name without a seed' do 
+			Timecop.freeze(Time.new(2014, 4, 10, 11, 12, 13)) do
+				filename = TsungWrapper.tmpfilename
+				filename.should =~ /TW-140410111213000.tmp$/
+			end
+
+			Timecop.freeze(Time.new(2014, 4, 10, 11, 12, 13)) do
+				filename = TsungWrapper.tmpfilename('ABC')
+				filename.should =~ /TWABC-140410111213000.tmp$/
+			end
+			
+		end		
+	end
 end
+
+
+
+
+
+
+
+
+

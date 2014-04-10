@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'timecop'
 require_relative '../lib/wrapper'
 
 module TsungWrapper
@@ -14,20 +15,21 @@ module TsungWrapper
 
 
       it 'should produce a skeleton xml file if given nothing to wrap' do
+        Timecop.freeze(Time.new(2014, 4, 9, 14, 3, 5)) do
 
-        expected = simple_session
+          expected = simple_session
 
-        
-        wrapper = Wrapper.new('hit_landing_page', 'test')
-        expect(wrapper).to receive(:formatted_time).and_return('20140409-140305')
-        actual = wrapper.wrap
+          
+          wrapper = Wrapper.new('hit_landing_page', 'test')
+          actual = wrapper.wrap
 
-        # puts "++++++ expected ++++++ #{__FILE__}::#__LINE__)} ++++\n"
-        # puts expected
-        # puts "++++++ actual ++++++ #{__FILE__}::#__LINE__)} ++++\n"
-        # puts actual
-        
-        actual.should == expected
+          # puts "++++++ expected ++++++ #{__FILE__}::#__LINE__)} ++++\n"
+          # puts expected
+          # puts "++++++ actual ++++++ #{__FILE__}::#__LINE__)} ++++\n"
+          # puts actual
+          
+          actual.should == expected
+        end
       end
 
     end
@@ -45,23 +47,23 @@ def simple_session
 <tsung loglevel="notice" version="1.0">
   <!-- Client Side Setup -->
   <clients>
-    <client host="localhost" use_controller_vm="true" maxusers="40"/>
+    <client host="localhost" use_controller_vm="true" maxusers="1500"/>
   </clients>
   <!-- Server Side Setup -->
   <servers>
-    <server host="test_server_host" port="8080" type="tcp"/>
+    <server host="test_server_host" port="80" type="tcp"/>
   </servers>
   <load>
     <!-- Scenario 1: Average Load -->
-    <arrivalphase phase="1" duration="10" unit="minute">
+    <arrivalphase phase="1" duration="2" unit="minute">
       <users interarrival="30" unit="second"/>
     </arrivalphase>
     <!-- Scenario 2: High Load -->
-    <arrivalphase phase="2" duration="10" unit="minute">
-      <users interarrival="10" unit="second"/>
+    <arrivalphase phase="2" duration="2" unit="minute">
+      <users interarrival="2" unit="second"/>
     </arrivalphase>
     <!-- Scenario 3: Very High Load -->
-    <arrivalphase phase="3" duration="5" unit="minute">
+    <arrivalphase phase="3" duration="1" unit="minute">
       <users interarrival="2" unit="second"/>
     </arrivalphase>
   </load>

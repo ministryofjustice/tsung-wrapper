@@ -14,7 +14,7 @@ module TsungWrapper
 
 		def initialize(session_name)
 			@session_name = session_name
-			filename = "#{::TsungWrapper.config_dir}/sessions/#{@session_name}.yml"
+			filename = "#{TsungWrapper.config_dir}/sessions/#{@session_name}.yml"
 			
 			unless File.exist?(filename)
 				raise ArgumentError.new("No session found with name '#{@session_name}'")

@@ -1,11 +1,12 @@
 # command line script to wrap session configuration files to produce Tsung XML configs
 
 require 'optparse'
+require 'tempfile'
 require File.dirname(__FILE__) + '/wrapper'
 
 # default options
 # options = {:env => 'development', :output => :xml}
-options = {:env => 'development', :outut => :xml }
+options = {:env => 'development', :output => :xml, :verbose => false }
 
 OptionParser.new do |opts|
 	opts.banner = "Usage: wrap [-e <environment>] -x|-r session_name"
@@ -22,10 +23,19 @@ OptionParser.new do |opts|
 	end
 
 	opts.on("-r", "--run-tsung", "Generate XML config and pipe into tsung") do |xml|
-		optons[:output] = :tsung
+		options[:output] = :tsung
+	end
+
+	opts.on("-v", "--verbose", "Set verbose mode ON") do |v|
+		options[:verbose] = true
 	end
 end.parse!
 
+@verbose = options[:verbose]
+if @verbose
+	puts "Options: #{options.inspect}"
+	puts "ARGS:    #{ARGV.inspect}"
+end
 
 if ARGV.empty?
 	puts "No session name specified" if ARGV.empty?
@@ -35,6 +45,11 @@ session_name = ARGV.first
 
 output = ""
 begin
+	if @verbose
+		puts "Calling TsungWrapper::Wrapper.new(#{session_name}, #{options[:env]})"
+	end
+
+
 	wrapper = TsungWrapper::Wrapper.new(session_name, options[:env])
 	output = wrapper.wrap
 rescue => err
@@ -45,12 +60,23 @@ end
 if options[:output] == :xml 
 	puts output
 else
-	file = Tempfile.new("tsung_wrapper_xml")
-	file.puts(output)
-	file.close
+	filename = TsungWrapper.tmpfilename
+	File.open(filename, 'w') do |fp|	
+		fp.puts(output)
+	end
 
-	# cat simple_test.xml | tsung -f - start
-  %x{ cat #{file.path} | tsung -f - start } }
+	command = "tsung -f #{filename} start "
+	if @verbose
+		puts "Running commnad: #{command}"
+	end
+
+	pipe = IO.popen(command)
+	while !pipe.eof do
+		line = pipe.readline
+		puts "Data returned from Tsung >>> #{line}"
+	end
+	pipe.close
+	
 end
 
 

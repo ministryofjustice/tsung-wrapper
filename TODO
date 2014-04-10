@@ -1,0 +1,18 @@
+TODO
+====
+
+
+DONE:
+=====
+
+- test piping into tsung and outputting results
+
+
+
+STILL TO DO:
+============
+
+- handle multiple scenarios
+- handle posts with parameters
+- act on return codes
+- run the tsung_stats script

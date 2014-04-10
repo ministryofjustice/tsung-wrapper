@@ -44,4 +44,11 @@ module TsungWrapper
 	end
 
 
+	def self.tmpfilename(seed = nil)
+		tmpdir = ENV['TMPDIR']
+		tod =  Time.now.strftime("%y%m%d%H%M%S%L")
+		name = File.join(tmpdir, "TW#{seed}-#{tod}.tmp")
+	end
+
+
 end
