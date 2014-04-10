@@ -1,0 +1,15 @@
+
+
+request:
+  thinktime: 6
+  name: Login
+  url: '/user/login'
+  http_method: POST
+  params:
+    email: test@test.com
+    password: Abc123123
+    submit: Sign in
+
+
+
+

@@ -9,16 +9,28 @@ module TsungWrapper
 
 	class Wrapper
 
-		def initialize(session, env = nil)
-			@env     = env.nil? ? 'development' : env
-			TsungWrapper.env = @env
-			@config  = ConfigLoader.new(@env)
-			@session = Session.new(session)
-			@xml     = ""
-		  @builder = Builder::XmlMarkup.new(:target => @xml, :indent => 2)
-		  @builder.instruct! :xml, :encoding => "UTF-8"
-		  @builder.declare! :DOCTYPE, :tsung, :SYSTEM, "#{TsungWrapper.dtd}"
+		def initialize(session, env = nil, snippet_only = false, snippet_name = nil)
+			TsungWrapper.env = env
+			@snippet_only    = snippet_only
+			@snippet_name    = snippet_name
+			@env             = env.nil? ? 'development' : env
+			@config          = ConfigLoader.new(@env)
+			@xml             = ""
+		  @builder 				 = Builder::XmlMarkup.new(:target => @xml, :indent => 2)
+		  
+		  unless @snippet_only
+		  	@session = Session.new(session)
+			  @builder.instruct! :xml, :encoding => "UTF-8"
+			  @builder.declare! :DOCTYPE, :tsung, :SYSTEM, "#{TsungWrapper.dtd}"
+			end
 		end
+
+
+		def self.xml_for_snippet(snippet_name)
+			wrapper = self.new(nil, 'test', true, snippet_name)
+			wrapper.wrap_snippet
+		end
+
 
 		def wrap 
 			@builder.tsung('loglevel' => 'notice', 'version' => '1.0') do 
@@ -32,9 +44,21 @@ module TsungWrapper
 		end		
 
 
+		def wrap_snippet
+			raise "Unable to call wrap_snippet on a Wrapper that wasn't instantiated using xml_for_snippet()" unless @snippet_only == true
+			snippet = Snippet.new(@snippet_name)
+			transform_snippet(snippet)
+		end
+
+
+
 
 
 		private
+
+
+		
+
 
 		def formatted_time
 			Time.now.strftime('%Y%m%d-%H%M%S')
@@ -53,8 +77,16 @@ module TsungWrapper
 			url
 		end
 
-
-
+		# expects and OpenStruct 
+		def transform_snippet(snippet)
+			@builder.comment! snippet.name
+			if snippet.has_attribute?('thinktime')
+				@builder.thinktime(:random => true, :value => snippet.thinktime)
+			end
+			@builder.request do 
+				@builder.http(:url => make_url(@config, snippet), :version => @config.http_version, :method => snippet.http_method)
+			end
+		end
 
 
 
@@ -62,10 +94,7 @@ module TsungWrapper
 			@builder.sessions do
 				@builder.session(:name => "#{@session.session_name}-#{formatted_time}", :probability => 100, :type => 'ts_http') do 
 					@session.snippets.each do |snippet|
-						@builder.comment! snippet.name
-						@builder.request do 
-							@builder.http(:url => make_url(@config, snippet), :version => @config.http_version, :method => snippet.http_method)
-						end
+						transform_snippet(snippet)
 					end
 				end
 			end

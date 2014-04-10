@@ -1,6 +1,8 @@
 require 'yaml'
 require 'ostruct'
 
+require_relative 'snippet'
+
 
 module TsungWrapper
 
@@ -33,14 +35,8 @@ module TsungWrapper
 		end
 
 
-		def build_snippet(snippet)
-			filename = "#{TsungWrapper.config_dir}/snippets/#{snippet}.yml"
-			unless File.exist?(filename)
-				raise ArgumentError.new("The session '#{@session_name}' refers to a snippet '#{snippet}' which cannot be found.")
-			end
-
-			config = YAML.load_file(filename)
-			@snippets << OpenStruct.new(config['request'])
+		def build_snippet(snippet_name)
+			@snippets << Snippet.new(snippet_name)
 		end
 
 	

@@ -9,33 +9,77 @@ module TsungWrapper
     describe 'wrap' do
 
       it 'should raise an exception if the session cannot be found' do
-
+        expect {
+          Wrapper.new('missing sesssion', 'test')
+        }.to raise_error ArgumentError, "No session found with name 'missing sesssion'"
       end
 
 
 
       it 'should produce a skeleton xml file if given nothing to wrap' do
         Timecop.freeze(Time.new(2014, 4, 9, 14, 3, 5)) do
-
           expected = simple_session
-
-          
           wrapper = Wrapper.new('hit_landing_page', 'test')
           actual = wrapper.wrap
-
           # puts "++++++ expected ++++++ #{__FILE__}::#__LINE__)} ++++\n"
           # puts expected
           # puts "++++++ actual ++++++ #{__FILE__}::#__LINE__)} ++++\n"
           # puts actual
-          
           actual.should == expected
         end
       end
-
     end
+
+    describe '#wrap_snippet' do
+      it 'should raise an exception if wrapper not instantiated through new_for_snippet' do |variable|
+        wrapper = Wrapper.new('hit_landing_page', 'test')
+        expect {
+          wrapper.wrap_snippet
+        }.to raise_error RuntimeError, "Unable to call wrap_snippet on a Wrapper that wasn't instantiated using xml_for_snippet()"
+      end
+    end
+
+
+    describe '.xml_for_snippet' do
+      it 'should produce xml for the named snippet' do
+        xml = Wrapper.xml_for_snippet('hit_landing_page')
+        xml.should == hit_landing_page_snippet_xml
+      end
+    end
+
+
+    context 'request with thinktime' do
+      it 'should produce a request with a thinktime element' do
+        xml = Wrapper.xml_for_snippet('hit_register_page_with_thinktime')
+        xml.should == hit_register_page_with_thinktime_snippet_xml
+      end
+    end
+
+
   end
 end
 
+
+def hit_register_page_with_thinktime_snippet_xml
+  str = <<-EOXML
+<!-- Hit Register Page With Thinktime -->
+<thinktime random="true" value="5"/>
+<request>
+  <http url="http://test_base_url.com/user/register" version="1.1" method="GET"/>
+</request>
+EOXML
+end
+
+
+
+def hit_landing_page_snippet_xml
+  str = <<-EOXML
+<!-- Hit Landing Page -->
+<request>
+  <http url="http://test_base_url.com" version="1.1" method="GET"/>
+</request>
+EOXML
+end
 
 
 

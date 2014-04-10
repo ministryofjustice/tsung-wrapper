@@ -1,0 +1,7 @@
+
+request:
+  thinktime: 5
+  name: Hit Register Page With Thinktime
+  url: '/user/register'
+  http_method: GET
+
