@@ -9,16 +9,27 @@ module TsungWrapper
 
 	class Wrapper
 
-		def initialize(session, env = nil)
+		def initialize(session, env = nil, snippet_only = false, snippet_name = nil)
+			@snippet_only = snippet_only
+			@snippet_name = snippet_name
 			@env     = env.nil? ? 'development' : env
 			TsungWrapper.env = @env
 			@config  = ConfigLoader.new(@env)
 			@session = Session.new(session)
 			@xml     = ""
 		  @builder = Builder::XmlMarkup.new(:target => @xml, :indent => 2)
-		  @builder.instruct! :xml, :encoding => "UTF-8"
-		  @builder.declare! :DOCTYPE, :tsung, :SYSTEM, "#{TsungWrapper.dtd}"
+		  unless @snippet_only
+			  @builder.instruct! :xml, :encoding => "UTF-8"
+			  @builder.declare! :DOCTYPE, :tsung, :SYSTEM, "#{TsungWrapper.dtd}"
+			end
 		end
+
+
+		def self.new_for_snippet(snippet_name)
+			wrapper = self.new(nil, 'test', true, snippet_name)
+			wrapper.wrap_snippet
+		end
+
 
 		def wrap 
 			@builder.tsung('loglevel' => 'notice', 'version' => '1.0') do 
@@ -35,6 +46,15 @@ module TsungWrapper
 
 
 		private
+
+
+		def wrap_snippet
+			raise "Unable to call wrap_snippet on a Wrapper that wasn't instantiated using new_for_snippet()" unless @snippet_only
+			@builder.comment! @snippet_name
+			
+
+		end
+
 
 		def formatted_time
 			Time.now.strftime('%Y%m%d-%H%M%S')
@@ -53,8 +73,13 @@ module TsungWrapper
 			url
 		end
 
-
-
+		# expects and OpenStruct 
+		def transform_snippet(snippet)
+			@builder.comment! snippet.name
+			@builder.request do 
+				@builder.http(:url => make_url(@config, snippet), :version => @config.http_version, :method => snippet.http_method)
+			end
+		end
 
 
 
@@ -62,10 +87,7 @@ module TsungWrapper
 			@builder.sessions do
 				@builder.session(:name => "#{@session.session_name}-#{formatted_time}", :probability => 100, :type => 'ts_http') do 
 					@session.snippets.each do |snippet|
-						@builder.comment! snippet.name
-						@builder.request do 
-							@builder.http(:url => make_url(@config, snippet), :version => @config.http_version, :method => snippet.http_method)
-						end
+						transform_snippet(snippet)
 					end
 				end
 			end

@@ -10,6 +10,8 @@ DONE:
 
 WIP:
 ====
+- make a Snippet object so that it can be re-used.
+- enable generation of snippets of xml for testing purposes
 - add thinktime
 - handle posts with parameters
 

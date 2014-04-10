@@ -9,30 +9,38 @@ module TsungWrapper
     describe 'wrap' do
 
       it 'should raise an exception if the session cannot be found' do
-
+        expect {
+          Wrapper.new('missing sesssion', 'test')
+        }.to raise_error ArgumentError, "No session found with name 'missing sesssion'"
       end
 
 
 
       it 'should produce a skeleton xml file if given nothing to wrap' do
         Timecop.freeze(Time.new(2014, 4, 9, 14, 3, 5)) do
-
           expected = simple_session
-
-          
           wrapper = Wrapper.new('hit_landing_page', 'test')
           actual = wrapper.wrap
-
           # puts "++++++ expected ++++++ #{__FILE__}::#__LINE__)} ++++\n"
           # puts expected
           # puts "++++++ actual ++++++ #{__FILE__}::#__LINE__)} ++++\n"
           # puts actual
-          
           actual.should == expected
         end
       end
-
     end
+
+    describe '#wrap_snippet' do
+      it 'should raise an exception if wrapper not instantiated through new_for_snippet' do |variable|
+        wrapper = Wrapper.new('hit_landing_page', 'test')
+        expect {
+          wrapper.send(:wrap_snippet)
+        }.to raise_error RuntimeError, "Unable to call wrap_snippet on a Wrapper that wasn't instantiated using new_for_snippet()"
+      end
+      
+    end
+
+
   end
 end
 
