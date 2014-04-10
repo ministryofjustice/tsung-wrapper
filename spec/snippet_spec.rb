@@ -30,6 +30,20 @@ module TsungWrapper
 			end
 		end
 
+		describe '#has_attribute?' do
+			it 'should return true if the attribute is present' do
+				snippet = Snippet.new('login_with_think_time')
+				snippet.has_attribute?('thinktime').should be_true
+			end
+
+			it 'should return false if the attribute is not present' do
+				snippet = Snippet.new('hit_landing_page')
+				snippet.has_attribute?('thinktime').should be_false
+			end
+		end
+
+
+
 		describe '#params' do
 			it 'should return a list of parameter names' do
 				snippet = Snippet.new('login_with_think_time')

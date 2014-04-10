@@ -34,16 +34,52 @@ module TsungWrapper
       it 'should raise an exception if wrapper not instantiated through new_for_snippet' do |variable|
         wrapper = Wrapper.new('hit_landing_page', 'test')
         expect {
-          wrapper.send(:wrap_snippet)
-        }.to raise_error RuntimeError, "Unable to call wrap_snippet on a Wrapper that wasn't instantiated using new_for_snippet()"
+          wrapper.wrap_snippet
+        }.to raise_error RuntimeError, "Unable to call wrap_snippet on a Wrapper that wasn't instantiated using xml_for_snippet()"
       end
-      
+    end
+
+
+    describe '.xml_for_snippet' do
+      it 'should produce xml for the named snippet' do
+        xml = Wrapper.xml_for_snippet('hit_landing_page')
+        xml.should == hit_landing_page_snippet_xml
+      end
+    end
+
+
+    context 'request with thinktime' do
+      it 'should produce a request with a thinktime element' do
+        xml = Wrapper.xml_for_snippet('hit_register_page_with_thinktime')
+        xml.should == hit_register_page_with_thinktime_snippet_xml
+      end
     end
 
 
   end
 end
 
+
+def hit_register_page_with_thinktime_snippet_xml
+  str = <<-EOXML
+<!-- Hit Register Page With Thinktime -->
+<thinktime random="true" value="5"/>
+<request>
+  <http url="http://test_base_url.com/user/register" version="1.1" method="GET"/>
+</request>
+EOXML
+end
+
+
+
+def hit_landing_page_snippet_xml
+  str = <<-EOXML
+<!-- Hit Landing Page -->
+<request>
+  <http url="http://test_base_url.com" version="1.1" method="GET"/>
+</request>
+EOXML
+end
 
 
 

@@ -13,10 +13,16 @@ module TsungWrapper
 				raise ArgumentError.new("No Snippet with the name '#{snippet_name}' can be found.")
 			end
 
-			config = YAML.load_file(filename)
-			@attrs = config['request']
+			config  = YAML.load_file(filename)
+			@attrs  = config['request']
 			@params = @attrs['params'].nil? ? {} : @attrs['params']
 		end
+
+		# we want to return nil
+		def has_attribute?(attr_name)
+			@attrs.has_key?(attr_name)
+		end
+
 
 		# returns the keys of the params that are stored
 		def params

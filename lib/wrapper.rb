@@ -10,22 +10,23 @@ module TsungWrapper
 	class Wrapper
 
 		def initialize(session, env = nil, snippet_only = false, snippet_name = nil)
-			@snippet_only = snippet_only
-			@snippet_name = snippet_name
-			@env     = env.nil? ? 'development' : env
-			TsungWrapper.env = @env
-			@config  = ConfigLoader.new(@env)
-			@session = Session.new(session)
-			@xml     = ""
-		  @builder = Builder::XmlMarkup.new(:target => @xml, :indent => 2)
+			TsungWrapper.env = env
+			@snippet_only    = snippet_only
+			@snippet_name    = snippet_name
+			@env             = env.nil? ? 'development' : env
+			@config          = ConfigLoader.new(@env)
+			@xml             = ""
+		  @builder 				 = Builder::XmlMarkup.new(:target => @xml, :indent => 2)
+		  
 		  unless @snippet_only
+		  	@session = Session.new(session)
 			  @builder.instruct! :xml, :encoding => "UTF-8"
 			  @builder.declare! :DOCTYPE, :tsung, :SYSTEM, "#{TsungWrapper.dtd}"
 			end
 		end
 
 
-		def self.new_for_snippet(snippet_name)
+		def self.xml_for_snippet(snippet_name)
 			wrapper = self.new(nil, 'test', true, snippet_name)
 			wrapper.wrap_snippet
 		end
@@ -43,17 +44,20 @@ module TsungWrapper
 		end		
 
 
+		def wrap_snippet
+			raise "Unable to call wrap_snippet on a Wrapper that wasn't instantiated using xml_for_snippet()" unless @snippet_only == true
+			snippet = Snippet.new(@snippet_name)
+			transform_snippet(snippet)
+		end
+
+
+
 
 
 		private
 
 
-		def wrap_snippet
-			raise "Unable to call wrap_snippet on a Wrapper that wasn't instantiated using new_for_snippet()" unless @snippet_only
-			@builder.comment! @snippet_name
-			
-
-		end
+		
 
 
 		def formatted_time
@@ -76,6 +80,9 @@ module TsungWrapper
 		# expects and OpenStruct 
 		def transform_snippet(snippet)
 			@builder.comment! snippet.name
+			if snippet.has_attribute?('thinktime')
+				@builder.thinktime(:random => true, :value => snippet.thinktime)
+			end
 			@builder.request do 
 				@builder.http(:url => make_url(@config, snippet), :version => @config.http_version, :method => snippet.http_method)
 			end
