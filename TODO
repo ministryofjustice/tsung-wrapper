@@ -5,7 +5,7 @@ TODO
 DONE:
 =====
 
-- test piping into tsung and outputting results
+- test piping into tsung and outputing results
 - make a Snippet object so that it can be re-used.
 - enable generation of snippets of xml for testing purposes
 - add thinktime
