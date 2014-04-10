@@ -8,11 +8,18 @@ DONE:
 - test piping into tsung and outputting results
 
 
+WIP:
+====
+- add thinktime
+- handle posts with parameters
+
 
 STILL TO DO:
 ============
 
 - handle multiple scenarios
-- handle posts with parameters
+	- rename sessions as scenarios
+	- include multiple scenarios in one session
+
 - act on return codes
 - run the tsung_stats script
