@@ -48,6 +48,7 @@ module TsungWrapper
 			raise "Unable to call wrap_snippet on a Wrapper that wasn't instantiated using xml_for_snippet()" unless @snippet_only == true
 			snippet = Snippet.new(@snippet_name)
 			transform_snippet(snippet)
+			@xml
 		end
 
 
@@ -84,7 +85,15 @@ module TsungWrapper
 				@builder.thinktime(:random => true, :value => snippet.thinktime)
 			end
 			@builder.request do 
-				@builder.http(:url => make_url(@config, snippet), :version => @config.http_version, :method => snippet.http_method)
+				if snippet.has_params?
+					@builder.http(:url => make_url(@config, snippet), 
+												:version => @config.http_version, 
+												:contents => snippet.content_string,
+												:content_type => "application/x-www-form-urlencoded",
+												:method => snippet.http_method)
+				else
+					@builder.http(:url => make_url(@config, snippet), :version => @config.http_version, :method => snippet.http_method)
+				end
 			end
 		end
 

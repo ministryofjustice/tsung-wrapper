@@ -18,11 +18,27 @@ module TsungWrapper
 			@params = @attrs['params'].nil? ? {} : @attrs['params']
 		end
 
+		def content_string
+			string = ''
+			encoded_params = []
+			@params.each do |key, value|
+				encoded_params << "#{key}=#{param(key)}"
+			end
+			encoded_params.join('&')		
+		end
+
+
 		# we want to return nil
 		def has_attribute?(attr_name)
 			@attrs.has_key?(attr_name)
 		end
 
+
+
+
+		def has_params?
+			@params.size > 0
+		end
 
 		# returns the keys of the params that are stored
 		def params
