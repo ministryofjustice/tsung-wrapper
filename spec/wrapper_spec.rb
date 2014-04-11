@@ -42,7 +42,7 @@ module TsungWrapper
 
 
     describe '.xml_for_snippet' do
-      it 'should produce xml for the named snippet' do
+      it 'should emit xml for the named snippet' do
         xml = Wrapper.xml_for_snippet('hit_landing_page')
         xml.should == hit_landing_page_snippet_xml
       end
@@ -50,7 +50,7 @@ module TsungWrapper
 
 
     context 'request with thinktime' do
-      it 'should produce a request with a thinktime element' do
+      it 'should emit a request with a thinktime element' do
         xml = Wrapper.xml_for_snippet('hit_register_page_with_thinktime')
         xml.should == hit_register_page_with_thinktime_snippet_xml
       end
@@ -58,9 +58,20 @@ module TsungWrapper
 
 
     context 'post_request_with_parameters' do
-      it 'should produce an xml snippet for a post request with parameters' do |variable|
+      it 'should emit an xml snippet for a post request with parameters' do |variable|
         xml = Wrapper.xml_for_snippet('login_with_think_time')
         xml.should == login_snippet_xml
+      end
+    end
+
+    context 'post_request_with_dynamic_variables' do
+      it 'should emit an xml request snippet incuding a subst=true attribute' do
+        xml = Wrapper.xml_for_snippet('login_using_dynvars')
+        puts "++++++ actual ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+        puts xml
+        puts "++++++ expected ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+        puts login_using_dynvars_xml
+        xml.should == login_using_dynvars_xml
       end
     end
 
@@ -86,6 +97,17 @@ module TsungWrapper
 
   end
 end
+
+
+def login_using_dynvars_xml
+  str = <<-EOXML
+<!-- Login -->
+<request subst="true">
+  <http url="http://test_base_url.com/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
+</request>  
+EOXML
+end
+
 
 
 def erlang_function_xml

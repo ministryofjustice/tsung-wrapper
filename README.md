@@ -137,6 +137,9 @@ There are three kinds of dynamic variables that can be defined:
 	* random number
 	* result of an Erlan function
 
+The dynamic variables are defined in small yaml files in the dynvars section.  They can then be refered to in the sessions yaml files and given 
+a name for subsequent referencingin the snippets.
+
 #### Defining a random string
 
 		dynvar:
@@ -144,18 +147,7 @@ There are three kinds of dynamic variables that can be defined:
 			length: 10
 			
 
-As may be guessed, this will generate a 10-byte random string that with the name 'email_first_part'.
-This can be referred to in subsequent requests as %%_email_first_part%%, e.g.
-
-		request:
-		  thinktime: 6
-		  name: Login
-		  url: '/user/login'
-		  http_method: POST
-		  params:
-		    email:  %%_email_first_part%%@test.com
-		    password: %%_password%%
-		    submit: Sign in
+As may be guessed, this will generate a 10-byte random string.
 
 #### Defining a random number
 

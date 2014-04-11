@@ -69,6 +69,24 @@ module TsungWrapper
 		end
 
 
+		describe '#has_dynvars?' do
+			it 'should return false if there are no parameters' do
+				snippet = Snippet.new('hit_landing_page')
+				snippet.has_dynvars?.should be_false
+			end
+
+			it 'should return false if the parameters do not contains dynvars' do
+				snippet = Snippet.new('login_with_random_user_name')
+				snippet.has_dynvars?.should be_false
+			end
+
+			it 'should return true if at least one param contains a dynvar' do
+				snippet = Snippet.new('login_using_dynvars')
+				snippet.has_dynvars?.should be_true
+			end
+		end
+
+
 		describe '#param' do
 			it 'should return the CGI encoded value of the param' do
 				snippet = Snippet.new('login_with_think_time')
@@ -91,7 +109,7 @@ module TsungWrapper
 		describe '#content_string' do
 			it 'should return an encoded parameter string' do
 				snippet = Snippet.new('login_with_think_time')
-				snippet.content_string.should == 'email=test%40test.com&password=Abc123123&submit=Sign+in'
+				snippet.content_string.should == :'email=test%40test.com&amp;password=Abc123123&submit=Sign+in'
 			end
 		end
 
@@ -100,16 +118,5 @@ module TsungWrapper
 	end
 
 end
-
-
-# thinktime: 6
-#   name: Login
-#   url: '/user/login'
-#   http_method: POST
-#   params:
-#     email: test@test.com
-#     password: Abc123123
-#     submit: Sign in
-
 
 

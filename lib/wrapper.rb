@@ -109,11 +109,13 @@ module TsungWrapper
 			if snippet.has_attribute?('thinktime')
 				@builder.thinktime(:random => true, :value => snippet.thinktime)
 			end
-			@builder.request do 
+
+			request_attrs = snippet.has_dynvars? ? {:subst => true} : nil
+			@builder.request(request_attrs) do 
 				if snippet.has_params?
 					@builder.http(:url => make_url(@config, snippet), 
 												:version => @config.http_version, 
-												:contents => snippet.content_string,
+												:contents => snippet.content_string.to_sym,
 												:content_type => "application/x-www-form-urlencoded",
 												:method => snippet.http_method)
 				else

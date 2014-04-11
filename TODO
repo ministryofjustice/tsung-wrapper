@@ -15,23 +15,24 @@ DONE:
 WIP:
 ====
 
+- allow generation of random strings
+- allow generation of random bumbers
+- allow inclusion of erlang snippets
 
 
 
 STILL TO DO:
 ============
-
-- allow generation of random strings
-- allow generation of random bumbers
-- allow inclusion of erlang snippets
+- validate parameters do not contain chars which need to be escaped - add instructions to README
+- act on return codes
+- run the tsung_stats script
 
 
 - handle multiple scenarios
 	- rename sessions as scenarios
 	- include multiple scenarios in one session
 
-- act on return codes
-- run the tsung_stats script
+
 
 
 
