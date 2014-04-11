@@ -1,0 +1,8 @@
+session:
+  dynvars:
+    username: random_str_12
+    userid: random_number
+    today: erlang_function
+  snippets:
+    - hit_landing_page
+    - hit_register_page

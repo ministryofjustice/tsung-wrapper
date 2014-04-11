@@ -9,16 +9,27 @@ module TsungWrapper
 
 	class Wrapper
 
-		def initialize(session, env = nil, snippet_only = false, snippet_name = nil)
+		# Instantiate a Wrapper.  Usual invocation is:
+		#
+		#    TsungWrapper::Wrapper.new("my_session") 
+		#    TsungWrapper::Wrapper.new("my_session", "staging")
+		#
+		# For testing purposes, Wrapper objects can be instantiated just to emit the xml for snippets or dynvars:
+		#
+		# 		TsungWrapper::Wrapper.new("my_session", "test", :snippet, 'my_snippet')
+		#  		TsungWrapper::Wrapper.new("my_session", "test", :dynvar, '"my_dynvar"')
+		#
+		def initialize(session, env = nil, xml_to_generate = :full, snippet_name = nil)
 			TsungWrapper.env = env
-			@snippet_only    = snippet_only
-			@snippet_name    = snippet_name
+			@wrapper_type    = xml_to_generate
+			@snippet_name    = @wrapper_type == :snippet ? snippet_name : nil
+			@dynvar_name     = @wrapper_type == :dynvar  ? snippet_name : nil
 			@env             = env.nil? ? 'development' : env
 			@config          = ConfigLoader.new(@env)
 			@xml             = ""
 		  @builder 				 = Builder::XmlMarkup.new(:target => @xml, :indent => 2)
-		  
-		  unless @snippet_only
+
+		  if @wrapper_type == :full
 		  	@session = Session.new(session)
 			  @builder.instruct! :xml, :encoding => "UTF-8"
 			  @builder.declare! :DOCTYPE, :tsung, :SYSTEM, "#{TsungWrapper.dtd}"
@@ -26,9 +37,16 @@ module TsungWrapper
 		end
 
 
+		# this method is used for testing only
 		def self.xml_for_snippet(snippet_name)
-			wrapper = self.new(nil, 'test', true, snippet_name)
+			wrapper = self.new(nil, 'test', :snippet, snippet_name)
 			wrapper.wrap_snippet
+		end
+
+
+		def self.xml_for_dynvar(dynvar_name, varname)
+			wrapper = self.new(nil, 'test', :dynvar, dynvar_name)
+			wrapper.wrap_dynvar(varname)
 		end
 
 
@@ -45,13 +63,20 @@ module TsungWrapper
 
 
 		def wrap_snippet
-			raise "Unable to call wrap_snippet on a Wrapper that wasn't instantiated using xml_for_snippet()" unless @snippet_only == true
+			raise "Unable to call wrap_snippet on a Wrapper that wasn't instantiated using xml_for_snippet()" unless @wrapper_type == :snippet
 			snippet = Snippet.new(@snippet_name)
 			transform_snippet(snippet)
 			@xml
 		end
 
 
+
+		def wrap_dynvar(varname)
+			raise "Unable to call wrap_dynvar on a Wrapper that wasn't instantiated using xml_for_dynvar()" unless @wrapper_type == :dynvar
+			dynvar = Dynvar.new(@dynvar_name, varname)
+			add_dynvar(dynvar)
+			@xml
+		end
 
 
 
@@ -98,10 +123,20 @@ module TsungWrapper
 		end
 
 
+		def add_dynvar(dynvar)
+			@builder.setdynvars(dynvar.attr_hash) do
+				@builder.var(:name => dynvar.varname)
+			end
+		end
+
+
 
 		def add_sessions
 			@builder.sessions do
 				@builder.session(:name => "#{@session.session_name}-#{formatted_time}", :probability => 100, :type => 'ts_http') do 
+					@session.dynvars.each do |dynvar|
+						add_dynvar(dynvar)
+					end
 					@session.snippets.each do |snippet|
 						transform_snippet(snippet)
 					end

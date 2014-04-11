@@ -5,19 +5,20 @@ module TsungWrapper
 
 	class Dynvar
 
-		attr_reader :attrs, :type, :length, :start, :end, :code
+		attr_reader :varname, :type, :length, :start, :end, :code
 
-		def initialize(dynvar_name)
-			@attrs  = []
-		  @type   = nil
-		  @length = nil
-		  @start  = nil
-		  @end    = nil
-		  @code   = nil
+		def initialize(dynvar_definition_name, varname)
+			# @attrs  = []
+		  @type    = nil
+		  @length  = nil
+		  @start   = nil
+		  @end     = nil
+		  @code    = nil
+		  @varname = varname
 
-			filename = File.join(TsungWrapper.config_dir, 'dynvars', "#{dynvar_name}.yml")
+			filename = File.join(TsungWrapper.config_dir, 'dynvars', "#{dynvar_definition_name}.yml")
 		  unless File.exist?(filename)
-		  	raise ArgumentError.new("No Dynamic Variable snippet with name '#{dynvar_name}' can be found.")
+		  	raise ArgumentError.new("No Dynamic Variable snippet with name '#{dynvar_definition_name}' can be found.")
 		  end
 
 		  @config = YAML.load_file(filename)['dynvar']
@@ -36,18 +37,35 @@ module TsungWrapper
 		  end
 		end
 
+		# produces a hash which can be passed as the attributes to the <setdynvars> element
+		def attr_hash
+			hash = {:sourcetype => @type}
+			case @type
+			when 'random_string'
+				hash[:length] = @length
+			when 'random_number'
+				hash[:start] = @start
+				hash[:end] = @end
+			when 'eval'
+				hash[:code] = @code.chomp.to_sym			# symbolize it in order to prevent it from being escaped
+			end
+			hash
+		end
+
+
+
 
 		private
 
 		def populate_random_string
-			@attrs  = [:type, :length]
+			@attrs  = [:sourcetype, :length]
 			@type   = 'random_string'
 			@length = @config['length']
 		end
 
 
 		def populate_random_number
-			@attrs = [:type, :start, :end]
+			@attrs = [:sourcetype, :start, :end]
 			@type  = 'random_number'
 			@start = @config['start']
 			@end   = @config['end']
@@ -55,12 +73,10 @@ module TsungWrapper
 
 
 		def populate_erlang
-			@attrs = [:type, :code]
+			@attrs = [:sourcetype, :code]
 			@type  = 'eval'
 			@code  = @config['code']
 		end
-
-		
 	end
 
 end

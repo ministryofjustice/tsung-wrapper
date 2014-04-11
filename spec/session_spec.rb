@@ -35,11 +35,20 @@ module TsungWrapper
 				}.to raise_error ArgumentError, "No Snippet with the name 'non_existent_snippet' can be found."
 			end
 
+			it 'should load dynvars' do
+				session = Session.new('dynvar_session')
+				session.has_dynvars?.should be_true
+				dv = session.dynvars.first
+				dv.type.should == 'random_string'
+			end
+
+
 
 			it 'should load the session and component snippets' do
 				session = Session.new('hit_landing_page')
 				session.session_name.should == 'hit_landing_page'
 				session.snippets.size.should == 2
+				session.has_dynvars?.should be_false
 
 				snippet = session.snippets.first
 				snippet.name.should == "Hit Landing Page"
@@ -50,7 +59,6 @@ module TsungWrapper
 				snippet.name.should == "Hit Register Page"
 				snippet.url.should == '/user/register'
 				snippet.http_method.should == 'GET'
-
 			end
 		end
 

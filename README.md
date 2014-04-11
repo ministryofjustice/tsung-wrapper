@@ -70,15 +70,25 @@ All of the above elements must be present.
 
 This folder contains yaml files that describe the sessions that you want to run.
 
-Basically, they are just simple containers for an array of snippets that will be included into the XML file, e.g.
+Basically, they are just simple containers for an array of dynamic variables that are used, and snippets that will be included into the XML file, e.g.
 
 
 
 
 		session:
+			dynvars:
+		    username: random_str_12
+		    userid: random_number
+		    today: erlang_function
 		  snippets:
 		    - hit_landing_page
 		    - hit_register_page
+
+In the above example, three dynamic variables are declared (username, userid, today), and the definition is taken from the follwoing files:
+
+* config/dynvars/random_str_12.yml, 
+* config/dynvars/random_number.yml
+* config/dynvars/erlang_funtion.yml
 
 The name of the session is taken from the name of the file, and will be included as a comment in the XML.
 

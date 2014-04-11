@@ -2,7 +2,7 @@ require 'yaml'
 require 'awesome_print'
 require 'pp'
 
-filename = File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'sessions', 'hit_landing_page.yml'))
+filename = File.expand_path(File.join(File.dirname(__FILE__), '..', 'spec', 'config', 'dynvars', 'erlang_function.yml'))
 
 config = YAML.load_file(filename)
 
