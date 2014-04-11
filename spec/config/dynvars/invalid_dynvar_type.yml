@@ -1,0 +1,4 @@
+dynvar:
+  type: ruby
+  length: 12
+  name: username

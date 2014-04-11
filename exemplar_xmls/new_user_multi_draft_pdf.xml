@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/local/Cellar/tsung/1.5.0/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="notice" version="1.0">
+
+  <!-- Client side setup -->
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="10000"/>
+  </clients>
+
+  <!-- Server side setup -->
+  <servers>
+    <!-- server host="lastingpowerofattorney.service.gov.uk" port="443" type="tcp"></server-->
+    <server host="staging.lpa.dsd.io" port="443" type="tcp"></server>
+    <!-- server host="lpa-front" port="80" type="tcp"></server-->
+  </servers>
+
+  <load>
+  <!-- several arrival phases can be set: for each phase, you can set
+  the mean inter-arrival time between new clients and the phase
+  duration -->
+  
+   <arrivalphase phase="1" duration="5" unit="minute">
+     <users interarrival="1" unit="second"></users>
+   </arrivalphase>
+  
+   <arrivalphase phase="5" duration="5" unit="minute">
+     <users interarrival="0.5" unit="second"></users>
+   </arrivalphase>
+  </load>
+
+  <options>
+   <option type="ts_http" name="user_agent">
+    <user_agent probability="80">Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21</user_agent>
+    <user_agent probability="20">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</user_agent>
+   </option>
+  </options>
+  
+
+  <!-- start a session for a http user. the probability is the
+  frequency of this type os session. The sum of all session's
+  probabilities must be 100 -->
+
+ <sessions>
+  <session name="test-session" probability="100" type="ts_http">
+  
+  <setdynvars sourcetype="random_string" length="13">
+    <var name="randomname" />
+  </setdynvars>
+
+  <request><http url='https://staging.lpa.dsd.io' version='1.1' method='GET'></http></request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request><http url='/user/register' version='1.1' method='GET'></http></request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request subst="true">
+    <dyn_variable name="activationurl" re="id='activation_link' href='(.*)'" />
+    <http url='/user/register' version='1.1'  contents='email=%%_randomname%%%40test.com&amp;email_confirm=%%_randomname%%%40test.com&amp;password=Passw0rd&amp;password_confirm=Passw0rd&amp;confirmUnderstanding=1&amp;submit=I+understand' content_type='application/x-www-form-urlencoded' method='POST'></http>
+  </request>
+
+  <thinktime random='true' value='10'/>
+
+  <request subst="true"><http url='%%_activationurl%%' version='1.1' method='GET'></http></request>
+
+  <thinktime random='true' value='4'/>
+
+  <request><http url='/user/login' version='1.1' method='GET'></http></request>
+
+  <thinktime random='true' value='10'/>
+
+  <request subst="true"><http url='/user/login' version='1.1'  contents='email=%%_randomname%%%40test.com&amp;password=Passw0rd&amp;submit=Sign+in' content_type='application/x-www-form-urlencoded' method='POST'></http></request>
+
+  <thinktime random='true' value='4'/>
+
+  <request><http url='/user/about-you' version='1.1' method='GET'></http></request>
+  
+  <thinktime random='true' value='10'/>
+  
+  <request><http url='/user/about-you' version='1.1'  contents='title=Mr&amp;title=Mr&amp;firstname=testerforename&amp;middlename=&amp;surname=testerlastname&amp;dob%5Bday%5D=&amp;dob%5Bmonth%5D=&amp;dob%5Byear%5D=&amp;addr1=&amp;addr2=&amp;addr3=&amp;town=&amp;county=&amp;postcode=&amp;country=UK&amp;save=Save+and+continue' content_type='application/x-www-form-urlencoded' method='POST'></http></request>
+
+  <thinktime random='true' value='4'/>
+
+  <request><http url='/create/lpa-type' version='1.1' method='GET'></http></request>
+
+  <thinktime random='true' value='10'/>
+
+  <request><http url='/create/lpa-type' version='1.1'  contents='lpa_type=Property+and+financial+affairs&amp;save=Save+and+continue' content_type='application/x-www-form-urlencoded' method='POST'></http></request>
+
+  <thinktime random='true' value='4'/>
+
+  <request><http url='/create/donor' version='1.1' method='GET'></http></request>
+
+  <thinktime random='true' value='4'/>
+
+  <request><http url='/create/add-donor' version='1.1' method='GET'></http></request>
+  
+  <thinktime random='true' value='10'/>
+  
+  <request><http url='/create/add-donor' version='1.1'  contents='title=Mr&amp;title=Mr&amp;firstname=test&amp;middlename=&amp;surname=test&amp;othername=&amp;dob%5Bday%5D=02&amp;dob%5Bmonth%5D=03&amp;dob%5Byear%5D=1907&amp;phone=&amp;email=&amp;address%5Baddr1%5D=aaa&amp;address%5Baddr2%5D=&amp;address%5Baddr3%5D=&amp;address%5Btown%5D=bbb&amp;address%5Bcounty%5D=ccc&amp;address%5Bpostcode%5D=ddd&amp;address%5Bcountry%5D=UK&amp;donor_cannot_sign=0' content_type='application/x-www-form-urlencoded; charset=UTF-8' method='POST'></http></request>
+
+  <thinktime random='true' value='4'/>
+
+  <request><http url='/create/donor' version='1.1' method='GET'></http></request>
+
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="loop" sleep_loop="5" max_loop="600" when="match">(.*)Please wait while we are generating your document(.*)</match>
+  	<http url='/pdf/draft/Lasting-Power-of-Attorney-Draft.pdf' version='1.1' method='GET'></http>
+  </request>
+
+  <request>
+    <match do="loop" sleep_loop="5" max_loop="600" when="match">(.*)Please wait while we are generating your document(.*)</match>
+  	<http url='/pdf/draft/Lasting-Power-of-Attorney-Draft.pdf' version='1.1' method='GET'></http>
+  </request>
+
+  <thinktime random='true' value='10'/>
+
+  <request><http url='/user/account' version='1.1' method='GET'></http></request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request><http url='/user/delete' version='1.1' method='DELETE'></http></request>
+  
+  </session>
+ </sessions>
+</tsung>

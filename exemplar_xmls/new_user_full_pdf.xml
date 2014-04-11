@@ -1,0 +1,602 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/local/Cellar/tsung/1.5.0/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="notice" version="1.0">
+
+  <!-- Client side setup -->
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="10000"/>
+  </clients>
+
+  <!-- Server side setup -->
+  <servers>
+    <!-- server host="lastingpowerofattorney.service.gov.uk" port="443" type="tcp"></server-->
+    <server host="dev.lpa.dsd.io" port="443" type="tcp"></server>
+  </servers>
+
+  <load>
+  <!-- several arrival phases can be set: for each phase, you can set
+  the mean inter-arrival time between new clients and the phase
+  duration -->
+
+
+   <!-- Scenario: heavy load  -->
+   <arrivalphase phase="1" duration="5" unit="minute">
+     <users interarrival="1" unit="second"></users>
+   </arrivalphase>
+
+   <!-- Scenario: extream load  -->
+   <arrivalphase phase="2" duration="5" unit="minute">
+     <users interarrival="0.5" unit="second"></users>
+   </arrivalphase>
+   
+  </load>
+
+  <options>
+   <option type="ts_http" name="user_agent">
+    <user_agent probability="80">Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21</user_agent>
+    <user_agent probability="20">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</user_agent>
+   </option>
+  </options>
+  
+
+  <!-- start a session for a http user. the probability is the
+  frequency of this type os session. The sum of all session's
+  probabilities must be 100 -->
+
+ <sessions>
+  <session name="test-session" probability="100" type="ts_http">
+  <setdynvars sourcetype="random_string" length="13">
+    <var name="random_name" />
+  </setdynvars>
+  
+  <setdynvars sourcetype="eval"
+            code="fun({Pid,DynVars})->
+           {{Y, Mo, D},_}=calendar:now_to_datetime(erlang:now()),
+           DateAsString = io_lib:format('~2.10.0B%2F~2.10.0B%2F~4.10.0B', [D, Mo, Y]),
+           lists:flatten(DateAsString) end.">
+    <var name="todaystr" />
+  </setdynvars>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='https://dev.lpa.dsd.io/?<TEST_KEY>' version='1.1' method='GET'></http>
+  </request>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/user/register' version='1.1' method='GET'></http>
+  </request>
+  
+  <request subst="true">
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <dyn_variable name="activate_url" re="id='activation_link' href='(.*)'" />
+    <http url='/user/register' version='1.1'  contents='email=%%_random_name%%%40test.com&amp;email_confirm=%%_random_name%%%40test.com&amp;password=Passw0rd&amp;password_confirm=Passw0rd&amp;confirmUnderstanding=1&amp;submit=I+understand' content_type='application/x-www-form-urlencoded' method='POST'></http>
+  </request>
+
+  <thinktime random='true' value='4'/>
+  
+  <request subst="true">
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='%%_activate_url%%' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/user/login' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request subst="true">
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/user/login' version='1.1'  contents='email=%%_random_name%%%40test.com&amp;password=Passw0rd&amp;submit=Sign+in' content_type='application/x-www-form-urlencoded' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/user/about-you' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/user/about-you' version='1.1'  contents='title=Mr&amp;title=Mr&amp;firstname=testerforename&amp;middlename=&amp;surname=testerlastname&amp;dob%5Bday%5D=&amp;dob%5Bmonth%5D=&amp;dob%5Byear%5D=&amp;addr1=&amp;addr2=&amp;addr3=&amp;town=&amp;county=&amp;postcode=&amp;country=UK&amp;save=Save+and+continue' content_type='application/x-www-form-urlencoded' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/lpa-type' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/lpa-type' version='1.1'  contents='lpa_type=Property+and+financial+affairs&amp;save=Save+and+continue' content_type='application/x-www-form-urlencoded' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/donor' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  <request><http url='/images/icon/progress-tick.png' version='1.1' method='GET'></http></request>
+  <request><http url='/images/ajax-loader.gif' version='1.1' method='GET'></http></request>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/add-donor' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/add-donor' version='1.1'  contents='title=Mr&amp;title=Mrs&amp;firstname=Louise&amp;middlename=Mary&amp;surname=James&amp;othername=&amp;dob%5Bday%5D=11&amp;dob%5Bmonth%5D=01&amp;dob%5Byear%5D=1948&amp;phone=&amp;email=opglpademo%2BLouiseJames%40gmail.com&amp;address%5Baddr1%5D=Bank+End+Farm+House&amp;address%5Baddr2%5D=Undercliff+Drive&amp;address%5Baddr3%5D=&amp;address%5Btown%5D=Ventnor&amp;address%5Bcounty%5D=Isle+of+Wight&amp;address%5Bpostcode%5D=PO38+1UL&amp;address%5Bcountry%5D=UK&amp;donor_cannot_sign=0' content_type='application/x-www-form-urlencoded; charset=UTF-8' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/donor' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request><http url='/js/jquery-ui-1.10.3.custom/js/jquery-1.9.1.min.js' version='1.1' if_modified_since='Sat, 29 Jun 2013 20:26:23 GMT' method='GET'></http></request>
+  <request><http url='/js/application.min.js' version='1.1' if_modified_since='Mon, 30 Sep 2013 16:38:16 GMT' method='GET'></http></request>
+  <request><http url='/js/pdf.js' version='1.1' if_modified_since='Thu, 09 Jan 2014 15:53:17 GMT' method='GET'></http></request>
+  <request><http url='/css/styles.css' version='1.1' if_modified_since='Tue, 08 Oct 2013 15:33:17 GMT' method='GET'></http></request>
+  <request><http url='/images/gov.uk_logotype-2x.png' version='1.1' if_modified_since='Tue, 25 Jun 2013 12:32:48 GMT' method='GET'></http></request>
+  <request><http url='/images/icon/person.png' version='1.1' if_modified_since='Thu, 09 Jan 2014 15:53:38 GMT' method='GET'></http></request>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/when-to-use' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/when-to-use' version='1.1'  contents='whenToStart=0&amp;save=Save+and+continue' content_type='application/x-www-form-urlencoded' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/attorneys' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/add-attorney' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/add-attorney' version='1.1'  contents='title=Mr&amp;title=Mrs&amp;firstname=Amy&amp;middlename=Jane&amp;surname=Wheeler&amp;dob%5Bday%5D=10&amp;dob%5Bmonth%5D=05&amp;dob%5Byear%5D=1975&amp;address%5Baddr1%5D=Brickhill+Cottage&amp;address%5Baddr2%5D=Birch+Cross&amp;address%5Baddr3%5D=Marchington&amp;address%5Btown%5D=Uttoxeter&amp;address%5Bcounty%5D=Staffordshire&amp;address%5Bpostcode%5D=ST14+8NX&amp;address%5Bcountry%5D=UK&amp;dxNumber=1234&amp;dxExchange=CAMBRIDGE&amp;email=opglpademo%2BAmyWheeler%40gmail.com&amp;phone=10827477387&amp;occupation=Computer+Programmer&amp;relationshipToDonor=Solicitor&amp;relationshipToDonorOther=' content_type='application/x-www-form-urlencoded; charset=UTF-8' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/attorneys' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/add-attorney' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/add-trust-corporation/attorney' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/add-trust-corporation/attorney' version='1.1'  contents='companyName=Standard+Trust&amp;registrationNumber=678437685&amp;address%5Baddr1%5D=1+Laburnum+Place&amp;address%5Baddr2%5D=Sketty&amp;address%5Baddr3%5D=&amp;address%5Btown%5D=Swansea&amp;address%5Bcounty%5D=Abertawe&amp;address%5Bpostcode%5D=SA2+8HT&amp;address%5Bcountry%5D=UK&amp;dxNumber=&amp;dxExchange=' content_type='application/x-www-form-urlencoded; charset=UTF-8' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/attorneys' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/how-attorneys-act' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/how-attorneys-act' version='1.1'  contents='howAttorneysAct=1&amp;attorneyActDecisions=&amp;save=Save+and+continue' content_type='application/x-www-form-urlencoded' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/replacement-attorneys' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/add-replacement-attorney' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/add-replacement-attorney' version='1.1'  contents='title=Mr&amp;title=Ms&amp;firstname=Isobel&amp;middlename=Samantha&amp;surname=Ward&amp;dob%5Bday%5D=01&amp;dob%5Bmonth%5D=02&amp;dob%5Byear%5D=1937&amp;email=opglpademo%2BIsobelWard%40gmail.com&amp;phone=&amp;address%5Baddr1%5D=2+Westview&amp;address%5Baddr2%5D=Staplehay&amp;address%5Baddr3%5D=Trull&amp;address%5Btown%5D=Taunton&amp;address%5Bcounty%5D=Somerset&amp;address%5Bpostcode%5D=TA3+7HF&amp;address%5Bcountry%5D=UK' content_type='application/x-www-form-urlencoded; charset=UTF-8' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/replacement-attorneys' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/add-replacement-attorney' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/add-replacement-attorney' version='1.1'  contents='title=Mr&amp;title=Mr&amp;firstname=Ewan&amp;middlename=&amp;surname=Adams&amp;dob%5Bday%5D=12&amp;dob%5Bmonth%5D=03&amp;dob%5Byear%5D=1972&amp;email=opglpademo%2BEwanAdams%40gmail.com&amp;phone=&amp;address%5Baddr1%5D=2+Westview&amp;address%5Baddr2%5D=Staplehay&amp;address%5Baddr3%5D=Trull&amp;address%5Btown%5D=Taunton&amp;address%5Bcounty%5D=Somerset&amp;address%5Bpostcode%5D=TA3+7HF&amp;address%5Bcountry%5D=UK' content_type='application/x-www-form-urlencoded; charset=UTF-8' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/replacement-attorneys' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/how-replacement-attorneys-step-in' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/how-replacement-attorneys-step-in' version='1.1'  contents='howReplacementAttorneysStepIn=1&amp;otherStepInDecision=&amp;save=Save+and+continue' content_type='application/x-www-form-urlencoded' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/certificate-provider' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/add-certificate-provider' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/add-certificate-provider' version='1.1'  contents='title=Mr&amp;title=Dr&amp;firstname=Reece&amp;middlename=&amp;surname=Richards&amp;email=opglpademo%2BReeceRichards%40gmail.com&amp;address%5Baddr1%5D=11+Brookside&amp;address%5Baddr2%5D=Cholsey&amp;address%5Baddr3%5D=&amp;address%5Btown%5D=Wallingford&amp;address%5Bcounty%5D=Oxfordshire&amp;address%5Bpostcode%5D=OX10+9NN&amp;address%5Bcountry%5D=UK&amp;certificateProviderStatementType=I+want+them+to+complete+these+details+on+the+print+LPA+form+themselves' content_type='application/x-www-form-urlencoded; charset=UTF-8' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/certificate-provider' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/certificate-provider' version='1.1'  contents='certificateProviderStatementType=0&amp;certificateProviderKnowledgeOfDonor=&amp;certificateProviderProfessionalSkills=&amp;save=Save+and+continue' content_type='application/x-www-form-urlencoded' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/people-to-be-told' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/add-notified-person' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/add-notified-person' version='1.1'  contents='title=Mr&amp;title=Mr&amp;firstname=Anthony&amp;surname=Webb&amp;email=opglpademo%2BAnthonyWebb%40gmail.com&amp;phone=&amp;address%5Baddr1%5D=Brickhill+Cottage&amp;address%5Baddr2%5D=Birch+Cross&amp;address%5Baddr3%5D=Marchington&amp;address%5Btown%5D=Uttoxeter&amp;address%5Bcounty%5D=Staffordshire&amp;address%5Bpostcode%5D=BS18+6PL&amp;address%5Bcountry%5D=UK' content_type='application/x-www-form-urlencoded; charset=UTF-8' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/people-to-be-told' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/review' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="loop" sleep_loop="5" max_loop="20" when="match">(.*)Please wait while we are generating your document(.*)</match>
+    <http url='/pdf/draft/Lasting-Power-of-Attorney-Draft.pdf' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/review' version='1.1'  contents='restrictions=test%21&amp;guidance=TEST%21&amp;charges=test+%21&amp;save=Save+and+continue' content_type='application/x-www-form-urlencoded' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/create/complete' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="loop" sleep_loop="5" max_loop="20" when="match">(.*)Please wait while we are generating your document(.*)</match>
+    <http url='/pdf/instrument/Lasting-Power-of-Attorney-Instrument.pdf' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/register' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/register/applicant' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/register/applicant' version='1.1'  contents='whoIsMakingThisApplication=donor&amp;save=Save+and+continue' content_type='application/x-www-form-urlencoded' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/register/correspondent' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/register/signature-dates' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="loop" sleep_loop="5" max_loop="20" when="match">(.*)Please wait while we are generating your document(.*)</match>
+    <http url='/pdf/notification/Lasting-Power-of-Attorney-Notification.pdf' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request subst="true">
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/register/signature-dates' version='1.1'  contents='donor=%%_todaystr%%&amp;certificateProvider_0=%%_todaystr%%&amp;attorney_0=%%_todaystr%%&amp;replacementAttorney_0=%%_todaystr%%&amp;replacementAttorney_1=%%_todaystr%%&amp;trustCorporation=%%_todaystr%%&amp;submit=Continue+to+next+question' content_type='application/x-www-form-urlencoded' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/register/notice-dates' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request subst="true">
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/register/notice-dates' version='1.1'  contents='notifiedPerson_0=%%_todaystr%%&amp;submit=Continue+to+next+question' content_type='application/x-www-form-urlencoded' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/register/further-info' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/register/further-info' version='1.1'  contents='previousLpa=0&amp;notesForPreviousLpa=&amp;additionalInfo=&amp;submit=Continue+to+next+question' content_type='application/x-www-form-urlencoded' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/register/fees' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/register/fees' version='1.1'  contents='claimBenefits=0&amp;receiveUniversalCredit=0&amp;hasLowIncome=0&amp;hasLowIncome=1&amp;payByCheque=0&amp;payByCheque=1&amp;paymentEmailContact=&amp;submit=Proceed' content_type='application/x-www-form-urlencoded' method='POST'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <http url='/register/confirmation' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="loop" sleep_loop="5" max_loop="20" when="match">(.*)Please wait while we are generating your document(.*)</match>
+    <http url='/pdf/feeremission/Lasting-Power-of-Attorney-Feeremission.pdf' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="loop" sleep_loop="5" max_loop="20" when="match">(.*)Please wait while we are generating your document(.*)</match>
+    <http url='/pdf/registration/Lasting-Power-of-Attorney-Registration.pdf' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/user/account' version='1.1' method='GET'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <match do="abort" when="match">HTTP/1.1 (5|4)\d\d </match>
+    <match do="continue"  when="match">HTTP/1.1 (3|2)\d\d </match>
+    <http url='/user/delete' version='1.1' method='DELETE'></http>
+  </request>
+  
+  <thinktime random='true' value='4'/>
+  
+  <request>
+    <http url='/' version='1.1' method='GET'></http>
+  </request>
+  
+  </session>
+ </sessions>
+</tsung>
+

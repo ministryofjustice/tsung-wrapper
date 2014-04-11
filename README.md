@@ -100,6 +100,75 @@ The name of the snippet as defined in the file will be included into the XML fil
 The url will be appended to the base_url defined in the environment configuration.
 
 
+## Dynamic variable definition and substitution
+
+Dynamic variables can be defined in special snippets located in the congig/dynvars folder.
+They can be included into a session under the dynvars section, specifying the name of the dynamic variable snippet, and the namne to 
+be given to the variable so that it can later be referred to in snippets, e.g
+
+		session:
+			dynvars:
+				username: randomstr12
+				userid: random_num6
+
+		  snippets:
+		    - hit_landing_page
+		    - hit_register_page
+
+The above session delares that there are two dynamic variables used, the one defined in config/dynvars/randomstr12.yml and will be 
+assigned the name 'username', and the one defined in config/dynvars/randomnum6.yml and will be assigned the name userid.
+
+These dynamic variables can be referred to in subsequent snippets as %%_username%% and %%_userid%%.
+
+### Types of dynamic variables
+
+There are three kinds of dynamic variables that can be defined:
+	* random string
+	* random number
+	* result of an Erlan function
+
+#### Defining a random string
+
+		dynvar:
+			type: random_string
+			length: 10
+			
+
+As may be guessed, this will generate a 10-byte random string that with the name 'email_first_part'.
+This can be referred to in subsequent requests as %%_email_first_part%%, e.g.
+
+		request:
+		  thinktime: 6
+		  name: Login
+		  url: '/user/login'
+		  http_method: POST
+		  params:
+		    email:  %%_email_first_part%%@test.com
+		    password: %%_password%%
+		    submit: Sign in
+
+#### Defining a random number
+
+		dynvar:
+			type: random_number
+			start: 1
+			end:  500000
+			
+
+#### Defining an Erlang Function
+	
+Erlang functions can be used to generate output:
+
+	dynvar:
+		type: erlang
+		code: datetime_str
+		
+
+	This will load the erlang fucntion defined in config/erlang/datetime_str.  Whenever you want to use this in a request, you can refer to it by its name, e.g. '%%_today%%'.
+
+	
+
+
 ## Command line usage
 
     wrap [-e <environment>] -x|-r session_name

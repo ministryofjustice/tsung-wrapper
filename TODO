@@ -21,9 +21,22 @@ WIP:
 STILL TO DO:
 ============
 
+- allow generation of random strings
+- allow generation of random bumbers
+- allow inclusion of erlang snippets
+
+
 - handle multiple scenarios
 	- rename sessions as scenarios
 	- include multiple scenarios in one session
 
 - act on return codes
 - run the tsung_stats script
+
+
+
+
+
+
+
+

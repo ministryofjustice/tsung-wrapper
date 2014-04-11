@@ -64,8 +64,31 @@ module TsungWrapper
       end
     end
 
+
+    context 'dynamic variables' do
+      it 'should generate snippet to define a random string' do
+        xml = Wrapper.xml_for_snippet('dynvar_random_str_12')
+        xml.should == random_str_12_xml
+      end
+    end
+
   end
 end
+
+
+
+def random_str_12_xml
+  str = <<-EOXML
+<setdynvars sourcetype="random_string" length="12">
+  <var name="username"/>
+</setdynvars>
+EOXML
+end
+
+
+
+
+
 
 
 

@@ -1,0 +1,8 @@
+dynvar:
+  type: erlang
+  code: |
+    fun({Pid,DynVars})->
+           {{Y, Mo, D},_}=calendar:now_to_datetime(erlang:now()),
+           DateAsString = io_lib:format('~2.10.0B%2F~2.10.0B%2F~4.10.0B', [D, Mo, Y]),
+           lists:flatten(DateAsString) end.
+

@@ -1,0 +1,4 @@
+dynvar:
+  type: random_number
+  start: 500
+  end: 99000
