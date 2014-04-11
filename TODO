@@ -8,13 +8,14 @@ DONE:
 - test piping into tsung and outputing results
 - make a Snippet object so that it can be re-used.
 - enable generation of snippets of xml for testing purposes
+- handle posts with parameters
 - add thinktime
+
 
 WIP:
 ====
 
 
-- handle posts with parameters
 
 
 STILL TO DO:

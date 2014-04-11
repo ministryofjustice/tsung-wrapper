@@ -60,12 +60,6 @@ module TsungWrapper
     context 'post_request_with_parameters' do
       it 'should produce an xml snippet for a post request with parameters' do |variable|
         xml = Wrapper.xml_for_snippet('login_with_think_time')
-        puts "++++++ expected ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-        puts login_snippet_xml
-        puts "++++++ actual ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-        puts xml
-        
-        
         xml.should == login_snippet_xml
       end
     end
@@ -97,7 +91,7 @@ def login_snippet_xml
 <!-- Login -->
 <thinktime random="true" value="6"/>
 <request>
-  <http url="http://test_base_url.com/user/login" version="1.1" contents="#{content_string}" content_type="application/x-www-form-urlencoded" method='POST'/>
+  <http url="http://test_base_url.com/user/login" version="1.1" contents="#{content_string}" content_type="application/x-www-form-urlencoded" method="POST"/>
 </request>
 EOXML
 end

@@ -48,6 +48,7 @@ module TsungWrapper
 			raise "Unable to call wrap_snippet on a Wrapper that wasn't instantiated using xml_for_snippet()" unless @snippet_only == true
 			snippet = Snippet.new(@snippet_name)
 			transform_snippet(snippet)
+			@xml
 		end
 
 

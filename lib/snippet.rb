@@ -24,7 +24,7 @@ module TsungWrapper
 			@params.each do |key, value|
 				encoded_params << "#{key}=#{param(key)}"
 			end
-			encoded_params.join('&amp;')		
+			encoded_params.join('&')		
 		end
 
 

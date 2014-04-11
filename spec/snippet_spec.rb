@@ -91,7 +91,7 @@ module TsungWrapper
 		describe '#content_string' do
 			it 'should return an encoded parameter string' do
 				snippet = Snippet.new('login_with_think_time')
-				snippet.content_string.should == 'email=test%40test.com&amp;password=Abc123123&amp;submit=Sign+in'
+				snippet.content_string.should == 'email=test%40test.com&password=Abc123123&submit=Sign+in'
 			end
 		end
 
