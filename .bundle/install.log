@@ -1,0 +1,13 @@
+# Logfile created on 2014-04-12 10:28:39 +0100 by logger.rb/44203
+I, [2014-04-12T10:28:39.647296 #92489]  INFO -- : 0:  awesome_print (1.2.0) from /Users/stephen/.rvm/gems/ruby-2.1.0@tsung_wrapper/specifications/awesome_print-1.2.0.gemspec
+I, [2014-04-12T10:28:40.654015 #92489]  INFO -- : 0:  builder (3.2.2) from /Users/stephen/.rvm/gems/ruby-2.1.0@tsung_wrapper/specifications/builder-3.2.2.gemspec
+I, [2014-04-12T10:28:41.770218 #92489]  INFO -- : 0:  diff-lcs (1.2.5) from /Users/stephen/.rvm/gems/ruby-2.1.0@tsung_wrapper/specifications/diff-lcs-1.2.5.gemspec
+I, [2014-04-12T10:28:42.826376 #92489]  INFO -- : 0:  multi_json (1.9.2) from /Users/stephen/.rvm/gems/ruby-2.1.0@tsung_wrapper/specifications/multi_json-1.9.2.gemspec
+I, [2014-04-12T10:28:44.092768 #92489]  INFO -- : 0:  rspec-core (2.14.8) from /Users/stephen/.rvm/gems/ruby-2.1.0@tsung_wrapper/specifications/rspec-core-2.14.8.gemspec
+I, [2014-04-12T10:28:45.302934 #92489]  INFO -- : 0:  rspec-expectations (2.14.5) from /Users/stephen/.rvm/gems/ruby-2.1.0@tsung_wrapper/specifications/rspec-expectations-2.14.5.gemspec
+I, [2014-04-12T10:28:46.465984 #92489]  INFO -- : 0:  rspec-mocks (2.14.6) from /Users/stephen/.rvm/gems/ruby-2.1.0@tsung_wrapper/specifications/rspec-mocks-2.14.6.gemspec
+I, [2014-04-12T10:28:47.379276 #92489]  INFO -- : 0:  rspec (2.14.1) from /Users/stephen/.rvm/gems/ruby-2.1.0@tsung_wrapper/specifications/rspec-2.14.1.gemspec
+I, [2014-04-12T10:28:48.724262 #92489]  INFO -- : 0:  simplecov-html (0.7.1) from /Users/stephen/.rvm/gems/ruby-2.1.0@tsung_wrapper/specifications/simplecov-html-0.7.1.gemspec
+I, [2014-04-12T10:28:49.791213 #92489]  INFO -- : 0:  simplecov (0.7.1) from /Users/stephen/.rvm/gems/ruby-2.1.0@tsung_wrapper/specifications/simplecov-0.7.1.gemspec
+I, [2014-04-12T10:28:50.743670 #92489]  INFO -- : 0:  timecop (0.7.1) from /Users/stephen/.rvm/gems/ruby-2.1.0@tsung_wrapper/specifications/timecop-0.7.1.gemspec
+I, [2014-04-12T10:28:50.744083 #92489]  INFO -- : 0:  bundler (1.5.1) from /Users/stephen/.rvm/gems/ruby-2.1.0@global/specifications/bundler-1.5.1.gemspec
