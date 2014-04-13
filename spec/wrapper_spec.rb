@@ -67,10 +67,6 @@ module TsungWrapper
     context 'post_request_with_dynamic_variables' do
       it 'should emit an xml request snippet incuding a subst=true attribute' do
         xml = Wrapper.xml_for_snippet('login_using_dynvars')
-        puts "++++++ actual ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-        puts xml
-        puts "++++++ expected ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-        puts login_using_dynvars_xml
         xml.should == login_using_dynvars_xml
       end
     end
@@ -104,7 +100,7 @@ def login_using_dynvars_xml
 <!-- Login -->
 <request subst="true">
   <http url="http://test_base_url.com/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
-</request>  
+</request>
 EOXML
 end
 

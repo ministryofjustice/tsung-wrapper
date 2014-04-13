@@ -1,6 +1,8 @@
 require 'ostruct'
 require 'cgi'
 
+require_relative 'content_string'
+
 
 module TsungWrapper
 
@@ -29,17 +31,9 @@ module TsungWrapper
 		# names have the pattern %%_paramname%%, and so must be excluded from the url escaping
 		#
 		def content_string
-			encoded_params = []
-			@params.each do |key, value|
-				encoded_params << "#{key}=#{param(key)}"
-			end
-			string = encoded_params.join('&').to_sym	
-			encode_content_string(string)	
+			ContentString.encode(@params)
 		end
 
-		# we have to extract the dynvars, escape the string and then reisinser the (unencoded)
-		def encode_content_string
-		end
 
 
 
