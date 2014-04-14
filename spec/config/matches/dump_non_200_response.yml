@@ -1,0 +1,7 @@
+# dump all requests whose response isn't 200
+
+match:
+  when: nomatch                     # match or nomatch
+  source: all                       # all (header + body) or body
+  do: dump                          # continue | abort | log | dump | loop (requires sleep_loop and max_loop)
+  pattern: "HTTP/1.1 (200" 

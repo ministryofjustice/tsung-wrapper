@@ -19,6 +19,7 @@ module TsungWrapper
 			@attrs       = config['request']
 			@params      = @attrs['params'].nil? ? {} : @attrs['params']
 			@has_dynvars = params_contain_dynvars?
+			@matches     = []
 		end
 
 
@@ -33,9 +34,6 @@ module TsungWrapper
 		def content_string
 			ContentString.encode(@params)
 		end
-
-
-
 
 
 		def has_dynvars?
@@ -65,6 +63,22 @@ module TsungWrapper
 		def method_missing(meth)
 			stringified_meth = meth.to_s
 			@attrs.has_key?(stringified_meth) ? @attrs[stringified_meth] : super
+		end
+
+
+		def matches
+			if @matches.empty?
+				if @attrs['matches']
+					@attrs['matches'].each do |match|
+						filename = File.join(TsungWrapper.config_dir, 'matches', "#{match}.yml")
+						config = YAML.load_file(filename)
+						struct =  OpenStruct.new(config['match'])
+						struct.name = match
+						@matches << struct
+					end
+				end
+			end
+			@matches
 		end
 
 		private

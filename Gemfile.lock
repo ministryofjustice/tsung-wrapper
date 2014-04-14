@@ -3,8 +3,14 @@ GEM
   specs:
     awesome_print (1.2.0)
     builder (3.2.2)
+    coderay (1.1.0)
     diff-lcs (1.2.5)
+    method_source (0.8.2)
     multi_json (1.9.2)
+    pry (0.9.12.6)
+      coderay (~> 1.0)
+      method_source (~> 0.8)
+      slop (~> 3.4)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -17,6 +23,7 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
+    slop (3.5.0)
     timecop (0.7.1)
 
 PLATFORMS
@@ -25,6 +32,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   builder
+  pry
   rspec
   simplecov (~> 0.7.1)
   timecop

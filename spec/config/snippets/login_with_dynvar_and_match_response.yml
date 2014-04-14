@@ -1,0 +1,11 @@
+request:
+  name: Login
+  url: '/user/login'
+  http_method: POST
+  params:
+    email: "%%_username%%@test.com"
+    password: "%%_password%%"
+    submit: Sign in
+  matches:
+    - dump_non_200_response
+    - match_200_response

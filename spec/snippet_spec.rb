@@ -2,6 +2,7 @@ require 'spec_helper'
 require_relative '../lib/snippet'
 
 module TsungWrapper
+	include TsungWrapperSpecHelper
 
 	describe Snippet do
 
@@ -113,6 +114,37 @@ module TsungWrapper
 			end
 		end
 
+
+		describe '#matches' do
+			it 'should return an empty array if there are no matches' do
+				snippet = Snippet.new('login_with_think_time')
+				snippet.matches.should be_instance_of(Array)
+				snippet.matches.should be_empty
+			end
+
+			it 'should return an array of OpenStructs containing match attributes' do
+				snippet = Snippet.new('login_with_dynvar_and_match_response')
+				snippet.matches.size.should == 2
+				
+				match = snippet.matches.first
+
+				match.name.should == 'dump_non_200_response'
+				match.when.should == 'nomatch'
+				match.do.should == 'dump'
+				match.source.should == 'all'
+				match.pattern.should == 'HTTP/1.1 (200'
+
+				match = snippet.matches.last
+				match.name.should == 'match_200_response'
+				match.when.should ==  'match' 	
+				match.do.should == 'continue'									
+				match.source.should ==  'all'                       
+				match.pattern.should == "HTTP/1.1 (200" 
+
+
+			end
+		end
+ 
 
 
 	end

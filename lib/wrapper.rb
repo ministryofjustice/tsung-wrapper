@@ -110,8 +110,13 @@ module TsungWrapper
 				@builder.thinktime(:random => true, :value => snippet.thinktime)
 			end
 
+
+
 			request_attrs = snippet.has_dynvars? ? {:subst => true} : nil
 			@builder.request(request_attrs) do 
+
+				add_matches(snippet.matches)
+
 				if snippet.has_params?
 					@builder.http(:url => make_url(@config, snippet), 
 												:version => @config.http_version, 
@@ -123,6 +128,14 @@ module TsungWrapper
 				end
 			end
 		end
+
+
+		def add_matches(matches)
+			matches.each do |match| 
+				@builder.match(match.pattern, :do => match.do, :when => match.when, :name => match.name)
+			end
+		end
+
 
 
 		def add_dynvar(dynvar)

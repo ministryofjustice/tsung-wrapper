@@ -4,6 +4,7 @@ require 'cgi'
 require_relative '../lib/wrapper'
 
 module TsungWrapper
+  include TsungWrapperSpecHelper
 
   describe Wrapper do
 
@@ -90,7 +91,6 @@ module TsungWrapper
 
       it 'should generate snippet to define a random number' do
         xml = Wrapper.xml_for_dynvar('random_number', 'user_id')
-        
         xml.should == random_number_xml
       end
 
@@ -101,23 +101,35 @@ module TsungWrapper
       end
     end
 
+
+    context 'matches' do
+      it 'should generate a request snippet including named matches' do
+        xml = Wrapper.xml_for_snippet('login_with_dynvar_and_match_response')
+        xml.should == login_with_dynvar_and_match_response_xml
+      end
+    end
+
   end
 end
 
 
-# utility for dumping actual and expected to files in ~/tmp so that we can use diffmerge to look at the differences
-def dump_to_file(data, filename)
-  filename = "#{ENV['HOME']}/tmp/#{filename}.xml"
-  File.open(filename, 'w') do |fp|
-    fp.puts data
-  end
-end
 
 
 def login_using_dynvars_xml
   str = <<-EOXML
 <!-- Login -->
 <request subst="true">
+  <http url="http://test_base_url.com/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
+</request>
+EOXML
+end
+
+def login_with_dynvar_and_match_response_xml
+  str = <<-EOXML
+<!-- Login -->
+<request subst="true">
+  <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 (200</match>
+  <match do="continue" when="match" name="match_200_response">HTTP/1.1 (200</match>
   <http url="http://test_base_url.com/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
 </request>
 EOXML

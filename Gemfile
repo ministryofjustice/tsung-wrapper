@@ -5,11 +5,14 @@ ruby "2.1.0"
 
 gem 'builder'
 
+group :development, :test do
+	gem 'awesome_print'
+	gem 'pry'
+end
 
 
 group :development do
 	gem 'rspec'
-	gem 'awesome_print'
 end
 
 group :test do
