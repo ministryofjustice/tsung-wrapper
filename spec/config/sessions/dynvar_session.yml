@@ -5,4 +5,4 @@ session:
     today: erlang_function
   snippets:
     - hit_landing_page
-    - hit_register_page
+    - login_using_dynvars
