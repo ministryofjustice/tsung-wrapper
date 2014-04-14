@@ -1,0 +1,7 @@
+# session - login and dump if not 200
+
+session:
+  snippets:
+    - hit_landing_page
+    - login_with_dynvar_and_match_response
+  
