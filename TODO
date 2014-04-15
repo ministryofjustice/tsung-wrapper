@@ -16,18 +16,27 @@ DONE:
 - validate parameters do not contain chars which need to be escaped - add instructions to README
 - act on return codes
 - run the tsung_stats script
+- clean old libraries
+
 
 
 WIP:
 ====
 - specify library for logging
-- clean old libraries
 - execute perl_stats
 
 
 
 STILL TO DO:
 ============
+
+
+- move loads to loads
+	- move arrival phases to separate file
+	- load a default loadfile specified in environment file
+	- enable load to be specified on command line
+
+
 - specify library for logging
 - run the perl_stats
 - print url for viewing graphs

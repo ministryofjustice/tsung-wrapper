@@ -36,6 +36,11 @@ module TsungWrapper
 			end
 		end
 
+		def register_load_profile(lp_name)
+			@config.register_load_profile(lp_name)
+		end
+
+
 
 		# this method is used for testing only
 		def self.xml_for_snippet(snippet_name)

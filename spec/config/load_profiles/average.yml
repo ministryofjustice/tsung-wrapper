@@ -1,0 +1,19 @@
+arrivalphases:
+  - name: Average Load
+    sequence: 1
+    duration: 2
+    duration_unit: minute
+    arrival_interval: 30
+    arrival_interval_unit: second
+  - name: High Load
+    sequence: 2
+    duration: 2
+    duration_unit: minute
+    arrival_interval: 2
+    arrival_interval_unit: second
+  - name: Very High Load
+    sequence: 3
+    duration: 1
+    duration_unit: minute
+    arrival_interval: 2
+    arrival_interval_unit: second   

@@ -48,9 +48,23 @@ module TsungWrapper
 				ua.name.should == 'Windows Firefox'
 				ua.probability.should == 20
 				ua.user_agent_string.should == 'Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4'
-
-
 			end
+		end
+
+		describe '#register_load_profile' do
+			it 'should override the existing load profiles with the new ones' do
+				config = ConfigLoader.new('test')
+				config.arrivalphases.size.should == 3
+				config.register_load_profile('minimal')
+				config.arrivalphases.size.should == 1
+				ap = config.arrivalphases.first
+				ap.name.should == 'Minimal Load'
+				ap.sequence.should == 1
+				ap.duration.should == 30
+				ap.duration_unit.should == 'second'
+				ap.arrival_interval.should == 5
+				ap.arrival_interval_unit.should == 'second'
+			end			
 		end
 
 	end

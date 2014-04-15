@@ -13,9 +13,10 @@ module TsungWrapper
 	class Wrap
 
 		def initialize()
-			@options      = {:env => 'development', :output => :nil, :verbose => false, :clean => nil }
+			@options      = {:env => 'development', :output => :nil, :verbose => false, :clean => nil, :load_profile => nil }
 			@config       = nil
 			@session_name = nil
+			@help					= false
 
 		  validate_options
 		  validate_config
@@ -70,6 +71,9 @@ module TsungWrapper
 			end
 
 			wrapper = TsungWrapper::Wrapper.new(@session_name, @options[:env])
+			unless @options[:load_profile].nil?
+				wrapper.register_load_profile(@options[:load_profile])
+			end
 			output = wrapper.wrap
 			
 
@@ -105,7 +109,8 @@ module TsungWrapper
 
 		def validate_options
 			OptionParser.new do |opts|
-				opts.banner = "Usage: wrap [-e <environment>] -x|-r session_name"
+				opts.banner = "Usage: wrap [-e environment] [-l load_profile] [-v] -x|-r session_name\n" + 
+										  "       wrap [-e environment] -c n"
 				opts.separator ""
 			  opts.separator "Generate Tsung XML file for session <session_name>"
 			  opts.separator ""
@@ -122,6 +127,10 @@ module TsungWrapper
 					@options[:output] = :tsung
 				end
 
+				opts.on("-l", "--load-profile LOAD_PROFILE", "Use specific load profile") do |load_profile|
+					@options[:load_profile] = load_profile
+				end
+
 				opts.on("-s", "--generate-stats", "Generate Stats (requires that -r option is set") do |stats|
 					@options[:stats] = true
 				end
@@ -130,7 +139,7 @@ module TsungWrapper
 					@options[:verbose] = true
 				end
 
-				opts.on("-c" "--clean-log-dir HOURS", "Clean log dir of directories created before N hours ago") do |hours|
+				opts.on("-c", "--clean-log-dir HOURS", "Clean log dir of directories created before N hours ago") do |hours|
 					unless hours =~ /^[0-9+]$/
 						puts "Error: parameter passed to -c switch must be numeric"
 						exit 2
@@ -138,6 +147,8 @@ module TsungWrapper
 					@options[:clean] = hours.to_i
 				end.parse!
 			end
+
+
 
 			TsungWrapper.env = @options[:env]
 			check_env_exists
@@ -164,6 +175,10 @@ module TsungWrapper
 
 
 		def check_env_exists
+			puts "++++++ config dir #{TsungWrapper.config_dir} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+			f = File.expand_path(File.join(TsungWrapper.config_dir, 'environments', "#{@options[:env]}.yml"))
+			puts "++++++ #{f} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+			
 			unless File.exist?(File.expand_path(File.join(TsungWrapper.config_dir, 'environments', "#{@options[:env]}.yml")))
 				raise ArgumentError.new("Configuration file for environment '#{@options[:env]}' does not exist.")
 			end
@@ -195,7 +210,7 @@ end
 
 
 begin
-	TsungWrapper::Wrap.new.run
+	wrapper = TsungWrapper::Wrap.new.run
 rescue => err
 	$stderr.puts "#{err.class}: #{err.message}"
 	$stderr.puts err.backtrace

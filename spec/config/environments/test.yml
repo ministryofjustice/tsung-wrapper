@@ -5,26 +5,9 @@ base_url: http://test_base_url.com
 maxusers: 1500
 server_port: 80
 http_version: 1.1
+load_profile: normal
 
-arrivalphases:
-  - name: Average Load
-    sequence: 1
-    duration: 2
-    duration_unit: minute
-    arrival_interval: 30
-    arrival_interval_unit: second
-  - name: High Load
-    sequence: 2
-    duration: 2
-    duration_unit: minute
-    arrival_interval: 2
-    arrival_interval_unit: second
-  - name: Very High Load
-    sequence: 3
-    duration: 1
-    duration_unit: minute
-    arrival_interval: 2
-    arrival_interval_unit: second   
+
 
 user_agents:
   - name: Linux Firefox

@@ -38,8 +38,19 @@ module TsungWrapper
           # actual.should == expected
         end
       end
+    end
 
 
+    describe '#register load_profile' do
+      it 'should produce a simple xml file with updated arrival phases' do
+        Timecop.freeze(Time.new(2014, 4, 9, 14, 3, 5)) do
+          expected = simple_session_minimal_load
+          wrapper = Wrapper.new('hit_landing_page', 'test')
+          wrapper.register_load_profile('minimal')
+          actual = wrapper.wrap
+          actual.should == expected
+        end
+      end
     end
 
     describe '#wrap_snippet' do
@@ -245,6 +256,49 @@ def hit_landing_page_snippet_xml
 EOXML
 end
 
+
+
+def simple_session_minimal_load
+  str = <<-EOXML
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tsung SYSTEM "#{TsungWrapper.dtd}">
+<tsung loglevel="notice" version="1.0">
+  <!-- Client Side Setup -->
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="1500"/>
+  </clients>
+  <!-- Server Side Setup -->
+  <servers>
+    <server host="test_server_host" port="80" type="tcp"/>
+  </servers>
+  <load>
+    <!-- Scenario 1: Minimal Load -->
+    <arrivalphase phase="1" duration="30" unit="second">
+      <users interarrival="5" unit="second"/>
+    </arrivalphase>
+  </load>
+  <!-- Define User Agents -->
+  <options>
+    <option type="ts_http" name="user_agent">
+      <user_agent probability="80">Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21</user_agent>
+      <user_agent probability="20">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</user_agent>
+    </option>
+  </options>
+  <sessions>
+    <session name="hit_landing_page-20140409-140305" probability="100" type="ts_http">
+      <!-- Hit Landing Page -->
+      <request>
+        <http url="http://test_base_url.com" version="1.1" method="GET"/>
+      </request>
+      <!-- Hit Register Page -->
+      <request>
+        <http url="http://test_base_url.com/user/register" version="1.1" method="GET"/>
+      </request>
+    </session>
+  </sessions>
+</tsung>
+EOXML
+end
 
 
 
