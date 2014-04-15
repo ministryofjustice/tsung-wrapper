@@ -52,17 +52,13 @@ module TsungWrapper
 
 		def generate_xml
 			output = ""
-			begin
-				if @verbose
-					puts "Calling TsungWrapper::Wrapper.new(#{@session_name}, #{@options[:env]})"
-				end
-
-				wrapper = TsungWrapper::Wrapper.new(@session_name, @options[:env])
-				output = wrapper.wrap
-			rescue => err
-				$stderr.puts "#{err.class}: #{err.message}"
-				exit 2
+			if @verbose
+				puts "Calling TsungWrapper::Wrapper.new(#{@session_name}, #{@options[:env]})"
 			end
+
+			wrapper = TsungWrapper::Wrapper.new(@session_name, @options[:env])
+			output = wrapper.wrap
+			
 
 			if @options[:output] == :xml 
 				puts output
@@ -129,6 +125,7 @@ module TsungWrapper
 					@options[:clean] = hours.to_i
 				end.parse!
 			end
+			check_env_exists
 
 
 			if @options[:stats] == true && @options[:output] != :tsung
@@ -148,6 +145,13 @@ module TsungWrapper
 				exit(1)
 			end
 			@session_name = ARGV.first
+		end
+
+
+		def check_env_exists
+			unless File.exist?(File.expand_path(File.join(TsungWrapper.config_dir, 'environments', "#{@options[:env]}.yml")))
+				raise ArgumentError.new("Configuration file for environment '#{@options[:env]}' does not exist.")
+			end
 		end
 
 
@@ -175,8 +179,12 @@ module TsungWrapper
 end
 
 
-
-TsungWrapper::Wrap.new.run
+begin
+	TsungWrapper::Wrap.new.run
+rescue => err
+	$stderr.puts "#{err.class}: #{err.message}"
+	exit 2
+end
 
 
 

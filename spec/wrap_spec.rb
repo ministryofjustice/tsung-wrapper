@@ -9,23 +9,23 @@ module TsungWrapper
 		let(:wrap)  { "ruby #{TsungWrapper.root}/lib/wrap.rb" }
 
 		it 'should return error message if  no session is specified' do
-			output = capture_stdout(wrap)
-			output.should == ["No session name specified\n"]
+			output = capture_stdout("#{wrap} 2>&1")
+			output.should == ["Error: No session name specified\n"]
 		end		
 
 		it 'should return error message if non_existent session specified' do 
-			output = capture_stdout("#{wrap} -e test missing_session")
+			output = capture_stdout("#{wrap} -e test missing_session 2>&1")
 			output.should == ["ArgumentError: No session found with name 'missing_session'\n"]
 		end
 
 		it 'should return error message if non-existent env specified' do 
-			output = capture_stdout("#{wrap} -e fantasy hit_landing_page")
+			output = capture_stdout("#{wrap} -e fantasy hit_landing_page  2>&1")
 			output.should == ["ArgumentError: Configuration file for environment 'fantasy' does not exist.\n"]
 		end
 			
 
 		it 'should print the xml file' do
-			output = capture_stdout("#{wrap} -e test hit_landing_page")
+			output = capture_stdout("#{wrap} -xe test hit_landing_page")
 			output.first.should =~ /^<\?xml version=\"1\.0\" encoding=\"UTF-8"\?>$/
 		end
 
