@@ -33,7 +33,20 @@ module TsungWrapper
 		private
 
 		def run_stats
-			command = 'xxx'
+			command = "#{@config['tsung_stats']}"
+			puts "++++++ DEBUG ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+			require 'pp'
+			pp @config
+			puts "++++++ DEBUG ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+			puts "PERL5LIB=#{@config['perl_libs'].join(':')} "
+			unless  @config['perl_libs'].nil?
+				command = "PERL5LIB=#{@config['perl_libs'].join(':')} " + command
+			end
+			puts command
+			Dir.chdir("/Users/stephen/src/tsung-wrapper/log/20140415-0950") 
+			pipe = IO.popen(command)
+			lines = pipe.readlines
+			pipe.close
 		end
 
 
@@ -72,7 +85,7 @@ module TsungWrapper
 
 
 		def run_tsung
-			FileUtils.mkdir_p(@config['log_dir']) unless File.exist?(@confif['log_dir'])
+			FileUtils.mkdir_p(@config['log_dir']) unless File.exist?(@config['log_dir'])
 
 			command = "tsung -f #{@tmp_file} -l #{@config['log_dir']} start "
 			if @verbose
@@ -125,6 +138,8 @@ module TsungWrapper
 					@options[:clean] = hours.to_i
 				end.parse!
 			end
+
+			TsungWrapper.env = @options[:env]
 			check_env_exists
 
 
@@ -157,7 +172,7 @@ module TsungWrapper
 
 
 		def validate_config
-			TsungWrapper.env = @options[:env]
+			
 			filename = File.expand_path(File.join(TsungWrapper.config_dir, 'tsung.yml'))
 			unless File.exist?(filename)
 				$stderr.puts "Error: Unable to find config file #{filename}"
@@ -183,60 +198,7 @@ begin
 	TsungWrapper::Wrap.new.run
 rescue => err
 	$stderr.puts "#{err.class}: #{err.message}"
+	$stderr.puts err.backtrace
 	exit 2
 end
-
-
-
-
-
-# output = ""
-# begin
-# 	if @verbose
-# 		puts "Calling TsungWrapper::Wrapper.new(#{session_name}, #{options[:env]})"
-# 	end
-
-
-# 	wrapper = TsungWrapper::Wrapper.new(session_name, options[:env])
-# 	output = wrapper.wrap
-# rescue => err
-# 	$stderr.puts "#{err.class}: #{err.message}"
-# 	exit 2
-# end
-
-# if options[:output] == :xml 
-# 	puts output
-# else
-# 	filename = TsungWrapper.tmpfilename
-# 	File.open(filename, 'w') do |fp|	
-# 		fp.puts(output)
-# 	end
-
-# 	command = "tsung -f #{filename} start "
-# 	if @verbose
-# 		puts "Running commnad: #{command}"
-# 	end
-
-# 	pipe = IO.popen(command)
-# 	while !pipe.eof do
-# 		line = pipe.readline
-# 		puts "Data returned from Tsung >>> #{line}"
-# 	end
-# 	pipe.close
-	
-# end
-
-
-# end
-
-
-
-
-
-
-
-
-
-
-
 

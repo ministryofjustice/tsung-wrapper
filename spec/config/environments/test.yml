@@ -1,6 +1,6 @@
-
+  
 server_host: test_server_host
-base_url: http://test_base_url.com
+base_url: http://ec2-54-229-53-8.eu-west-1.compute.amazonaws.com
 maxusers: 1500
 server_port: 80
 http_version: 1.1

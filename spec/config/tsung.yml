@@ -7,4 +7,4 @@ tsung_config:
 
   # location of any perl libraries that aren't being auto-loadee
   perl_libs:
-    - /Users/stephen/perl5/lib/perl5/darwin-thread-multi-2level/Template.pm
+    - /Users/stephen/perl5/lib/perl5/darwin-thread-multi-2level
