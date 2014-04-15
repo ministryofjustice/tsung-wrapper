@@ -38,6 +38,7 @@ module TsungWrapper
     # extract any dynvars, escape, and then reinsert the dynvars
     def encode_value(param_value)
       substitutions = {}
+      param_value = param_value.to_s
       matches = param_value.scan(@@dynvar_pattern)
 
       matches.each_with_index do |match, i|

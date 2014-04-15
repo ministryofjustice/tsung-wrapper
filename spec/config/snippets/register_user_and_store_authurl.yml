@@ -1,0 +1,18 @@
+request:
+  thinktime: 2
+  name: Hit Register Page and store AuthURL from response
+  url: '/user/register'
+  http_method: POST
+  params:
+    email: "%%_username%%"
+    email_confirm: "%%_username%%"
+    password: Passw0rd
+    password_confirm: Passw0rd
+    confirmUnderstanding: 1
+    submit: I understand
+    setAutoKey: "I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe+FLPTVHZho3zK0mu41ouPmxLXJlZYi"
+  extract_dynvars:
+    activationurl: "id='activation_link' href='(.*)'"
+    page_title: "&lt;title&gt;(.*)&lt;/title&gt;"
+
+

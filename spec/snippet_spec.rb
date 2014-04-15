@@ -57,6 +57,35 @@ module TsungWrapper
 		end 
 
 
+		describe '#has_extract_dynvars?' do
+			it 'should return false if there are no dynvars to be extracted' do
+				snippet = Snippet.new('hit_landing_page')
+				snippet.has_extract_dynvars?.should be_false
+			end
+
+			it 'should return true if dynvars are to be extracted' do
+				snippet = Snippet.new('register_user_and_store_authurl')
+				snippet.has_extract_dynvars?.should be_true
+			end
+		end
+
+		context 'extract dynvars' do
+			it 'should return empty hash if there are no extracted dynvars' do
+				snippet = Snippet.new('hit_landing_page')	
+				snippet.extract_dynvars.should == {}
+			end
+
+			it 'should return populated hash if there are extracted dynvars' do
+				snippet = Snippet.new('register_user_and_store_authurl')
+				snippet.extract_dynvars.should == {
+					'activationurl'				=> "id='activation_link' href='(.*)'",
+					'page_title'			   	=> "&lt;title&gt;(.*)&lt;/title&gt;"
+				}
+			end
+		end
+
+
+
 		describe '#params' do
 			it 'should return a list of parameter names' do
 				snippet = Snippet.new('login_with_think_time')

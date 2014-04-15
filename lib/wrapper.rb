@@ -106,6 +106,14 @@ module TsungWrapper
 		# expects and OpenStruct 
 		def transform_snippet(snippet)
 			@builder.comment! snippet.name
+
+			if snippet.has_extract_dynvars?
+				snippet.extract_dynvars.keys.each do |name|
+					@builder.dyn_variable(:name => name, :re => snippet.extract_dynvars[name])
+				end
+			end
+
+
 			if snippet.has_attribute?('thinktime')
 				@builder.thinktime(:random => true, :value => snippet.thinktime)
 			end

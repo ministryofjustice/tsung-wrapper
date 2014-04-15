@@ -1,0 +1,3 @@
+dynvar:
+  type: regex
+  pattern: "id='activation_link' href='(.*)'"

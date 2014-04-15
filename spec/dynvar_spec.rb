@@ -45,6 +45,7 @@ module TsungWrapper
 				dynvar.varname.should == 'myvar'
 				dynvar.attr_hash.should == {:sourcetype => 'eval', :code => expected_erlang_code.chomp.to_sym}
 			end
+
 		end
 	end
 end

@@ -8,6 +8,7 @@ module TsungWrapper
 
 	class Snippet
 
+		attr_reader :extract_dynvars
 
 		def initialize(snippet_name)
 			filename = "#{TsungWrapper.config_dir}/snippets/#{snippet_name}.yml"
@@ -15,11 +16,12 @@ module TsungWrapper
 				raise ArgumentError.new("No Snippet with the name '#{snippet_name}' can be found.")
 			end
 
-			config       = YAML.load_file(filename)
-			@attrs       = config['request']
-			@params      = @attrs['params'].nil? ? {} : @attrs['params']
-			@has_dynvars = params_contain_dynvars?
-			@matches     = []
+			config           = YAML.load_file(filename)
+			@attrs           = config['request']
+			@params          = @attrs['params'].nil? ? {} : @attrs['params']
+			@extract_dynvars = @attrs['extract_dynvars'].nil? ? {} :  @attrs['extract_dynvars']
+			@has_dynvars     = params_contain_dynvars?
+			@matches         = []
 		end
 
 
@@ -47,7 +49,12 @@ module TsungWrapper
 		end
 
 		def has_params?
-			@params.size > 0
+			@params.any?
+		end
+
+
+		def has_extract_dynvars?
+			@extract_dynvars.any?
 		end
 
 		# returns the keys of the params that are stored
