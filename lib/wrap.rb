@@ -109,7 +109,7 @@ module TsungWrapper
 
 		def validate_options
 			OptionParser.new do |opts|
-				opts.banner = "Usage: wrap [-e environment] [-l load_profile] [-v] -x|-r session_name\n" + 
+				opts.banner = "Usage: wrap [-e environment] [-l load_profile] [-v] [-s] -x|-r session_name\n" + 
 										  "       wrap [-e environment] -c n"
 				opts.separator ""
 			  opts.separator "Generate Tsung XML file for session <session_name>"

@@ -6,17 +6,29 @@ This project enables the creation of complex XML files for load testing using Ts
 yaml configuration files.  The tool can be used to just produce the XML file, or actually run the tsung session.
 
 
+
+
 ## Configuration Files
 
 Configuration files are located in the /config directory (for testing, they are located in /spec/config).
 The config directory contains the dtd file to be used, plus three folders: 
 
+*  dynvars
 *  environments
+*  load_profiles
+*  matches
 *  sessions
 *  snippets
 
+
+### The dynvars Folder
+
+Files in this folder specify dynamic variables which can be automatically generated during the session - see Dynamic variable definition and substitution below.
+
+
+
  
-## Environments Folder
+### The environments Folder
 There should be a configuration file for each environment that you intend to run, e.g.
  
  * development.yml
@@ -33,6 +45,24 @@ Each environment file contains global variables that will be used when building 
 		maxusers: 40
 		server_port: 8080
 		http_version: 1.1
+		load_profile: average
+
+		user_agents:
+		  - name: Linux Firefox
+		    user_agent_string: "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21"
+		    probability: 80
+		  - name: Windows Firefox
+		    user_agent_string: "Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4"
+		    probability: 20
+
+All of the above elements must be present.
+
+### The load_profiles folder
+
+The files in this folder specify various load profiles.  The default load profile for each environment is specified in the 
+environment file, but may be overridden on the command line with the -l command line switch.
+
+A typical load_profile looks like this:
 
 		arrivalphases:
 		  - name: Average Load
@@ -54,19 +84,7 @@ Each environment file contains global variables that will be used when building 
 		    arrival_interval: 2
 		    arrival_interval_unit: second   
 
-		user_agents:
-		  - name: Linux Firefox
-		    user_agent_string: "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21"
-		    probability: 80
-		  - name: Windows Firefox
-		    user_agent_string: "Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4"
-		    probability: 20
-
-All of the above elements must be present.
-
-
-
-## Sessions Folder
+### The sessions Folder
 
 This folder contains yaml files that describe the sessions that you want to run.
 
@@ -94,9 +112,9 @@ The name of the session is taken from the name of the file, and will be included
 
 
 
-## Snippets Folder
+### The snippets Folder
 
-This folder contains the snippets - details of requests that are to be made, and will be included in a session.
+This folder contains the snippets.  Each snippet is one request, either GET or POST, and can be included in a session.
 
 And example is hit_register_page.yml, inluded as the second snippet in the session file described above.
 
@@ -105,16 +123,30 @@ And example is hit_register_page.yml, inluded as the second snippet in the sessi
 	  url: 'user/register'
 	  http_method: GET
 
-The name of the snippet as defined in the file will be included into the XML file as acommen.
+The name of the snippet as defined in the file will be included into the XML file as a comment.
 
 The url will be appended to the base_url defined in the environment configuration.
 
 
-## Dynamic variable definition and substitution
+### Dynamic variable definition and substitution
 
-Dynamic variables can be defined in special snippets located in the congig/dynvars folder.
-They can be included into a session under the dynvars section, specifying the name of the dynamic variable snippet, and the namne to 
-be given to the variable so that it can later be referred to in snippets, e.g
+A request can include paramters which use dynamically generated variables - 'dynvars' which can come from one of two places:
+
+*  from a definition in the dynvars folder
+*  extracted from a response earlier in the session
+
+
+##### Defnining dynamic variables in the dynvars folder
+
+Each type of dynvar is defined in its own file in the dynvars folder.  There are three types of dynvar:
+
+* random string
+* random number
+* erlang
+
+See examples in the spec/config/dynvars folder to see how they are defined.
+
+When you want to use them in the session, you must include a dynvars section in your session file which details what definition to use, and what name you will assign to it, e.g. 
 
 		session:
 			dynvars:
@@ -130,56 +162,66 @@ assigned the name 'username', and the one defined in config/dynvars/randomnum6.y
 
 These dynamic variables can be referred to in subsequent snippets as %%_username%% and %%_userid%%.
 
-### Types of dynamic variables
 
-There are three kinds of dynamic variables that can be defined:
-	* random string
-	* random number
-	* result of an Erlan function
+#### Extracting dynvars from responses.
 
-The dynamic variables are defined in small yaml files in the dynvars section.  They can then be refered to in the sessions yaml files and given 
-a name for subsequent referencingin the snippets.
+If you need to extract some information from a response to a request, you 
+specify this in the snippet that will generate the request in the extract_dynvars section.
 
-#### Defining a random string
+This section is a list of key value pairs, where the key is the name that will be given to the variable, and the value is the regular expression that will extract the value.
 
-		dynvar:
-			type: random_string
-			length: 10
-			
-
-As may be guessed, this will generate a 10-byte random string.
-
-#### Defining a random number
-
-		dynvar:
-			type: random_number
-			start: 1
-			end:  500000
-			
-
-#### Defining an Erlang Function
-	
-Erlang functions can be used to generate output:
-
-	dynvar:
-		type: erlang
-		code: datetime_str
-		
-
-	This will load the erlang fucntion defined in config/erlang/datetime_str.  Whenever you want to use this in a request, you can refer to it by its name, e.g. '%%_today%%'.
+For example:
 
 	
+	request:
+	  thinktime: 2
+	  name: Hit Register Page and store AuthURL from response
+	  url: '/user/register'
+	  http_method: POST
+	  params:
+	    email: "%%_username%%"
+	    email_confirm: "%%_username%%"
+	    password: Passw0rd
+	    password_confirm: Passw0rd
+	    confirmUnderstanding: 1
+	    submit: I understand
+	    setAutoKey: "I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe+FLPTVHZho3zK0mu41ouPmxLXJlZYi"
+	  extract_dynvars:
+	    activationurl: "id='activation_link' href='(.*)'"
+	    page_title: "&lt;title&gt;(.*)&lt;/title&gt;"
+
+In the above example, given that the request contained:
+
+	<a id="activation_link" href="http://test.com/activate/abc123">Activate</a>
+
+Then a dynamic variable called activationurl will be created with the contents:
+	
+	http://test.com/activate/abc123
+
+This can be used in subsequent requests using the normal substitution convention, i.e. 
+
+	%%_activationurl%%
+
 
 
 ## Command line usage
+The command line tool is run by executing ruby lib/wrap.rb from the root directory of the project.
+It can be used to generate xml to stdout, or a temporary file which is then piped into tsung.
 
-    wrap [-e <environment>] -x|-r session_name
 
-    -e run using the specified environment.  If not specified, 'development is assumed'.
-    -x just produce the xml file to STDOUT
-    -r pipe the output into tsung
-    session_name - the name of the session to be executed.  There must be a file of this name with the extension .yml in the config directory.
 
+    Usage: wrap [-e environment] [-l load_profile] [-v] [-s] -x|-r session_name
+       wrap [-e environment] -c n
+
+	Generate Tsung XML file for session <session_name>
+
+    -e, --environment  ENV           Use specified environment (default: development)
+    -x, --xml-out                    Generate XML config and write to STDOUT
+    -r, --run-tsung                  Generate XML config and pipe into tsung
+    -l, --load-profile LOAD_PROFILE  Use specific load profile
+    -s, --generate-stats             Generate Stats (requires that -r option is set
+    -v, --verbose                    Set verbose mode ON
+    -c, --clean-log-dir HOURS        Clean log dir of directories created before N hours ago
     
 
 
