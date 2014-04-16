@@ -117,24 +117,14 @@ module TsungWrapper
 		def transform_snippet(snippet)
 			@builder.comment! snippet.name
 
-			if snippet.has_extract_dynvars?
-				snippet.extract_dynvars.keys.each do |name|
-					@builder.dyn_variable(:name => name, :re => snippet.extract_dynvars[name])
-				end
-			end
-
-
 			if snippet.has_attribute?('thinktime')
 				@builder.thinktime(:random => true, :value => snippet.thinktime)
 			end
 
-
-
 			request_attrs = snippet.has_dynvars? ? {:subst => true} : nil
 			@builder.request(request_attrs) do 
-
 				add_matches(snippet.matches)
-
+				add_extract_dynvars(snippet) if snippet.has_extract_dynvars?
 				if snippet.has_params?
 					@builder.http(:url => make_url(@config, snippet), 
 												:version => @config.http_version, 
@@ -146,6 +136,14 @@ module TsungWrapper
 				end
 			end
 		end
+
+
+		def add_extract_dynvars(snippet)
+			snippet.extract_dynvars.keys.each do |name|
+				@builder.dyn_variable(:name => name, :re => snippet.extract_dynvars[name])
+			end
+		end
+
 
 
 		def add_matches(matches)

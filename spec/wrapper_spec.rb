@@ -153,10 +153,10 @@ end
 def register_user_and_store_authurl_xml
   str = <<-EOXML
 <!-- Hit Register Page and store AuthURL from response -->
-<dyn_variable name="activationurl" re="id='activation_link' href='(.*)'"/>
-<dyn_variable name="page_title" re="&amp;lt;title&amp;gt;(.*)&amp;lt;/title&amp;gt;"/>
 <thinktime random="true" value="2"/>
 <request subst="true">
+  <dyn_variable name="activationurl" re="id='activation_link' href='(.*)'"/>
+  <dyn_variable name="page_title" re="&amp;lt;title&amp;gt;(.*)&amp;lt;/title&amp;gt;"/>
   <http url="http://test_base_url.com/user/register" version="1.1" contents="email=%%_username%%&amp;email_confirm=%%_username%%&amp;password=Passw0rd&amp;password_confirm=Passw0rd&amp;confirmUnderstanding=1&amp;submit=I+understand&amp;setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe%2BFLPTVHZho3zK0mu41ouPmxLXJlZYi" content_type="application/x-www-form-urlencoded" method="POST"/>
 </request>
 EOXML
