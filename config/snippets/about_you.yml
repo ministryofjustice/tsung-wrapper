@@ -1,0 +1,20 @@
+request:
+  name: Login
+  url: '/user/about-you'
+  http_method: POST
+  params:
+    title: Mr
+    firstname: Stephen
+    middlename: Philip
+    surname: Richards
+    dob[day]: 13
+    dob[month]: August
+    dob[year]: 1963
+    addr1: 50 Tregunter Road
+    addr2: West Brompton
+    addr3:
+    town: London
+    county:
+    postcode: SW10 9XX
+    country: UK
+    save: Save and continue

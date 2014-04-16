@@ -3,6 +3,7 @@ session:
     username: random_str_12
   snippets:
     - hit_landing_page
-    - login_using_dynvars
+    - register_user_and_store_activation_url
     - activate_account
+    - login_using_dynvars
     - about_you
