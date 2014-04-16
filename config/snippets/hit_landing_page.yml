@@ -1,0 +1,5 @@
+
+request:
+  name: Hit Landing Page
+  url: 
+  http_method: GET

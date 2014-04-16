@@ -1,0 +1,7 @@
+arrivalphases:
+  - name: Minimal Load
+    sequence: 1
+    duration: 20
+    duration_unit: second
+    arrival_interval: 5
+    arrival_interval_unit: second

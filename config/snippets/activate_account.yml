@@ -1,0 +1,4 @@
+request:
+  name: Activate Account
+  url: "%%_activationurl%%"
+  http_method: POST
