@@ -95,11 +95,14 @@ module TsungWrapper
 			Time.now.strftime('%Y%m%d-%H%M%S')
 		end
 
-
+		# makes the url from the snippet and the config
+		# if the snippet is a dynvar, than it is not appended to the base_url
 		def make_url(config, snippet)
 			url = nil
 			if snippet.url.nil?
 				url = config.base_url
+			elsif snippet.has_url_dynvar?
+				url = snippet.url
 			else
 				protocol, resource = config.base_url.split('://')
 				resource = resource + '/' + snippet.url
@@ -107,6 +110,8 @@ module TsungWrapper
 			end
 			url
 		end
+
+
 
 		# expects and OpenStruct 
 		def transform_snippet(snippet)

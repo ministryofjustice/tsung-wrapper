@@ -130,7 +130,6 @@ module TsungWrapper
     context 'url is a dynvar' do
       it 'should generate a request where the url is a dynamic variable' do
         xml = Wrapper.xml_for_snippet('activate_account')
-        puts xml
         xml.should == activate_account_xml
       end
     end
@@ -144,7 +143,7 @@ def activate_account_xml
   str = <<-EOXML
 <!-- Activate Account -->
 <request subst="true">
-  <http url='%%_activationurl%%' version='1.1' method='GET'/>
+  <http url="%%_activationurl%%" version="1.1" method="GET"/>
 </request>
 EOXML
 end
