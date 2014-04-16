@@ -20,7 +20,8 @@ module TsungWrapper
 			@attrs           = config['request']
 			@params          = @attrs['params'].nil? ? {} : @attrs['params']
 			@extract_dynvars = @attrs['extract_dynvars'].nil? ? {} :  @attrs['extract_dynvars']
-			@has_dynvars     = params_contain_dynvars?
+			@url_dynvar 		 = false
+			@has_dynvars     = params_contain_dynvars? || url_contains_dynvars?
 			@matches         = []
 		end
 
@@ -40,6 +41,11 @@ module TsungWrapper
 
 		def has_dynvars?
 			@has_dynvars
+		end
+
+
+		def has_url_dynvar?
+			@url_dynvar
 		end
 
 
@@ -90,6 +96,10 @@ module TsungWrapper
 
 		private
 
+		def url_contains_dynvars?
+			@url_dynvar = contains_dynvar?(@attrs['url'])
+		end
+
 		def params_contain_dynvars?
 			result = false
 			@params.each do |key, value|
@@ -105,6 +115,7 @@ module TsungWrapper
 		def contains_dynvar?(param_value)
 			result = false
 			result = true if param_value =~ /%%_.*?%%/ 				# question mark after asterisk to stop it tbeing greedy
+			result
 		end
 	end
 

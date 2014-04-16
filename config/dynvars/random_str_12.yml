@@ -1,0 +1,3 @@
+dynvar:
+  type: random_string
+  length: 12

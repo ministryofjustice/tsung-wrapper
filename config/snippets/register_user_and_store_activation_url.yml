@@ -1,0 +1,14 @@
+request:
+  thinktime: 2
+  name: Hit Register Page and store Activation URL from response
+  url: '/user/register'
+  http_method: POST
+  params:
+    email: "%%_username%%"
+    email_confirm: "%%_username%%"
+    password: Passw00rd
+    password_confirm: Passw00rd
+    confirmUnderstanding: 1
+    submit: I understand
+  extract_dynvars:
+    activationurl: "id='activation_link' href='(.*)'"

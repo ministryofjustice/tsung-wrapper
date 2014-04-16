@@ -175,9 +175,7 @@ module TsungWrapper
 
 
 		def check_env_exists
-			puts "++++++ config dir #{TsungWrapper.config_dir} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
 			f = File.expand_path(File.join(TsungWrapper.config_dir, 'environments', "#{@options[:env]}.yml"))
-			puts "++++++ #{f} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
 			
 			unless File.exist?(File.expand_path(File.join(TsungWrapper.config_dir, 'environments', "#{@options[:env]}.yml")))
 				raise ArgumentError.new("Configuration file for environment '#{@options[:env]}' does not exist.")

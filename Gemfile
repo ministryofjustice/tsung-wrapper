@@ -11,11 +11,8 @@ group :development, :test do
 end
 
 
-group :development do
-	gem 'rspec'
-end
-
 group :test do
-	 gem 'simplecov', '~> 0.7.1', :require => false
-	 gem 'timecop'
+	gem 'rspec'
+	gem 'simplecov', '~> 0.7.1', :require => false
+	gem 'timecop'
 end

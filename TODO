@@ -17,6 +17,10 @@ DONE:
 - act on return codes
 - run the tsung_stats script
 - clean old libraries
+- move loads to loads
+	- move arrival phases to separate file
+	- load a default loadfile specified in environment file
+	- enable load to be specified on command line
 
 
 
@@ -30,11 +34,9 @@ WIP:
 STILL TO DO:
 ============
 
+- add tsung.yml details  to readme
 
-- move loads to loads
-	- move arrival phases to separate file
-	- load a default loadfile specified in environment file
-	- enable load to be specified on command line
+
 
 
 - specify library for logging

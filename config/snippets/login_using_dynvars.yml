@@ -1,0 +1,8 @@
+request:
+  name: Login
+  url: '/user/login'
+  http_method: POST
+  params:
+    email: "%%_username%%@test.com"
+    password: Passw00rd
+    submit: Sign in

@@ -114,6 +114,25 @@ module TsungWrapper
 				snippet = Snippet.new('login_using_dynvars')
 				snippet.has_dynvars?.should be_true
 			end
+
+			it 'should return true if the url is specified as a dynvar' do
+				snippet = Snippet.new('activate_account')
+				snippet.has_dynvars?.should be_true
+			end
+		end
+
+
+		describe 'has_url_dynvar?' do
+			
+			it 'should return true if the url is a dynvar' do
+				snippet = Snippet.new('activate_account')
+				snippet.has_url_dynvar?.should be_true
+			end
+
+			it 'should return false if the url is not a dynvar' do
+				snippet = Snippet.new('login_using_dynvars')
+				snippet.has_url_dynvar?.should be_false
+			end
 		end
 
 
