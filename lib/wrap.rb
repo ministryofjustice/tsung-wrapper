@@ -35,10 +35,6 @@ module TsungWrapper
 
 		def run_stats
 			command = "#{@config['tsung_stats']}"
-			puts "++++++ DEBUG ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-			require 'pp'
-			pp @config
-			puts "++++++ DEBUG ++++++ #{__FILE__}::#{__LINE__} ++++\n"
 			puts "PERL5LIB=#{@config['perl_libs'].join(':')} "
 			unless  @config['perl_libs'].nil?
 				command = "PERL5LIB=#{@config['perl_libs'].join(':')} " + command

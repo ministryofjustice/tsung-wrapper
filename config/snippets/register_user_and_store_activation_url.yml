@@ -4,8 +4,8 @@ request:
   url: '/user/register'
   http_method: POST
   params:
-    email: "%%_username%%"
-    email_confirm: "%%_username%%"
+    email: "%%_username%%@test.com"
+    email_confirm: "%%_username%%@test.com"
     password: Passw00rd
     password_confirm: Passw00rd
     confirmUnderstanding: 1

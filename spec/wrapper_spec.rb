@@ -23,6 +23,8 @@ module TsungWrapper
           expected = simple_session
           wrapper = Wrapper.new('hit_landing_page', 'test')
           actual = wrapper.wrap
+          dump_to_file(actual, 'actual')
+          dump_to_file(expected, 'expected')
           actual.should == expected
         end
       end

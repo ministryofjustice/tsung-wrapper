@@ -1,18 +1,20 @@
 require 'yaml'
 require 'ostruct'
+require_relative 'load_profile'
 
 module TsungWrapper
 
 	class ConfigLoader
 
 		@@automatic_attrs = [:server_host, :base_url, :maxusers, :server_port, :http_version]
-		attr_reader :arrivalphases, :user_agents
+		attr_reader  	:user_agents
+		attr_accessor :load_profile
 
 		attr_reader *@@automatic_attrs
 
 		def initialize(env)
-			@arrivalphases = []
-			@user_agents   = []
+			@load_profile = nil
+			@user_agents  = []
 
 		  filename = File.expand_path(File.join(TsungWrapper.config_dir, 'environments', "#{env}.yml"))
 		  unless File.exist?(filename)
@@ -33,16 +35,13 @@ module TsungWrapper
 		  	@user_agents << OpenStruct.new(ua)
 		  end
 
-		  register_load_profile(config['load_profile'])
+		  @load_profile = LoadProfile.new(config['load_profile'])
 		end
 
 		def register_load_profile(lp_name)
-			@arrivalphases = []
-			filename = File.expand_path(File.join(TsungWrapper.config_dir, 'load_profiles', "#{lp_name}.yml"))
-			load_profile = YAML.load_file(filename)
-			load_profile['arrivalphases'].each do |ap|
-		  	@arrivalphases << OpenStruct.new(ap)
-		  end
+			builder = @load_profile.builder
+			@load_profile = LoadProfile.new(lp_name)
+			@load_profile.builder = builder
 		end
 		
 

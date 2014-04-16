@@ -3,7 +3,7 @@ require 'builder'
 require_relative 'tsung_wrapper.rb'
 require_relative 'config_loader'
 require_relative 'session'
-
+require_relative 'load_profile'
 
 module TsungWrapper
 
@@ -29,6 +29,7 @@ module TsungWrapper
 			@xml             = ""
 		  @builder 				 = Builder::XmlMarkup.new(:target => @xml, :indent => 2)
 
+		  @config.load_profile.set_xml_builder(@builder)
 		  if @wrapper_type == :full
 		  	@session = Session.new(session)
 			  @builder.instruct! :xml, :encoding => "UTF-8"
@@ -190,14 +191,7 @@ module TsungWrapper
 
 
 		def add_load_element
-			@builder.load do 
-				@config.arrivalphases.each do |phase|
-					@builder.comment! "Scenario #{phase.sequence}: #{phase.name}"
-					@builder.arrivalphase(:phase => phase.sequence, :duration => phase.duration, :unit => phase.duration_unit) do
-						@builder.users(:interarrival => phase.arrival_interval, :unit => phase.arrival_interval_unit)
-					end
-				end
-			end
+			@config.load_profile.to_xml
 		end
 
 
