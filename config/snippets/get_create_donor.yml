@@ -1,0 +1,4 @@
+request:
+  name: Redirect to Create Donor page
+  url: "/create/donor"
+  http_method: GET		

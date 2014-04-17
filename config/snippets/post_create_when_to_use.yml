@@ -1,0 +1,10 @@
+
+request:
+  name: Select Use as soon as its registered and save and continue
+  url: "/create/when-to-use"
+  http_method: POST
+  params:
+    whenToStart: 0
+    save: Save and continue
+
+

@@ -1,0 +1,4 @@
+request:
+  name: Get User Login Page
+  url: "/user/login"
+  http_method: GET		

@@ -1,0 +1,4 @@
+request:
+  name: GET Add attorney page
+  url: "/create/add-attorney"
+  http_method: GET		

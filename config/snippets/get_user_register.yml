@@ -1,0 +1,4 @@
+request:
+  name: Get User Register Page
+  url: "/user/register"
+  http_method: GET		

@@ -7,9 +7,9 @@ request:
     firstname: Stephen
     middlename: Philip
     surname: Richards
-    dob[day]: 13
-    dob[month]: August
-    dob[year]: 1963
+    dob[day]: "13"
+    dob[month]: "08"
+    dob[year]: "1963"
     addr1: 50 Tregunter Road
     addr2: West Brompton
     addr3:
