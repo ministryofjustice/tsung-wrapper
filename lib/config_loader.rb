@@ -6,7 +6,7 @@ module TsungWrapper
 
 	class ConfigLoader
 
-		@@automatic_attrs = [:server_host, :base_url, :maxusers, :server_port, :http_version]
+		@@automatic_attrs = [:server_host, :base_url, :maxusers, :server_port, :http_version, :dumptraffic, :loglevel]
 		attr_reader  	:user_agents
 		attr_accessor :load_profile
 
@@ -27,15 +27,13 @@ module TsungWrapper
 		  	self.instance_variable_set(varname, config[attr.to_s])
 		  end
 
-		  # config['arrivalphases'].each do |ap|
-		  # 	@arrivalphases << OpenStruct.new(ap)
-		  # end
-
 		  config['user_agents'].each do |ua|
 		  	@user_agents << OpenStruct.new(ua)
 		  end
 
 		  @load_profile = LoadProfile.new(config['load_profile'])
+		  @dumptraffic = "false" if @dumptraffic.nil?
+		  @loglevel = "notice" if @loglevel.nil?
 		end
 
 		def register_load_profile(lp_name)

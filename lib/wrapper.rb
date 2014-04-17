@@ -57,7 +57,7 @@ module TsungWrapper
 
 
 		def wrap 
-			@builder.tsung('loglevel' => 'notice', 'version' => '1.0') do 
+			@builder.tsung(:loglevel => @config.loglevel, :dumptraffic => @config.dumptraffic, :version => '1.0') do 
 				add_standard_client_element
 				add_standard_server_element
 				add_load_element

@@ -280,7 +280,7 @@ def simple_session_minimal_load
   str = <<-EOXML
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tsung SYSTEM "#{TsungWrapper.dtd}">
-<tsung loglevel="notice" version="1.0">
+<tsung loglevel="notice" dumptraffic="false" version="1.0">
   <!-- Client Side Setup -->
   <clients>
     <client host="localhost" use_controller_vm="true" maxusers="1500"/>
@@ -324,7 +324,7 @@ def simple_session
   str = <<-EOXML
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tsung SYSTEM "#{TsungWrapper.dtd}">
-<tsung loglevel="notice" version="1.0">
+<tsung loglevel="notice" dumptraffic="false" version="1.0">
   <!-- Client Side Setup -->
   <clients>
     <client host="localhost" use_controller_vm="true" maxusers="1500"/>
