@@ -10,9 +10,9 @@
     <server host="test_server_host" port="80" type="tcp"/>
   </servers>
   <load>
-    <!-- Scenario 1: Minimal Load -->
-    <arrivalphase phase="1" duration="20" unit="second">
-      <users interarrival="5" unit="second"/>
+    <!-- Scenario 1: Single User -->
+    <arrivalphase phase="1" duration="6" unit="second">
+      <users maxnumber="1" arrivalrate="5" unit="second"/>
     </arrivalphase>
   </load>
   <!-- Define User Agents -->
@@ -23,7 +23,7 @@
     </option>
   </options>
   <sessions>
-    <session name="full_run-20140416-150650" probability="100" type="ts_http">
+    <session name="full_run-20140417-110031" probability="100" type="ts_http">
       <setdynvars sourcetype="random_string" length="12">
         <var name="username"/>
       </setdynvars>
@@ -48,6 +48,25 @@
       <!-- Login -->
       <request>
         <http url="http://ec2-54-229-53-8.eu-west-1.compute.amazonaws.com/user/about-you" version="1.1" contents="title=Mr&amp;firstname=Stephen&amp;middlename=Philip&amp;surname=Richards&amp;dob%5Bday%5D=13&amp;dob%5Bmonth%5D=August&amp;dob%5Byear%5D=1963&amp;addr1=50+Tregunter+Road&amp;addr2=West+Brompton&amp;addr3=&amp;town=London&amp;county=&amp;postcode=SW10+9XX&amp;country=UK&amp;save=Save+and+continue" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <!-- Select which type of LPA to create -->
+      <thinktime random="true" value="5"/>
+      <request>
+        <http url="http://ec2-54-229-53-8.eu-west-1.compute.amazonaws.com/create/lpa-type" version="1.1" contents="lpa_type=Property+and+financial+affairs&amp;save=Save+and+continue" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <!-- Push Create Donor Button -->
+      <request>
+        <http url="http://ec2-54-229-53-8.eu-west-1.compute.amazonaws.com/create/donor" version="1.1" method="GET"/>
+      </request>
+      <!-- Fill Add Donor Form -->
+      <thinktime random="true" value="5"/>
+      <request>
+        <http url="http://ec2-54-229-53-8.eu-west-1.compute.amazonaws.com/create/add-donor" version="1.1" contents="title=Mr&amp;firstname=test&amp;middlename=&amp;surname=test&amp;othername=&amp;dob%5Bday%5D=02&amp;dob%5Bmonth%5D=03&amp;dob%5Byear%5D=1920&amp;phone=&amp;email=&amp;address%5Baddr1%5D=aaa&amp;address%5Baddr2%5D=&amp;address%5Baddr3%5D=&amp;address%5Btown%5D=bbb&amp;address%5Bcounty%5D=ccc&amp;address%5Bpostcode%5D=ddd&amp;address%5Bcountry%5D=UK&amp;donor_cannot_sign=0" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <!-- Get PDF of Draft LPA -->
+      <thinktime random="true" value="2"/>
+      <request>
+        <http url="http://ec2-54-229-53-8.eu-west-1.compute.amazonaws.com/pdf/draft/Lasting-Power-of-Attorney-Draft.pdf" version="1.1" method="GET"/>
       </request>
     </session>
   </sessions>

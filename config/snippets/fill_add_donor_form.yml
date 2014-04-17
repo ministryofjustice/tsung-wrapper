@@ -1,0 +1,25 @@
+request:
+  name: Fill Add Donor Form
+  thinktime: 5
+  url: '/create/add-donor'
+  http_method: POST
+  params:
+    title: Mr
+    firstname: test
+    middlename:
+    surname: test
+    othername:
+    dob[day]: "02"
+    dob[month]: "03"
+    dob[year]: "1920"
+    phone:
+    email:
+    address[addr1]: aaa
+    address[addr2]: 
+    address[addr3]: 
+    address[town]: bbb
+    address[county]: ccc
+    address[postcode]: ddd
+    address[country]: UK
+    donor_cannot_sign: 0
+

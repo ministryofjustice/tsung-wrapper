@@ -1,0 +1,8 @@
+request:
+  name: Select which type of LPA to create
+  thinktime: 5
+  url: '/create/lpa-type'
+  http_method: POST
+  params:
+    lpa_type: Property and financial affairs
+    save: Save and continue

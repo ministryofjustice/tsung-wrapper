@@ -7,3 +7,7 @@ session:
     - activate_account
     - login_using_dynvars
     - about_you
+    - create_lpa_type
+    - push_create_donor_button
+    - fill_add_donor_form
+    - get_draft_lpa
