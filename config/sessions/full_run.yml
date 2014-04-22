@@ -3,7 +3,8 @@ session:
     username: random_str_12
   snippets:
     # register user and login
-    - hit_landing_page
+    # - hit_landing_page
+    - hit_landing_page_with_auto_test_key
     - get_user_register
     - post_user_register
     - activate_account
@@ -34,11 +35,52 @@ session:
     - post_create_add_attorney
     - get_create_attorneys
 
-    # print draft LPA
+    # print draft LPA & add replacement attorney
 
     - get_pdf_draft_lpa
-    # unable to simulate pdf poll without some way of getting UID
-    # unable to simulate pdf download without some way of getting UID
+    - get_create_replacement_attorney
+    - get_postcode_lookup
+    - get_address_lookup
+    - post_create_replacement_attorneys
+    - get_create_replacement_attorney
+    - get_pdf_draft_lpa
+
+    # add certificate provider
+
+    - get_create_certificate_provider
+    - get_create_add_certificate_provider
+    - get_postcode_lookup
+    - get_address_lookup
+    - post_create_add_certificate_provider
+    - get_create_certificate_provider
+    - post_create_certificate_provider
+
+    # add people to be told
+    - get_create_people_to_be_told
+    - get_create_add_notified_person
+    - get_postcode_lookup
+    - get_address_lookup
+    - post_create_add_notified_person
+    - get_create_people_to_be_told
+    - get_pdf_draft_lpa
+
+    # review and complete
+    - get_create_review
+    - post_create_review
+    - get_create_complete
+    - get_register_applicant
+    - post_register_applicant
+    - get_register_notice_dates
+    - get_pdf_draft_lpa
+    - post_register_notice_dates
+    - get_register_further_info
+    - post_register_further_info
+
+
+
+
+    # # unable to simulate pdf poll without some way of getting UID
+    # # unable to simulate pdf download without some way of getting UID
 
 
 # list of requests from live session (indented = replicated in snippets above)
@@ -77,11 +119,11 @@ session:
     
 # GET /pdf/poll/e9043b29dab5810829761c8f583feb52/draft HTTP/1.1
 # GET /pdf/download/e9043b29dab5810829761c8f583feb52/draft HTTP/1.1
-# GET /create/replacement-attorneys HTTP/1.1
-# GET /create/add-replacement-attorney HTTP/1.1
+    # GET /create/replacement-attorneys HTTP/1.1
+    # GET /create/add-replacement-attorney HTTP/1.1
 # GET /user/is-logged-in?_=1397748282184 HTTP/1.1
-# GET /postcode/lookup?postcode=W4+5RR HTTP/1.1
-# GET /address/lookup?addressid=28217290 HTTP/1.1
+    # GET /postcode/lookup?postcode=W4+5RR HTTP/1.1
+    # GET /address/lookup?addressid=28217290 HTTP/1.1
 # POST /create/add-replacement-attorney HTTP/1.1
 # GET /create/replacement-attorneys HTTP/1.1
 # GET /pdf/draft/Lasting-Power-of-Attorney-Draft.pdf HTTP/1.1

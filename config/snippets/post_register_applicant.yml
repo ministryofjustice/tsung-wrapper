@@ -1,0 +1,7 @@
+request:
+  name: POST Register Applicant
+  url: "register/applicant"
+  http_method: POST
+  params:
+    whoIsMakingThisApplication: attorney
+    save: Save and continue

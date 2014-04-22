@@ -1,0 +1,21 @@
+request:
+  name: POST Create Replacement Attorneys
+  url: "/create/add-replacement-attorney"
+  http_method: POST   
+  params:
+    title: Mr
+    firstname: David
+    middlename: Charles Nimmo
+    surname: Macfarlane
+    dob[day]: '28'
+    dob[month]: '11'
+    dob[year]: '1926'
+    email: dm@test.com
+    phone: '073476363'
+    address[addr1]: Flat 102
+    address[addr2]: 560 Chiswick High Road
+    address[addr3]: 
+    address[town]: London
+    address[county]: 
+    address[postcode]: W4 5RR
+    address[country]: UK

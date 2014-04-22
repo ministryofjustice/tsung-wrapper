@@ -1,0 +1,4 @@
+request:
+  name: GET Create People to be Told
+  url: "/create/people-to-be-told"
+  http_method: GET    

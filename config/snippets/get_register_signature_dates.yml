@@ -1,0 +1,4 @@
+request:
+  name: GET Register Signature Dates
+  url: "/register/signature-dates"
+  http_method: GET    

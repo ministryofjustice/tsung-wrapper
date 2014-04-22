@@ -1,0 +1,4 @@
+request:
+  name: GET Create Review
+  url: "/create/review"
+  http_method: GET    

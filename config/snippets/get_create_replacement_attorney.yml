@@ -1,0 +1,4 @@
+request:
+  name: GET Create Replacement Attorney
+  url: "/create/replacement-attorneys"
+  http_method: GET		

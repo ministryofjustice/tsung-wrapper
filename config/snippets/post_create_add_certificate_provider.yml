@@ -1,0 +1,18 @@
+request:
+  name: POST Create Add Certificate Provicer
+  url: "/create/add-certificate-provider"
+  http_method: POST    
+  params:
+    title: Mr
+    firstname: Daryl
+    middlename: 
+    surname: McKeown
+    email: dm@test.com
+    address[addr1]: Flat 6
+    address[addr2]: Rosewood House
+    address[addr3]: "35-39 Vauxhall Grove"
+    address[town]: London
+    address[county]: 
+    address[postcode]: SW8 1TB
+    address[country]: UK
+    certificateProviderStatementType: I want them to complete these details on the print LPA form themselves

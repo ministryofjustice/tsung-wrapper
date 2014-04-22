@@ -1,0 +1,8 @@
+request:
+  name: POST REgister Notice Dates
+  url: "/register/notice-dates"
+  http_method: POST
+  params:
+    notifiedPerson_0: "17/04/2014"
+    submit: Continue to next question
+    

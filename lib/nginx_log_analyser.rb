@@ -23,10 +23,10 @@ class NginxLogAnalyser
 				@fields.each do |field|
 					array << fields[field]
 				end
-				params = hash['@request']
-
-
-				array << CGI.unescape(params)
+				if hash.has_key?('@request')
+					params = hash['@request']
+					array << CGI.unescape(params)
+				end
 				csv << array
 			end
 		end
