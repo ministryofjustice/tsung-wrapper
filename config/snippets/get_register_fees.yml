@@ -1,0 +1,4 @@
+request:
+  name: GET Register Fees
+  url: "/register/fees"
+  http_method: GET    

@@ -1,0 +1,12 @@
+request:
+  name: POST REgister Fees
+  url: "/register/fees"
+  http_method: GET
+  params:
+    claimBenefits: 0
+    receiveUniversalCredit: 0
+    hasLowIncome: 0
+    payByCheque: 0
+    paymentEmailContact: sr@test.com
+    submit: Proceed to payment
+

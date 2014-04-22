@@ -1,0 +1,4 @@
+request:
+  name: GET Register Paymnet
+  url: "/register/payment"
+  http_method: GET    

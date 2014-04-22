@@ -75,6 +75,7 @@ session:
     - post_register_notice_dates
     - get_register_further_info
     - post_register_further_info
+    - get_register_fees
 
 
 
