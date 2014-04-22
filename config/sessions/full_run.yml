@@ -22,8 +22,6 @@ session:
     - get_postcode_lookup
     - get_address_lookup
     - post_create_add_donor
-    - post_create_add_donor
-    - get_create_donor
     - get_create_donor
     - get_create_when_to_use
     - post_create_when_to_use
@@ -43,35 +41,40 @@ session:
     # unable to simulate pdf download without some way of getting UID
 
 
-# list of requests from live session
+# list of requests from live session (indented = replicated in snippets above)
 #++++++++++++++++++++++++++++++++++
-# GET / HTTP/1.1
-# GET /user/register HTTP/1.1
-# POST /user/register HTTP/1.1
-# GET /activate/6ccb5c1114d1d423c1a98d1189a3ecab HTTP/1.1
-# GET /user/login HTTP/1.1
-# POST /user/login HTTP/1.1
-# GET /user/about-you HTTP/1.1
-# POST /user/about-you HTTP/1.1
-# GET /create/lpa-type HTTP/1.1
-# POST /create/lpa-type HTTP/1.1
-# GET /create/donor HTTP/1.1
-# GET /create/add-donor HTTP/1.1
+    # GET / HTTP/1.1
+    # GET /user/register HTTP/1.1
+    # POST /user/register HTTP/1.1
+    # GET /activate/6ccb5c1114d1d423c1a98d1189a3ecab HTTP/1.1
+    # GET /user/login HTTP/1.1
+    # POST /user/login HTTP/1.1
+    # GET /user/about-you HTTP/1.1
+    # POST /user/about-you HTTP/1.1
+
+    # GET /create/lpa-type HTTP/1.1
+    # POST /create/lpa-type HTTP/1.1
+    
+    # GET /create/donor HTTP/1.1
+    # GET /create/add-donor HTTP/1.1
 # GET /user/is-logged-in?_=1397748161961 HTTP/1.1
-# GET /postcode/lookup?postcode=SW10+9LB HTTP/1.1
-# GET /address/lookup?addressid=23911113 HTTP/1.1
-# POST /create/add-donor HTTP/1.1
-# GET /create/donor HTTP/1.1
-# GET /create/when-to-use HTTP/1.1
-# POST /create/when-to-use HTTP/1.1
-# GET /create/attorneys HTTP/1.1
-# GET /create/add-attorney HTTP/1.1
+    # GET /postcode/lookup?postcode=SW10+9LB HTTP/1.1
+    # GET /address/lookup?addressid=23911113 HTTP/1.1
+    # POST /create/add-donor HTTP/1.1
+    # GET /create/donor HTTP/1.1
+    # GET /create/when-to-use HTTP/1.1
+    # POST /create/when-to-use HTTP/1.1
+
+    # GET /create/attorneys HTTP/1.1
+    # GET /create/add-attorney HTTP/1.1
 # GET /user/is-logged-in?_=1397748221311 HTTP/1.1
-# GET /postcode/lookup?postcode=SW10+9LB HTTP/1.1
-# GET /address/lookup?addressid=23911113 HTTP/1.1
-# POST /create/add-attorney HTTP/1.1
-# POST /create/add-attorney HTTP/1.1
-# GET /pdf/draft/Lasting-Power-of-Attorney-Draft.pdf HTTP/1.1
+    # GET /postcode/lookup?postcode=SW10+9LB HTTP/1.1
+    # GET /address/lookup?addressid=23911113 HTTP/1.1
+    # POST /create/add-attorney HTTP/1.1
+    # POST /create/add-attorney HTTP/1.1
+
+    # GET /pdf/draft/Lasting-Power-of-Attorney-Draft.pdf HTTP/1.1
+    
 # GET /pdf/poll/e9043b29dab5810829761c8f583feb52/draft HTTP/1.1
 # GET /pdf/download/e9043b29dab5810829761c8f583feb52/draft HTTP/1.1
 # GET /create/replacement-attorneys HTTP/1.1

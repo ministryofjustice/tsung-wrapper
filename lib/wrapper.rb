@@ -97,7 +97,7 @@ module TsungWrapper
 		end
 
 		# makes the url from the snippet and the config
-		# if the snippet is a dynvar, than it is not appended to the base_url
+		# if the snippet url is a dynvar, than it is not appended to the base_url
 		def make_url(config, snippet)
 			url = nil
 			if snippet.url.nil?
@@ -108,6 +108,13 @@ module TsungWrapper
 				protocol, resource = config.base_url.split('://')
 				resource = resource + '/' + snippet.url
 				url = protocol + '://' + resource.gsub('//', '/')
+			end
+
+			# now add params if it's a get request and has params
+			
+			if snippet.is_get? && snippet.has_params?
+				params = snippet.content_string.to_s.gsub('%2B', '+')
+				url = url + '?' + params
 			end
 			url
 		end
@@ -126,7 +133,7 @@ module TsungWrapper
 			@builder.request(request_attrs) do 
 				add_matches(snippet.matches)
 				add_extract_dynvars(snippet) if snippet.has_extract_dynvars?
-				if snippet.has_params?
+				if snippet.is_post? && snippet.has_params?
 					@builder.http(:url => make_url(@config, snippet), 
 												:version => @config.http_version, 
 												:contents => snippet.content_string,
