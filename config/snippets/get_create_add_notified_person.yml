@@ -1,4 +1,4 @@
 request:
   name: GET Create Add Notified Person
-  url: "get_create_add_notified_person"
+  url: "/create/add-notified-person"
   http_method: GET    

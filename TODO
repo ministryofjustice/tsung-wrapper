@@ -33,6 +33,7 @@ WIP:
 
 STILL TO DO:
 ============
+<<<<<<< HEAD
 - update readme with requirements (tsung)
 - update readme iwth where logs are written (.tsung..)
 - add tsung.yml details  to readme
@@ -41,10 +42,14 @@ STILL TO DO:
 
 
 - specify library for logging
+=======
+
+- print details about what load profile, log level, etc are being used
+>>>>>>> develop
 - run the perl_stats
 - print url for viewing graphs
 
-
+- refactor snippet to emit xml and remove from wrapper
 
 - handle multiple scenarios
 	- rename sessions as scenarios
