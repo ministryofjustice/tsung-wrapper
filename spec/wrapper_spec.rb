@@ -65,57 +65,57 @@ module TsungWrapper
     end
 
 
-    describe '.xml_for_snippet' do
-      it 'should emit xml for the named snippet' do
-        xml = Wrapper.xml_for_snippet('hit_landing_page')
-        xml.should == hit_landing_page_snippet_xml
-      end
-    end
+    # describe '.xml_for_snippet' do
+    #   it 'should emit xml for the named snippet' do
+    #     xml = Wrapper.xml_for_snippet('hit_landing_page')
+    #     xml.should == hit_landing_page_snippet_xml
+    #   end
+    # end
 
 
-    context 'request with thinktime' do
-      it 'should emit a request with a thinktime element if the environment thinktime is not zero' do
-        # Given a wrapper with a config contianing a non-zero default thinktime
-        wrapper = Wrapper.new(nil, 'test', :snippet, "hit_register_page_with_thinktime")
-        config = wrapper.instance_variable_get(:@config)
-        config.instance_variable_set(:@default_thinktime, 10)
-        wrapper.instance_variable_set(:@config, config)
+    # context 'request with thinktime' do
+    #   it 'should emit a request with a thinktime element if the environment thinktime is not zero' do
+    #     # Given a wrapper with a config contianing a non-zero default thinktime
+    #     wrapper = Wrapper.new(nil, 'test', :snippet, "hit_register_page_with_thinktime")
+    #     config = wrapper.instance_variable_get(:@config)
+    #     config.instance_variable_set(:@default_thinktime, 10)
+    #     wrapper.instance_variable_set(:@config, config)
 
-        # The xml produced should come from the snippet
-        xml = wrapper.wrap_snippet
-        xml.should == hit_register_page_with_thinktime_snippet_xml
-      end
-    end
-
-
-    context 'post_request_with_parameters' do
-      it 'should emit an xml snippet for a post request with parameters' do |variable|
-        xml = Wrapper.xml_for_snippet('login_with_think_time')
-        xml.should == login_snippet_xml
-      end
-    end
+    #     # The xml produced should come from the snippet
+    #     xml = wrapper.wrap_snippet
+    #     xml.should == hit_register_page_with_thinktime_snippet_xml
+    #   end
+    # end
 
 
-    context 'get request with parameters' do
-      it 'should emit xml with a url and params' do
-        xml = Wrapper.xml_for_snippet('hit_landing_page_with_auto_test_key')
-        xml.should == login_with_autokey_snippet_xml
-      end
-    end
+    # context 'post_request_with_parameters' do
+    #   it 'should emit an xml snippet for a post request with parameters' do |variable|
+    #     xml = Wrapper.xml_for_snippet('login_with_think_time')
+    #     xml.should == login_snippet_xml
+    #   end
+    # end
 
-    context 'post_request_with_dynamic_variables' do
-      it 'should emit an xml request snippet incuding a subst=true attribute' do
-        xml = Wrapper.xml_for_snippet('login_using_dynvars')
-        xml.should == login_using_dynvars_xml
-      end
-    end
 
-    context 'extract_dynvars' do
-      it 'should generate a snippet with set_dynvars elements' do
-        xml = Wrapper.xml_for_snippet('register_user_and_store_authurl')
-        xml.should == register_user_and_store_authurl_xml
-      end
-    end
+    # context 'get request with parameters' do
+    #   it 'should emit xml with a url and params' do
+    #     xml = Wrapper.xml_for_snippet('hit_landing_page_with_auto_test_key')
+    #     xml.should == login_with_autokey_snippet_xml
+    #   end
+    # end
+
+    # context 'post_request_with_dynamic_variables' do
+    #   it 'should emit an xml request snippet incuding a subst=true attribute' do
+    #     xml = Wrapper.xml_for_snippet('login_using_dynvars')
+    #     xml.should == login_using_dynvars_xml
+    #   end
+    # end
+
+    # context 'extract_dynvars' do
+    #   it 'should generate a snippet with set_dynvars elements' do
+    #     xml = Wrapper.xml_for_snippet('register_user_and_store_authurl')
+    #     xml.should == register_user_and_store_authurl_xml
+    #   end
+    # end
 
 
     context 'dynamic variables' do
@@ -157,14 +157,14 @@ end
 
 
 
-def login_with_autokey_snippet_xml
-  str = <<-EOXML
-<!-- Hit Landing Page With Auto Key -->
-<request>
-  <http url="http://test_base_url.com/?setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe+FLPTVHZho3zK0mu41ouPmxLXJlZYi" version="1.1" method="GET"/>
-</request>
-EOXML
-end
+# def login_with_autokey_snippet_xml
+#   str = <<-EOXML
+# <!-- Hit Landing Page With Auto Key -->
+# <request>
+#   <http url="http://test_base_url.com/?setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe+FLPTVHZho3zK0mu41ouPmxLXJlZYi" version="1.1" method="GET"/>
+# </request>
+# EOXML
+# end
 
 
 
@@ -182,26 +182,26 @@ end
 
 
 
-def register_user_and_store_authurl_xml
-  str = <<-EOXML
-<!-- Hit Register Page and store AuthURL from response -->
-<request subst="true">
-  <dyn_variable name="activationurl" re="id='activation_link' href='(.*)'"/>
-  <dyn_variable name="page_title" re="&amp;lt;title&amp;gt;(.*)&amp;lt;/title&amp;gt;"/>
-  <http url="http://test_base_url.com/user/register" version="1.1" contents="email=%%_username%%&amp;email_confirm=%%_username%%&amp;password=Passw0rd&amp;password_confirm=Passw0rd&amp;confirmUnderstanding=1&amp;submit=I+understand&amp;setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe%2BFLPTVHZho3zK0mu41ouPmxLXJlZYi" content_type="application/x-www-form-urlencoded" method="POST"/>
-</request>
-EOXML
-end
+# def register_user_and_store_authurl_xml
+#   str = <<-EOXML
+# <!-- Hit Register Page and store AuthURL from response -->
+# <request subst="true">
+#   <dyn_variable name="activationurl" re="id='activation_link' href='(.*)'"/>
+#   <dyn_variable name="page_title" re="&amp;lt;title&amp;gt;(.*)&amp;lt;/title&amp;gt;"/>
+#   <http url="http://test_base_url.com/user/register" version="1.1" contents="email=%%_username%%&amp;email_confirm=%%_username%%&amp;password=Passw0rd&amp;password_confirm=Passw0rd&amp;confirmUnderstanding=1&amp;submit=I+understand&amp;setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe%2BFLPTVHZho3zK0mu41ouPmxLXJlZYi" content_type="application/x-www-form-urlencoded" method="POST"/>
+# </request>
+# EOXML
+# end
 
 
-def login_using_dynvars_xml
-  str = <<-EOXML
-<!-- Login -->
-<request subst="true">
-  <http url="http://test_base_url.com/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
-</request>
-EOXML
-end
+# def login_using_dynvars_xml
+#   str = <<-EOXML
+# <!-- Login -->
+# <request subst="true">
+#   <http url="http://test_base_url.com/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
+# </request>
+# EOXML
+# end
 
 def login_with_dynvar_and_match_response_xml
   str = <<-EOXML
@@ -253,54 +253,54 @@ end
 
 
 
-def encode_params(params)
-  param_pairs = []
-  params.each do |key, value|
-    param_pairs << "#{key}=#{CGI.escape(value)}"
-  end
-  param_pairs.join('&amp;')
-end
+# def encode_params(params)
+#   param_pairs = []
+#   params.each do |key, value|
+#     param_pairs << "#{key}=#{CGI.escape(value)}"
+#   end
+#   param_pairs.join('&amp;')
+# end
 
 
-def login_snippet_xml
-  params = {
-    'email'    => 'test@test.com',
-    'password' => 'Abc123123',
-    'submit'   => 'Sign in'
-  }
-  content_string = "#{encode_params(params)}"
+# def login_snippet_xml
+#   params = {
+#     'email'    => 'test@test.com',
+#     'password' => 'Abc123123',
+#     'submit'   => 'Sign in'
+#   }
+#   content_string = "#{encode_params(params)}"
 
-  # params = contents='email=test3%40test.com&amp;password=Abc123123&amp;submit=Sign+in' content_type='application/x-www-form-urlencoded'
-  str = <<-EOXML
-<!-- Login -->
-<request>
-  <http url="http://test_base_url.com/user/login" version="1.1" contents="#{content_string}" content_type="application/x-www-form-urlencoded" method="POST"/>
-</request>
-EOXML
-end
-
-
-
-def hit_register_page_with_thinktime_snippet_xml
-  str = <<-EOXML
-<!-- Hit Register Page With Thinktime -->
-<thinktime random="true" value="5"/>
-<request>
-  <http url="http://test_base_url.com/user/register" version="1.1" method="GET"/>
-</request>
-EOXML
-end
+#   # params = contents='email=test3%40test.com&amp;password=Abc123123&amp;submit=Sign+in' content_type='application/x-www-form-urlencoded'
+#   str = <<-EOXML
+# <!-- Login -->
+# <request>
+#   <http url="http://test_base_url.com/user/login" version="1.1" contents="#{content_string}" content_type="application/x-www-form-urlencoded" method="POST"/>
+# </request>
+# EOXML
+# end
 
 
 
-def hit_landing_page_snippet_xml
-  str = <<-EOXML
-<!-- Hit Landing Page -->
-<request>
-  <http url="http://test_base_url.com" version="1.1" method="GET"/>
-</request>
-EOXML
-end
+# def hit_register_page_with_thinktime_snippet_xml
+#   str = <<-EOXML
+# <!-- Hit Register Page With Thinktime -->
+# <thinktime random="true" value="5"/>
+# <request>
+#   <http url="http://test_base_url.com/user/register" version="1.1" method="GET"/>
+# </request>
+# EOXML
+# end
+
+
+
+# def hit_landing_page_snippet_xml
+#   str = <<-EOXML
+# <!-- Hit Landing Page -->
+# <request>
+#   <http url="http://test_base_url.com" version="1.1" method="GET"/>
+# </request>
+# EOXML
+# end
 
 
 

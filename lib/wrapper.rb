@@ -44,10 +44,10 @@ module TsungWrapper
 
 
 		# this method is used for testing only
-		def self.xml_for_snippet(snippet_name)
-			wrapper = self.new(nil, 'test', :snippet, snippet_name)
-			wrapper.wrap_snippet
-		end
+		# def self.xml_for_snippet(snippet_name)
+		# 	wrapper = self.new(nil, 'test', :snippet, snippet_name)
+		# 	wrapper.wrap_snippet
+		# end
 
 
 		def self.xml_for_dynvar(dynvar_name, varname)
@@ -96,78 +96,73 @@ module TsungWrapper
 			Time.now.strftime('%Y%m%d-%H%M%S')
 		end
 
-		# makes the url from the snippet and the config
-		# if the snippet url is a dynvar, than it is not appended to the base_url
-		def make_url(config, snippet)
-			url = nil
-			if snippet.url.nil?
-				url = config.base_url
-			elsif snippet.has_url_dynvar?
-				url = snippet.url
-			else
-				protocol, resource = config.base_url.split('://')
-				resource = resource + '/' + snippet.url
-				url = protocol + '://' + resource.gsub('//', '/')
-			end
+		# # makes the url from the snippet and the config
+		# # if the snippet url is a dynvar, than it is not appended to the base_url
+		# def make_url(config, snippet)
+		# 	url = nil
+		# 	if snippet.url.nil?
+		# 		url = config.base_url
+		# 	elsif snippet.has_url_dynvar?
+		# 		url = snippet.url
+		# 	else
+		# 		protocol, resource = config.base_url.split('://')
+		# 		resource = resource + '/' + snippet.url
+		# 		url = protocol + '://' + resource.gsub('//', '/')
+		# 	end
 
-			# now add params if it's a get request and has params
+		# 	# now add params if it's a get request and has params
 			
-			if snippet.is_get? && snippet.has_params?
-				params = snippet.content_string.to_s.gsub('%2B', '+')
-				url = url + '/' unless url =~ /\/$/
-				url = url + '?' + params
-			end
-			url
-		end
+		# 	if snippet.is_get? && snippet.has_params?
+		# 		params = snippet.content_string.to_s.gsub('%2B', '+')
+		# 		url = url + '/' unless url =~ /\/$/
+		# 		url = url + '?' + params
+		# 	end
+		# 	url
+		# end
 
 
 
 		# expects and OpenStruct 
-		def transform_snippet(snippet)
-			@builder.comment! snippet.name
+		# def transform_snippet(snippet)
+		# 	@builder.comment! snippet.name
 
 
 
-			unless @config.ignore_thinktimes?
-				if snippet.has_attribute?('thinktime')
-					@builder.thinktime(:random => true, :value => snippet.thinktime)
-				else
-					@builder.thinktime(:random => true, :value => @config.default_thinktime)
-				end
-			end
+		# 	unless @config.ignore_thinktimes?
+		# 		if snippet.has_attribute?('thinktime')
+		# 			@builder.thinktime(:random => true, :value => snippet.thinktime)
+		# 		else
+		# 			@builder.thinktime(:random => true, :value => @config.default_thinktime)
+		# 		end
+		# 	end
 
 
-			request_attrs = snippet.has_dynvars? ? {:subst => true} : nil
-			@builder.request(request_attrs) do 
-				add_matches(snippet.matches)
-				add_extract_dynvars(snippet) if snippet.has_extract_dynvars?
-				if snippet.is_post? && snippet.has_params?
-					@builder.http(:url => make_url(@config, snippet), 
-												:version => @config.http_version, 
-												:contents => snippet.content_string,
-												:content_type => "application/x-www-form-urlencoded",
-												:method => snippet.http_method)
-				else
-					@builder.http(:url => make_url(@config, snippet), :version => @config.http_version, :method => snippet.http_method)
-				end
-			end
-		end
+		# 	request_attrs = snippet.has_dynvars? ? {:subst => true} : nil
+		# 	@builder.request(request_attrs) do 
+		# 		add_matches(snippet.matches)
+		# 		add_extract_dynvars(snippet) if snippet.has_extract_dynvars?
+		# 		if snippet.is_post? && snippet.has_params?
+		# 			@builder.http(:url => make_url(@config, snippet), 
+		# 										:version => @config.http_version, 
+		# 										:contents => snippet.content_string,
+		# 										:content_type => "application/x-www-form-urlencoded",
+		# 										:method => snippet.http_method)
+		# 		else
+		# 			@builder.http(:url => make_url(@config, snippet), :version => @config.http_version, :method => snippet.http_method)
+		# 		end
+		# 	end
+		# end
 
 
-		def add_extract_dynvars(snippet)
-			snippet.extract_dynvars.keys.each do |name|
-				@builder.dyn_variable(:name => name, :re => snippet.extract_dynvars[name])
-			end
-		end
+		# def add_extract_dynvars(snippet)
+		# 	snippet.extract_dynvars.keys.each do |name|
+		# 		@builder.dyn_variable(:name => name, :re => snippet.extract_dynvars[name])
+		# 	end
+		# end
 
 
 
-		def add_matches(matches)
-			matches.each do |match| 
-				@builder.match(match.pattern, :do => match.do, :when => match.when, :name => match.name)
-			end
-		end
-
+		
 
 
 		def add_dynvar(dynvar)
