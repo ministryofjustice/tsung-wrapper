@@ -34,16 +34,11 @@ WIP:
 STILL TO DO:
 ============
 
-- add tsung.yml details  to readme
-
-
-
-
-- specify library for logging
+- print details about what load profile, log level, etc are being used
 - run the perl_stats
 - print url for viewing graphs
 
-
+- refactor snippet to emit xml and remove from wrapper
 
 - handle multiple scenarios
 	- rename sessions as scenarios

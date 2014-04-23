@@ -1,0 +1,28 @@
+arrivalphases:
+  - name: "Phase 1: Low Load"
+    sequence: 1
+    duration: 5
+    duration_unit: minute
+    arrival_interval: 20
+    arrival_interval_unit: second
+
+  - name: "Phase 2: Increased Load"
+    sequence: 2
+    duration: 5
+    duration_unit: minute
+    arrival_interval: 10
+    arrival_interval_unit: second
+
+  - name: "Phase 3: Heavy Load"
+    sequence: 1
+    duration: 5
+    duration_unit: minute
+    arrival_interval: 5
+    arrival_interval_unit: second
+
+  - name: "Phase 4: Insane Load"
+    sequence: 1
+    duration: 5
+    duration_unit: minute
+    arrival_interval: 1
+    arrival_interval_unit: second
