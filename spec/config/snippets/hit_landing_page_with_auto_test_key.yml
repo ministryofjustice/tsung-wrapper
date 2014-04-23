@@ -1,0 +1,7 @@
+
+request:
+  name: Hit Landing Page With Auto Key
+  url: 
+  http_method: GET
+  params:
+    setAutoKey: I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe+FLPTVHZho3zK0mu41ouPmxLXJlZYi

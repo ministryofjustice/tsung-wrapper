@@ -1,0 +1,4 @@
+request:
+  name: Redirect to Create Attorneys Page
+  url: "/create/attorneys"
+  http_method: GET		

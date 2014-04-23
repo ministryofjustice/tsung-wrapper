@@ -1,0 +1,23 @@
+request:
+  name: Fill in Add Donor Form
+  url: "/create/add-attorney"
+  http_method: POST
+  params:
+    title: Mrs
+    firstname: Christina
+    middlename: Adelaide
+    surname: Richards
+    dob[day]: "07"
+    dob[month]: "12"
+    dob[year]: "1918"
+    address[addr1]: "3 Melbury Close"
+    address[addr2]: "Ferndown"
+    address[addr3]:
+    address[town]: "Christchurch"
+    address[county]: "Dorset"
+    address[postcode]: "BH22 8HR"
+    address[country]: "UK"
+    email: car@test.com
+    phone: "01245 7855444"
+    occupation: Retired
+    relationshipToDonor: Child 

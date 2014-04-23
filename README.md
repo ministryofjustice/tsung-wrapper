@@ -225,4 +225,41 @@ It can be used to generate xml to stdout, or a temporary file which is then pipe
     
 
 
+## Development Server Configuration
+
+### Log File Format
+
+It helps to have as much detail from the web server access logs as possible, so change the default format to include the request, and then you will see the parameters that are posted along with the request.
+
+Edit 
+
+<pre>/etc/nginx/nginx.conf</pre>
+
+ and update the logstash-json entry to read as follows:
+
+     log_format logstash_json '{ "@timestamp": "$time_iso8601", '
+                             '"@fields": { '
+                             '"remote_addr": "$remote_addr", '
+                             '"remote_user": "$remote_user", '
+                             '"body_bytes_sent": "$body_bytes_sent", '
+                             '"request_time": "$request_time", '
+                             '"status": "$status", '
+                             '"request": "$request", '
+                             '"request_method": "$request_method", '
+                             '"http_referrer": "$http_referer", '
+                             '"http_user_agent": "$http_user_agent" '
+                             '}, "@request": "$request_body" }';
+
+ and then restart the nginx server with the command:
+
+ 		sudo service nginx restart
+
+
+
+### Clearing the access log before a run
+
+The access log can be emptied before a test run by the following command:
+
+    cat /dev/nul > /var/log/nginx/[logfile]
+
 

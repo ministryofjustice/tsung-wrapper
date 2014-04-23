@@ -1,0 +1,4 @@
+request:
+  name: GET REgister Notice Dates
+  url: "/register/notice-dates"
+  http_method: GET    

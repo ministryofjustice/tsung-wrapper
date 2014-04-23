@@ -1,0 +1,4 @@
+request:
+  name: GET Create Add Certificate Provider
+  url: "/create/add-certificate-provider"
+  http_method: GET    

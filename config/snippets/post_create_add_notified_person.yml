@@ -1,0 +1,18 @@
+request:
+  name: POST Create Add notified person
+  url: "/create/add-notified-person"
+  http_method: POST
+  params:
+    title: Mr
+    firstname: Beverley
+    surname: Meyers
+    email: bev@test.com
+    phone: 02552823626
+    address[addr1]: 10 Edge Street
+    address[addr2]: 
+    address[addr3]: 
+    address[town]: London
+    address[county]: 
+    address[postcode]: W8 7PN
+    address[country]: UK
+    

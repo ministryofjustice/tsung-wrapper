@@ -18,6 +18,7 @@ module TsungWrapper
 
 			config           = YAML.load_file(filename)
 			@attrs           = config['request']
+			@http_method 		 = @attrs['http_method']
 			@params          = @attrs['params'].nil? ? {} : @attrs['params']
 			@extract_dynvars = @attrs['extract_dynvars'].nil? ? {} :  @attrs['extract_dynvars']
 			@url_dynvar 		 = false
@@ -62,6 +63,15 @@ module TsungWrapper
 		def has_extract_dynvars?
 			@extract_dynvars.any?
 		end
+
+		def is_get?
+			@http_method == 'GET'
+		end
+
+		def is_post?
+			@http_method  == 'POST'
+		end
+
 
 		# returns the keys of the params that are stored
 		def params

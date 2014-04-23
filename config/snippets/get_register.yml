@@ -1,0 +1,4 @@
+request:
+  name: GET Register
+  url: "/register"
+  http_method: GET    

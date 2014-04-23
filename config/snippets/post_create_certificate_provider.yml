@@ -1,0 +1,9 @@
+request:
+  name: POST Create Certificate Provicder
+  url: "/create/certificate-provider"
+  http_method: POST    
+  params:
+    certificateProviderStatementType: "1"
+    certificateProviderKnowledgeOfDonor: I have been the donor's friend for 25 years
+    certificateProviderProfessionalSkills: 
+    save: Save and continue

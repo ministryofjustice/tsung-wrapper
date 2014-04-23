@@ -1,0 +1,10 @@
+request:
+  name: POST Register Further Info
+  url: "/register/further-info"
+  http_method: POST
+  params:
+    previousLpa: 0
+    notesForPreviousLpa: 
+    additionalInfo: 
+    submit: Continue to next question
+    

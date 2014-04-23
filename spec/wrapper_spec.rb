@@ -88,6 +88,14 @@ module TsungWrapper
       end
     end
 
+
+    context 'get request with parameters' do
+      it 'should emit xml with a url and params' do
+        xml = Wrapper.xml_for_snippet('hit_landing_page_with_auto_test_key')
+        xml.should == login_with_autokey_snippet_xml
+      end
+    end
+
     context 'post_request_with_dynamic_variables' do
       it 'should emit an xml request snippet incuding a subst=true attribute' do
         xml = Wrapper.xml_for_snippet('login_using_dynvars')
@@ -138,6 +146,21 @@ module TsungWrapper
 
   end
 end
+
+
+
+
+def login_with_autokey_snippet_xml
+  str = <<-EOXML
+<!-- Hit Landing Page With Auto Key -->
+<request>
+  <http url="http://test_base_url.com/?setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe+FLPTVHZho3zK0mu41ouPmxLXJlZYi" version="1.1" method="GET"/>
+</request>
+EOXML
+end
+
+
+
 
 
 

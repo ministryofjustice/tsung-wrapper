@@ -1,0 +1,4 @@
+request:
+  name: Redirect to Create LPA type page
+  url: "/create/lpa-type"
+  http_method: GET		

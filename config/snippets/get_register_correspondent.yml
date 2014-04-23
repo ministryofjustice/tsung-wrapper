@@ -1,0 +1,4 @@
+request:
+  name: GET Register Correspondent
+  url: "/register/correspondent"
+  http_method: GET    

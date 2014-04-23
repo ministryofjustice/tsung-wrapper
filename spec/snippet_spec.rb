@@ -85,6 +85,31 @@ module TsungWrapper
 		end
 
 
+		describe '#is_get?' do
+			it 'should return true for gets' do
+				snippet = Snippet.new('hit_landing_page')
+				snippet.is_get?.should be_true
+			end
+
+			it 'should return false for posts' do
+				snippet = Snippet.new('login_using_dynvars')
+				snippet.is_get?.should be_false
+			end
+		end
+
+
+		describe '#is_post?' do
+			it 'should return false for gets' do
+				snippet = Snippet.new('hit_landing_page')
+				snippet.is_post?.should be_false
+			end
+
+			it 'should return true for posts' do
+				snippet = Snippet.new('login_using_dynvars')
+				snippet.is_post?.should be_true
+			end
+		end
+
 
 		describe '#params' do
 			it 'should return a list of parameter names' do

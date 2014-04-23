@@ -1,0 +1,4 @@
+request:
+  name: GET register Applicant
+  url: "/register/applicant"
+  http_method: GET    
