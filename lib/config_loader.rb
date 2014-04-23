@@ -6,7 +6,7 @@ module TsungWrapper
 
 	class ConfigLoader
 
-		@@automatic_attrs = [:server_host, :base_url, :maxusers, :server_port, :http_version, :dumptraffic, :loglevel]
+		@@automatic_attrs = [:server_host, :base_url, :maxusers, :server_port, :http_version, :dumptraffic, :loglevel, :default_thinktime]
 		attr_reader  	:user_agents
 		attr_accessor :load_profile
 
@@ -35,6 +35,13 @@ module TsungWrapper
 		  @dumptraffic = "false" if @dumptraffic.nil?
 		  @loglevel = "notice" if @loglevel.nil?
 		end
+
+		def ignore_thinktimes?
+			@default_thinktime == 0
+		end
+
+
+
 
 		def register_load_profile(lp_name)
 			builder = @load_profile.builder

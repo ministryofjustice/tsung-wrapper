@@ -126,9 +126,16 @@ module TsungWrapper
 		def transform_snippet(snippet)
 			@builder.comment! snippet.name
 
-			if snippet.has_attribute?('thinktime')
-				@builder.thinktime(:random => true, :value => snippet.thinktime)
+
+
+			unless @config.ignore_thinktimes?
+				if snippet.has_attribute?('thinktime')
+					@builder.thinktime(:random => true, :value => snippet.thinktime)
+				else
+					@builder.thinktime(:random => true, :value => @config.default_thinktime)
+				end
 			end
+
 
 			request_attrs = snippet.has_dynvars? ? {:subst => true} : nil
 			@builder.request(request_attrs) do 

@@ -21,6 +21,7 @@ module TsungWrapper
 				config.server_port.should == 80
 				config.load_profile.num_phases.should == 3
 				config.http_version.should == 1.1
+				config.default_thinktime.should == 0
 
 				config.user_agents.size.should == 2
 				ua = config.user_agents.first

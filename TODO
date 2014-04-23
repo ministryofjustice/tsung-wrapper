@@ -33,10 +33,13 @@ WIP:
 
 STILL TO DO:
 ============
-<<<<<<< HEAD
 - update readme with requirements (tsung)
 - update readme iwth where logs are written (.tsung..)
 - add tsung.yml details  to readme
+
+- Thinktime:
+  - specify default thinktime in load_profile
+  - overrride thinktime in individual request
 
 
 
@@ -45,7 +48,6 @@ STILL TO DO:
 =======
 
 - print details about what load profile, log level, etc are being used
->>>>>>> develop
 - run the perl_stats
 - print url for viewing graphs
 

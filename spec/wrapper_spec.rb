@@ -74,8 +74,15 @@ module TsungWrapper
 
 
     context 'request with thinktime' do
-      it 'should emit a request with a thinktime element' do
-        xml = Wrapper.xml_for_snippet('hit_register_page_with_thinktime')
+      it 'should emit a request with a thinktime element if the environment thinktime is not zero' do
+        # Given a wrapper with a config contianing a non-zero default thinktime
+        wrapper = Wrapper.new(nil, 'test', :snippet, "hit_register_page_with_thinktime")
+        config = wrapper.instance_variable_get(:@config)
+        config.instance_variable_set(:@default_thinktime, 10)
+        wrapper.instance_variable_set(:@config, config)
+
+        # The xml produced should come from the snippet
+        xml = wrapper.wrap_snippet
         xml.should == hit_register_page_with_thinktime_snippet_xml
       end
     end
@@ -178,7 +185,6 @@ end
 def register_user_and_store_authurl_xml
   str = <<-EOXML
 <!-- Hit Register Page and store AuthURL from response -->
-<thinktime random="true" value="2"/>
 <request subst="true">
   <dyn_variable name="activationurl" re="id='activation_link' href='(.*)'"/>
   <dyn_variable name="page_title" re="&amp;lt;title&amp;gt;(.*)&amp;lt;/title&amp;gt;"/>
@@ -267,7 +273,6 @@ def login_snippet_xml
   # params = contents='email=test3%40test.com&amp;password=Abc123123&amp;submit=Sign+in' content_type='application/x-www-form-urlencoded'
   str = <<-EOXML
 <!-- Login -->
-<thinktime random="true" value="6"/>
 <request>
   <http url="http://test_base_url.com/user/login" version="1.1" contents="#{content_string}" content_type="application/x-www-form-urlencoded" method="POST"/>
 </request>
