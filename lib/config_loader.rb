@@ -1,13 +1,25 @@
 require 'yaml'
 require 'ostruct'
+
 require_relative 'load_profile'
+require_relative 'match'
+
 
 module TsungWrapper
 
 	class ConfigLoader
 
-		@@automatic_attrs = [:server_host, :base_url, :maxusers, :server_port, :http_version, :dumptraffic, :loglevel, :default_thinktime]
-		attr_reader  	:user_agents
+		@@automatic_attrs = [	:server_host, 
+													:base_url, 
+													:maxusers, 
+													:server_port, 
+													:http_version, 
+													:dumptraffic, 
+													:loglevel, 
+													:default_thinktime
+												]
+
+		attr_reader  	:user_agents, :default_matches
 		attr_accessor :load_profile
 
 		attr_reader *@@automatic_attrs
@@ -22,6 +34,8 @@ module TsungWrapper
 		  end
 		  config = YAML.load_file(filename)
 
+		  raise "No Load profile specified in #{filename}" if config['load_profile'].nil?
+
 		  @@automatic_attrs.each do |attr|
 		  	varname = "@#{attr}".to_sym
 		  	self.instance_variable_set(varname, config[attr.to_s])
@@ -29,6 +43,11 @@ module TsungWrapper
 
 		  config['user_agents'].each do |ua|
 		  	@user_agents << OpenStruct.new(ua)
+		  end
+
+		  @default_matches = []
+		  unless config['default_matches'].nil?
+		  	config['default_matches'].each { | matchname| @default_matches << Match.new(matchname) }
 		  end
 
 		  @load_profile = LoadProfile.new(config['load_profile'])

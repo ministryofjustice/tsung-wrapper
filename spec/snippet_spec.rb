@@ -205,17 +205,75 @@ module TsungWrapper
 				match.when.should == 'nomatch'
 				match.do.should == 'dump'
 				match.source.should == 'all'
-				match.pattern.should == 'HTTP/1.1 (200'
+				match.pattern.should == 'HTTP/1.1 200'
 
 				match = snippet.matches.last
 				match.name.should == 'match_200_response'
 				match.when.should ==  'match' 	
 				match.do.should == 'continue'									
 				match.source.should ==  'all'                       
-				match.pattern.should == "HTTP/1.1 (200" 
-
-
+				match.pattern.should == "HTTP/1.1 200" 
 			end
+		end
+
+
+		describe '#add_default_matches'  do
+			it 'should not replace existing matches with default matches' do
+				# given a config with matches ...
+				config = ConfigLoader.new('test_with_unique_matches')
+				config.default_matches.first.name.should == 'dump_4xx'
+				config.default_matches.last.name.should == 'continue_if_200_or_302'
+
+				# ... and a snippet with matches
+				snippet = Snippet.new('login_with_dynvar_and_match_response')
+				snippet.matches.size == 2
+				snippet.matches.first.name.should == 'dump_non_200_response'
+				snippet.matches.last.name.should == 'match_200_response'
+
+				# when we add default matches
+				snippet.add_default_matches(config)
+
+				# the matches in the snippet should not be changed
+				snippet.matches.size == 2
+				snippet.matches.first.name.should == 'dump_non_200_response'
+				snippet.matches.last.name.should == 'match_200_response'
+			end
+
+
+			it 'should insert default matches when matches are empty' do
+				# given a config with matches ....
+				config = ConfigLoader.new('test_with_unique_matches')
+				config.default_matches.first.name.should == 'dump_4xx'
+				config.default_matches.last.name.should == 'continue_if_200_or_302'
+
+				# ... and a snippet with no matches
+				snippet = Snippet.new('activate_account')
+				snippet.matches.should be_empty
+
+				#when I add default matchest
+				snippet.add_default_matches(config)
+
+				# the snippet should have the same matches as the config
+				snippet.matches.first.name.should == 'dump_4xx'
+				snippet.matches.last.name.should == 'continue_if_200_or_302'
+			end
+
+
+			it 'should insert empty array when there are no matches nor default matches' do
+				# given a sconfig with no default matches ...
+				config = ConfigLoader.new('development')
+
+				# and a snippet with no default matches
+				snippet = Snippet.new('activate_account')
+
+				# When I add default matches to the snippet
+				snippet.add_default_matches(config)
+
+				# the snippet whould have no matches
+				snippet.matches.should be_empty
+			end
+
+
 		end
  
 

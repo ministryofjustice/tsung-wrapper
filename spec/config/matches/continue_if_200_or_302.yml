@@ -1,7 +1,5 @@
-# this named match will continue if the response code is 200
-
 match:
   when: match                     # match or nomatch
   source: all                     # all (header + body) or body
   do: continue                    # continue | abort | log | dump | loop (requires sleep_loop and max_loop)
-  pattern: "HTTP/1.1 200" 
+  pattern: "HTTP/1.1 (200|302)" 

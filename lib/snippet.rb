@@ -2,13 +2,15 @@ require 'ostruct'
 require 'cgi'
 
 require_relative 'content_string'
+require_relative 'match'
+require_relative 'config_loader'
 
 
 module TsungWrapper
 
 	class Snippet
 
-		attr_reader :extract_dynvars
+		attr_reader :extract_dynvars, :matches
 
 		def initialize(snippet_name)
 			filename = "#{TsungWrapper.config_dir}/snippets/#{snippet_name}.yml"
@@ -23,7 +25,7 @@ module TsungWrapper
 			@extract_dynvars = @attrs['extract_dynvars'].nil? ? {} :  @attrs['extract_dynvars']
 			@url_dynvar 		 = false
 			@has_dynvars     = params_contain_dynvars? || url_contains_dynvars?
-			@matches         = []
+			@matches         = load_matches
 		end
 
 
@@ -88,23 +90,24 @@ module TsungWrapper
 			@attrs.has_key?(stringified_meth) ? @attrs[stringified_meth] : super
 		end
 
-
-		def matches
-			if @matches.empty?
-				if @attrs['matches']
-					@attrs['matches'].each do |match|
-						filename = File.join(TsungWrapper.config_dir, 'matches', "#{match}.yml")
-						config = YAML.load_file(filename)
-						struct =  OpenStruct.new(config['match'])
-						struct.name = match
-						@matches << struct
-					end
-				end
-			end
-			@matches
+		# we add the default matches from the config into this snippet, if there are no matches specified in the snippet itself.
+		def add_default_matches(config)
+			@matches = config.default_matches if @matches.empty?
 		end
 
+
+
 		private
+
+		def load_matches
+			matches = []
+			if @attrs['matches']
+				@attrs['matches'].each { |match_name| matches << Match.new(match_name) }
+			end
+			matches
+		end
+
+
 
 		def url_contains_dynvars?
 			@url_dynvar = contains_dynvar?(@attrs['url'])

@@ -23,6 +23,10 @@ module TsungWrapper
 				config.http_version.should == 1.1
 				config.default_thinktime.should == 0
 
+				config.default_matches.size.should == 2
+				config.default_matches.first.name.should == 'dump_non_200_response'
+				config.default_matches.last.name.should == 'match_200_response'
+
 				config.user_agents.size.should == 2
 				ua = config.user_agents.first
 				ua.name.should == 'Linux Firefox'
@@ -33,6 +37,18 @@ module TsungWrapper
 				ua.name.should == 'Windows Firefox'
 				ua.probability.should == 20
 				ua.user_agent_string.should == 'Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4'
+			end
+
+			it 'should initialise and empty array of default matches if default matches not specified in environment file' do
+				config = ConfigLoader.new('development')
+				config.default_matches.should be_instance_of(Array)
+				config.default_matches.size.should == 0
+			end
+
+			it 'should raise if the environment config doesnt have a load profile' do
+				expect {
+					config = ConfigLoader.new('test_without_load_profile')
+				}.to raise_error RuntimeError, /^No Load profile specified in.*test_without_load_profile\.yml$/
 			end
 		end
 

@@ -6,6 +6,7 @@ maxusers: 1000
 server_port: 80
 http_version: 1.1
 default_thinktime: 4
+load_profile: normal
 
 
 

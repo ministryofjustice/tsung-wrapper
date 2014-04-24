@@ -71,6 +71,7 @@ module TsungWrapper
 		def wrap_snippet
 			raise "Unable to call wrap_snippet on a Wrapper that wasn't instantiated using xml_for_snippet()" unless @wrapper_type == :snippet
 			snippet = Snippet.new(@snippet_name)
+			snippet.add_default_matches(@config)
 			transform_snippet(snippet)
 			@xml
 		end
@@ -164,7 +165,7 @@ module TsungWrapper
 
 		def add_matches(matches)
 			matches.each do |match| 
-				@builder.match(match.pattern, :do => match.do, :when => match.when, :name => match.name)
+				match.to_xml(@builder)
 			end
 		end
 
