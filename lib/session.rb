@@ -15,8 +15,10 @@ module TsungWrapper
 
 		attr_reader :snippets, :session_name, :dynvars
 
-		def initialize(session_name)
+		def initialize(session_name, builder, config)
 			@session_name = session_name
+			@builder      = builder
+			@config       = config
 			@dynvars      = []
 			@snippets     = []
 			filename      = "#{TsungWrapper.config_dir}/sessions/#{@session_name}.yml"
@@ -51,7 +53,7 @@ module TsungWrapper
 
 
 		def build_snippet(snippet_name)
-			@snippets << Snippet.new(snippet_name)
+			@snippets << Snippet.new(snippet_name, @builder, @config)
 		end
 
 	

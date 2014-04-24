@@ -55,14 +55,14 @@ module TsungWrapper
       end
     end
 
-    describe '#wrap_snippet' do
-      it 'should raise an exception if wrapper not instantiated through new_for_snippet' do |variable|
-        wrapper = Wrapper.new('hit_landing_page', 'test')
-        expect {
-          wrapper.wrap_snippet
-        }.to raise_error RuntimeError, "Unable to call wrap_snippet on a Wrapper that wasn't instantiated using xml_for_snippet()"
-      end
-    end
+    # describe '#wrap_snippet' do
+    #   it 'should raise an exception if wrapper not instantiated through new_for_snippet' do |variable|
+    #     wrapper = Wrapper.new('hit_landing_page', 'test')
+    #     expect {
+    #       wrapper.wrap_snippet
+    #     }.to raise_error RuntimeError, "Unable to call wrap_snippet on a Wrapper that wasn't instantiated using xml_for_snippet()"
+    #   end
+    # end
 
 
     # describe '.xml_for_snippet' do
@@ -119,10 +119,10 @@ module TsungWrapper
 
 
     context 'dynamic variables' do
-      it 'should generate snippet to define a random string' do
-        xml = Wrapper.xml_for_dynvar('random_str_12', 'username')
-        xml.should == random_str_12_xml
-      end
+      # it 'should generate snippet to define a random string' do
+      #   xml = Wrapper.xml_for_dynvar('random_str_12', 'username')
+      #   xml.should == random_str_12_xml
+      # end
 
       it 'should generate snippet to define a random number' do
         xml = Wrapper.xml_for_dynvar('random_number', 'user_id')
@@ -137,19 +137,19 @@ module TsungWrapper
     end
 
 
-    context 'matches' do
-      it 'should generate a request snippet including named matches' do
-        xml = Wrapper.xml_for_snippet('login_with_dynvar_and_match_response')
-        xml.should == login_with_dynvar_and_match_response_xml
-      end
-    end
+    # context 'matches' do
+    #   it 'should generate a request snippet including named matches' do
+    #     xml = Wrapper.xml_for_snippet('login_with_dynvar_and_match_response')
+    #     xml.should == login_with_dynvar_and_match_response_xml
+    #   end
+    # end
 
-    context 'url is a dynvar' do
-      it 'should generate a request where the url is a dynamic variable' do
-        xml = Wrapper.xml_for_snippet('activate_account')
-        xml.should == activate_account_xml
-      end
-    end
+    # context 'url is a dynvar' do
+    #   it 'should generate a request where the url is a dynamic variable' do
+    #     xml = Wrapper.xml_for_snippet('activate_account')
+    #     xml.should == activate_account_xml
+    #   end
+    # end
 
   end
 end
@@ -171,14 +171,14 @@ end
 
 
 
-def activate_account_xml
-  str = <<-EOXML
-<!-- Activate Account -->
-<request subst="true">
-  <http url="%%_activationurl%%" version="1.1" method="GET"/>
-</request>
-EOXML
-end
+# def activate_account_xml
+#   str = <<-EOXML
+# <!-- Activate Account -->
+# <request subst="true">
+#   <http url="%%_activationurl%%" version="1.1" method="GET"/>
+# </request>
+# EOXML
+# end
 
 
 

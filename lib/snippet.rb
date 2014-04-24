@@ -101,7 +101,11 @@ module TsungWrapper
 		end
 
 
-		def method_missing(meth)
+		def method_missing(*meth)
+			if meth.size > 1
+				raise "Unexpected method missing: #{meth.inspect}"
+			end
+			meth = meth.first
 			stringified_meth = meth.to_s
 			@attrs.has_key?(stringified_meth) ? @attrs[stringified_meth] : super
 		end
@@ -187,7 +191,11 @@ module TsungWrapper
 		end
 
 
-
+		def add_extract_dynvars(snippet)
+			snippet.extract_dynvars.keys.each do |name|
+				@builder.dyn_variable(:name => name, :re => snippet.extract_dynvars[name])
+			end
+		end
 
 
 

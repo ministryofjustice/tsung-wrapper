@@ -1,0 +1,6 @@
+session:
+  snippets:
+    - hit_landing_page
+    - hit_register_page
+    - no_such_snippet
+    

@@ -53,13 +53,20 @@ module TsungWrapper
       end
 
 
+      it 'should generate a request snippet including named matches' do
+      	snippet = Snippet.new('login_with_dynvar_and_match_response', builder, config)
+      	snippet.to_xml
+        xml.should == login_with_dynvar_and_match_response_xml
+      end
 
+       it 'should generate a request where the url is a dynamic variable' do
+        snippet = Snippet.new('activate_account', builder, config)
+        snippet.to_xml
+        xml.should == activate_account_xml
+      end
 
-			
+      
 		end
-
-
-
 
 
 
@@ -274,6 +281,33 @@ module TsungWrapper
 		end
 	end
 end
+
+
+
+def activate_account_xml
+  str = <<-EOXML
+<!-- Activate Account -->
+<request subst="true">
+  <http url="%%_activationurl%%" version="1.1" method="GET"/>
+</request>
+EOXML
+end
+
+
+
+
+def login_with_dynvar_and_match_response_xml
+  str = <<-EOXML
+<!-- Login -->
+<request subst="true">
+  <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 (200</match>
+  <match do="continue" when="match" name="match_200_response">HTTP/1.1 (200</match>
+  <http url="http://test_base_url.com/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
+</request>
+EOXML
+end
+
+
 
 
 
