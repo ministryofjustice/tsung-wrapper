@@ -103,22 +103,13 @@ module TsungWrapper
 		end
 
 
-		def method_missing(*meth)
-			if meth.size > 1
-				raise "Unexpected method missing: #{meth.inspect}"
-			end
-			meth = meth.first
+		def method_missing(*meth_and_params)
+			meth = meth_and_params.first
 			stringified_meth = meth.to_s
 			@attrs.has_key?(stringified_meth) ? @attrs[stringified_meth] : super
 		end
 
-		# we add the default matches from the config into this snippet, if there are no matches specified in the snippet itself.
-		def add_default_matches(config)
-			@matches = config.default_matches if @matches.empty?
-		end
-
-
-
+		
 		private
 
 		# loads the matches from the snippet definition, or the default matches if there aren't any defined in the snippet

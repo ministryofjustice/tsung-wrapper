@@ -65,6 +65,18 @@ module TsungWrapper
         xml.should == activate_account_xml
       end
 
+      it 'should generate thinktime from the environment default if not specified in snippet' do 
+        # given a config with a non-zero thinktime
+        myconfig = ConfigLoader.new('test_with_thinktime')
+
+        # and a snippet without it's own thinktimne
+        snippet = Snippet.new('activate_account', builder, myconfig)
+
+        # The gnerated xml should have the thinktime from the config        
+        snippet.to_xml
+        xml.should =~ /<thinktime random="true" value="8"\/>/
+      end
+
       
 		end
 
@@ -277,11 +289,9 @@ module TsungWrapper
 				match.do.should == 'continue'									
 				match.source.should ==  'all'                       
 				match.pattern.should == "HTTP/1.1 200" 
-
-
 			end
 		end
- 
+
 	end
 
 end

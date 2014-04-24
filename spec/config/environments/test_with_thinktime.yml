@@ -1,15 +1,16 @@
   
 server_host: test_server_host
-base_url: http://ec2-54-72-149-249.eu-west-1.compute.amazonaws.com
-maxusers: 9000
+# base_url: http://ec2-54-229-53-8.eu-west-1.compute.amazonaws.com
+base_url: http://test_base_url.com
+maxusers: 1500
 server_port: 80
 http_version: 1.1
-load_profile: heavy
-loglevel: debug
-dumptraffic: protocol
-default_thinktime: 4
+load_profile: normal
+default_thinktime: 8   
 default_matches:
-  - abort_unless_success_or_redirect
+  - dump_non_200_response
+  - match_200_response
+
 
 
 user_agents:
@@ -19,5 +20,4 @@ user_agents:
   - name: Windows Firefox
     user_agent_string: "Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4"
     probability: 20
-
 
