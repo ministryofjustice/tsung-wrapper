@@ -5,8 +5,8 @@ maxusers: 9000
 server_port: 80
 http_version: 1.1
 load_profile: heavy
-loglevel: warning
-dumptraffic: false
+loglevel: debug
+dumptraffic: true
 default_thinktime: 4
 default_matches:
   - abort_unless_success_or_redirect

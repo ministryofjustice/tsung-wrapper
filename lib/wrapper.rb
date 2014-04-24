@@ -125,9 +125,8 @@ module TsungWrapper
 
 		# expects and OpenStruct 
 		def transform_snippet(snippet)
+			snippet.add_default_matches(@config)
 			@builder.comment! snippet.name
-
-
 
 			unless @config.ignore_thinktimes?
 				if snippet.has_attribute?('thinktime')
@@ -136,7 +135,6 @@ module TsungWrapper
 					@builder.thinktime(:random => true, :value => @config.default_thinktime)
 				end
 			end
-
 
 			request_attrs = snippet.has_dynvars? ? {:subst => true} : nil
 			@builder.request(request_attrs) do 

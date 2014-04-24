@@ -1,6 +1,6 @@
 
 match:
-  when: nomatch                     # match or nomatch
-  source: all                       # all (header + body) or body
-  do: dump                          # continue | abort | log | dump | loop (requires sleep_loop and max_loop)
-  pattern: "HTTP/1.1 [^2|^3]\d\d"   # if HTTP status code not 2nn or 3nn
+  when: match                        # match or nomatch
+  source: all                        # all (header + body) or body
+  do: abort                          # continue | abort | log | dump | loop (requires sleep_loop and max_loop)
+  pattern: "HTTP/1.1 [^2|^3][0-9]{2}"
