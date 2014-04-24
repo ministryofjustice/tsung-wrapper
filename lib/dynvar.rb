@@ -1,3 +1,5 @@
+require 'builder'
+
 require_relative 'tsung_wrapper'
 
 
@@ -51,6 +53,23 @@ module TsungWrapper
 			end
 			hash
 		end
+
+
+		def to_xml(builder)
+			builder.setdynvars(self.attr_hash) do
+				builder.var(:name => self.varname)
+			end
+		end
+
+
+# ##################################################
+# 		def add_dynvar(dynvar)
+# 			@builder.setdynvars(dynvar.attr_hash) do
+# 				@builder.var(:name => dynvar.varname)
+# 			end
+# 		end
+# ##################################################
+
 
 
 

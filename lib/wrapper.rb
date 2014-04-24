@@ -19,34 +19,23 @@ module TsungWrapper
 		# 		TsungWrapper::Wrapper.new("my_session", "test", :snippet, 'my_snippet')
 		#  		TsungWrapper::Wrapper.new("my_session", "test", :dynvar, '"my_dynvar"')
 		#
-		def initialize(session, env = nil, xml_to_generate = :full, snippet_name = nil)
+		def initialize(session, env = nil)
 			TsungWrapper.env = env
-			@wrapper_type    = xml_to_generate
-			@snippet_name    = @wrapper_type == :snippet ? snippet_name : nil
-			@dynvar_name     = @wrapper_type == :dynvar  ? snippet_name : nil
 			@env             = env.nil? ? 'development' : env
 			@config          = ConfigLoader.new(@env)
 			@xml             = ""
 		  @builder 				 = Builder::XmlMarkup.new(:target => @xml, :indent => 2)
 
 		  @config.load_profile.set_xml_builder(@builder)
-		  if @wrapper_type == :full
-		  	@session = Session.new(session, @builder, @config)
-			  @builder.instruct! :xml, :encoding => "UTF-8"
-			  @builder.declare! :DOCTYPE, :tsung, :SYSTEM, "#{TsungWrapper.dtd}"
-			end
+	  	@session = Session.new(session, @builder, @config)
+		  @builder.instruct! :xml, :encoding => "UTF-8"
+		  @builder.declare! :DOCTYPE, :tsung, :SYSTEM, "#{TsungWrapper.dtd}"
 		end
 
 		def register_load_profile(lp_name)
 			@config.register_load_profile(lp_name)
 		end
 
-
-
-		def self.xml_for_dynvar(dynvar_name, varname)
-			wrapper = self.new(nil, 'test', :dynvar, dynvar_name)
-			wrapper.wrap_dynvar(varname)
-		end
 
 
 		def wrap 
@@ -61,12 +50,6 @@ module TsungWrapper
 		end		
 
 
-		def wrap_dynvar(varname)
-			raise "Unable to call wrap_dynvar on a Wrapper that wasn't instantiated using xml_for_dynvar()" unless @wrapper_type == :dynvar
-			dynvar = Dynvar.new(@dynvar_name, varname)
-			add_dynvar(dynvar)
-			@xml
-		end
 
 
 
@@ -79,19 +62,11 @@ module TsungWrapper
 
 
 
-		def add_dynvar(dynvar)
-			@builder.setdynvars(dynvar.attr_hash) do
-				@builder.var(:name => dynvar.varname)
-			end
-		end
-
-
-
 		def add_sessions
 			@builder.sessions do
 				@builder.session(:name => "#{@session.session_name}-#{formatted_time}", :probability => 100, :type => 'ts_http') do 
 					@session.dynvars.each do |dynvar|
-						add_dynvar(dynvar)
+						dynvar.to_xml(@builder)
 					end
 					@session.snippets.each do |snippet|
 						snippet.to_xml

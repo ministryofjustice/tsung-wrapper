@@ -47,8 +47,73 @@ module TsungWrapper
 			end
 
 		end
+
+
+		describe '#to_xml' do
+			
+			let(:xml)						{ "" }
+			let(:builder)      	{ Builder::XmlMarkup.new(:target => xml, :indent => 2) }
+
+
+			it 'should generate snippet to define a random number' do
+				dynvar = Dynvar.new('random_number', 'user_id')
+				dynvar.to_xml(builder)
+        xml.should == random_number_xml
+      end
+
+
+      it 'should generate snippet to define an erlang function' do
+      	dynvar = Dynvar.new('erlang_function', 'todaystr')
+				dynvar.to_xml(builder)
+        xml.should == erlang_function_xml
+      end
+
+
+      it 'should generate snippet to define a random string' do
+      	dynvar = Dynvar.new('random_str_12', 'username')
+				dynvar.to_xml(builder)
+        xml.should == random_str_12_xml
+      end
+
+
+		end
 	end
 end
+
+
+
+def random_str_12_xml
+  str = <<-EOXML
+<setdynvars sourcetype="random_string" length="12">
+  <var name="username"/>
+</setdynvars>
+EOXML
+end
+
+
+
+def erlang_function_xml
+  str = <<-EOXML
+<setdynvars sourcetype="eval" code="fun({Pid,DynVars})->
+       {{Y, Mo, D},_}=calendar:now_to_datetime(erlang:now()),
+       DateAsString = io_lib:format('~2.10.0B%2F~2.10.0B%2F~4.10.0B', [D, Mo, Y]),
+       lists:flatten(DateAsString) end.">
+  <var name="todaystr"/>
+</setdynvars>
+EOXML
+end
+
+
+
+def random_number_xml
+  str = <<-EOXML
+<setdynvars sourcetype="random_number" start="500" end="99000">
+  <var name="user_id"/>
+</setdynvars>
+EOXML
+end
+
+
 
 
 
