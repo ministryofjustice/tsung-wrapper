@@ -25,7 +25,7 @@ module TsungWrapper
       it 'should produce the correct xml' do
         match = Match.new('dump_non_200_response')
         match.to_xml(builder)
-        puts xml 
+        # puts xml 
         xml.should == %Q{<match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>\n}
       end
     end

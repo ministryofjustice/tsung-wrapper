@@ -1,42 +1,34 @@
 require 'spec_helper'
+require 'builder'
+
 require_relative '../lib/session'
+require_relative '../lib/config_loader'
+
 
 module TsungWrapper
 
 	describe Session do
 
 		describe '.new' do
+			let(:xml)							{ "" }
+			let(:builder)					{ Builder::XmlMarkup.new(:target => xml, :indent => 2) }
+			let(:config)					{ ConfigLoader.new('test') }
 
 			it 'should raise an exception if no session file exists with the specified name' do
 				expect {
-					Session.new('non_existent_session')
+					Session.new('non_existent_session', builder, config)
 				}.to raise_error ArgumentError, "No session found with name 'non_existent_session'"
 			end
 
 
 			it 'should raise an exception if the session contains non-existent snippets' do
-				filename = "#{TsungWrapper.config_dir}/sessions/my_session.yml"
-				snippet_1_filename = "#{TsungWrapper.config_dir}/snippets/hit_landing_page.yml"
-				snippet_2_filename = "#{TsungWrapper.config_dir}/snippets/non_existent_snippet.yml"
-				snippet_3_filename = "#{TsungWrapper.config_dir}/snippets/hit_register_page.yml"
-				session_hash = {"session"=>{"snippets"=>["hit_landing_page", "non_existent_snippet", "hit_register_page"]}}
-
-				expect(File).to receive(:exist?).with(filename).and_return(true)
-
-				expect(File).to receive(:exist?).with(snippet_1_filename).and_return(true)
-				expect(File).to receive(:exist?).with(snippet_2_filename).and_return(false)
-
-				expect(YAML).to receive(:load_file).with(filename).and_return(session_hash)
-				expect(YAML).to receive(:load_file).with(snippet_1_filename).and_return({"request"=>{"name"=>"Hit Landing Page", "url"=>nil, "http_method"=>"GET"}})
-
-
 				expect{
-					Session.new('my_session')
-				}.to raise_error ArgumentError, "No Snippet with the name 'non_existent_snippet' can be found."
+					Session.new('session_including_missing_snippet', builder, config)
+				}.to raise_error ArgumentError, "No Snippet with the name 'no_such_snippet' can be found."
 			end
 
 			it 'should load dynvars' do
-				session = Session.new('dynvar_session')
+				session = Session.new('dynvar_session', builder, config)
 				session.has_dynvars?.should be_true
 				dv = session.dynvars.first
 				dv.type.should == 'random_string'
@@ -45,7 +37,7 @@ module TsungWrapper
 
 
 			it 'should load the session and component snippets' do
-				session = Session.new('hit_landing_page')
+				session = Session.new('hit_landing_page', builder, config)
 				session.session_name.should == 'hit_landing_page'
 				session.snippets.size.should == 2
 				session.has_dynvars?.should be_false
