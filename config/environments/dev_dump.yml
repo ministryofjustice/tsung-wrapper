@@ -6,7 +6,7 @@ server_port: 80
 http_version: 1.1
 load_profile: heavy
 loglevel: debug
-dumptraffic: false
+dumptraffic: true
 default_thinktime: 4
 default_matches:
   - abort_unless_success_or_redirect
@@ -19,5 +19,3 @@ user_agents:
   - name: Windows Firefox
     user_agent_string: "Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4"
     probability: 20
-
-
