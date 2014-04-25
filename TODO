@@ -21,41 +21,29 @@ DONE:
 	- move arrival phases to separate file
 	- load a default loadfile specified in environment file
 	- enable load to be specified on command line
-
-
+- update readme with requirements (tsung)
+- update readme iwth where logs are written (.tsung..)
+- Thinktime:
+  - specify default thinktime in load_profile
+  - overrride thinktime in individual request
 
 WIP:
 ====
-- specify library for logging
-- execute perl_stats
+
 
 
 
 STILL TO DO:
 ============
-- update readme with requirements (tsung)
-- update readme iwth where logs are written (.tsung..)
+- execute perl_stats
+
 - add tsung.yml details  to readme
-
-- Thinktime:
-  - specify default thinktime in load_profile
-  - overrride thinktime in individual request
-
-
-
-
-- specify library for logging
-=======
-
-- print details about what load profile, log level, etc are being used
-- run the perl_stats
+- handle multiple scenarios
+  - rename sessions as scenarios
+  - include multiple scenarios in one session
 - print url for viewing graphs
 
-- refactor snippet to emit xml and remove from wrapper
 
-- handle multiple scenarios
-	- rename sessions as scenarios
-	- include multiple scenarios in one session
 
 
 
