@@ -46,13 +46,15 @@ All three of the steps above can be run using the lib/wrap.rb executable.
 
 ### Usage examples
 
-* Use the "development" environment confiifuration file, with load profile "heavy" and the session file "full_run" and just produce the xml file and pipe it to tmp/heavy_full_run.xml
+
+
+* Use the "development.yml" environment confiifuration file, with load profile "heavy.ymnl" and the session file "full_run.yml" and just produce the xml file and pipe it to tmp/heavy_full_run.xml
 
 
 	``ruby lib/wrap.rb -e development -l heavy -x full_run  > tmp/heavy_full_run.xml``
 
     
-* Use the "dev_dump" environments, "single_user" load profile and session "full_run" to produce the XMl file, run tsung using that file, and then generate the stats afterwards.
+* Use the "dev_dump.yml" environment, "single_user.yml" load profile and session "full_run.yml" to produce the XMl file, run tsung using that file, and then generate the stats afterwards.
 
 	``ruby lib/wrap.rb -e dev_dump -l single_user -rs full_run``
 	
@@ -68,17 +70,17 @@ Configuration files are located in the /config directory (for testing, they are 
 
 The config directory contains the dtd file to be used, plus six folders: 
 
-*  environments<br/>
+*  __environments__<br/>
 	describes the environment to run (host, log level, user agents, etc
-*  load_profiles<br/>
+*  __load_profiles__<br/>
 	decsribes the load to use during the test.  This could be single user, used when developing a load test to see the user journey through the site, or a series of phases to progressively load the server
-*  sessions<br/>
+*  __sessions__<br/>
 	gives a name to a session, which comprises of a series of requests, each request being detailed in a snippet
-*  snippets<br/>
+*  __snippets__<br/>
 	each snippet is a single GET or POST request, with or without parameters
-*  matches<br/>
+*  __matches__<br/>
 	standardised tests that can be carried out on the response, and action taken depending on the result
-*  dynvars<br/>
+*  __dynvars__<br/>
 	The definition of dynamic variables which can be used in requests, eg. to generate a random string to use as a username.
 
 
@@ -121,8 +123,8 @@ All of the above elements except default_thinktime and default_matches must be p
 
 Most of the elements are self explanatory, but the following need a bit more explanation:
 
-* load_profile: which load profile to use.  This can be overridden by the command line swith -l at runtime.
-*  dumptraffic: this can be one of the follwing values:
+* __load_profile__: which load profile to use.  This can be overridden by the command line swith -l at runtime.
+*  __dumptraffic__: this can be one of the follwing values:
 	* true: dump the entire request and response to tsung.dump
 	* false: do not dump anything
 	* light: dump the first 44 bytes of the response to tsung.dump
@@ -144,41 +146,6 @@ See http://tsung.erlang-projects.org/user_manual/conf-file.html for details.
 
 
 
-### The dynvars Folder
-
-Files in this folder specify dynamic variables which can be automatically generated during the session - see Dynamic variable definition and substitution below.
-
-
-
- 
-### The environments Folder
-There should be a configuration file for each environment that you intend to run, e.g.
- 
- * development.yml
- * test.yml
- * staging.yml
- * production.yml
- 
-Each environment file contains global variables that will be used when building the Tsung XML configuration file.  A typical example might be:
-
-
-
-		server_host: test_server_host
-		base_url: http://test_base_url.com
-		maxusers: 40
-		server_port: 8080
-		http_version: 1.1
-		load_profile: average
-
-		user_agents:
-		  - name: Linux Firefox
-		    user_agent_string: "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21"
-		    probability: 80
-		  - name: Windows Firefox
-		    user_agent_string: "Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4"
-		    probability: 20
-
-All of the above elements must be present.
 
 ### The load_profiles folder
 
@@ -207,17 +174,30 @@ A typical load_profile looks like this:
 		    arrival_interval: 2
 		    arrival_interval_unit: second   
 
+As you can see, each load profile is a colleciton of 1 or more "arrival phases".  Most arrival phases are like the one above, specifying a duration and the interval between new sessions being started.  However the syntax below can also be used if  you want to control the total number of users.  The configuration below specifies just one user session, which can be very useful in debugging when setting up a new session to use.
+
+		arrivalphases:
+	  	  - name: Single User
+	    	sequence: 1
+	    	duration: 6
+	    	duration_unit: second
+	    	max_users: 1
+	    	arrival_rate: 5
+	    	arrival_rate_unit: second
+
+
 ### The sessions Folder
 
 This folder contains yaml files that describe the sessions that you want to run.
 
-Basically, they are just simple containers for an array of dynamic variables that are used, and snippets that will be included into the XML file, e.g.
+There are two main bit of information that the session file will define:
+* the dynamic variables that will be used in the session
+* The requests that will be made
 
-
-
+A typical session file might look like this:
 
 		session:
-			dynvars:
+		  dynvars:
 		    username: random_str_12
 		    userid: random_number
 		    today: erlang_function
@@ -231,122 +211,85 @@ In the above example, three dynamic variables are declared (username, userid, to
 * config/dynvars/random_number.yml
 * config/dynvars/erlang_funtion.yml
 
-The name of the session is taken from the name of the file, and will be included as a comment in the XML.
+See below for an explanation of the dynvars file.
+
+The snippets section simply lists the snippet files which are to be executed one after another, in this case:
+
+* config/snippets/hit_landing_page.yml
+* config/snippets/hit_register_page.yml
+
 
 
 
 ### The snippets Folder
 
-This folder contains the snippets.  Each snippet is one request, either GET or POST, and can be included in a session.
+This folder contains the snippets.  Each snippet is one request, either GET or POST, that can be included in a session.
 
 And example is hit_register_page.yml, inluded as the second snippet in the session file described above.
 
 	request:
-	  name: Hit Register Page
-	  url: 'user/register'
-	  http_method: GET
-
-The name of the snippet as defined in the file will be included into the XML file as a comment.
-
-The url will be appended to the base_url defined in the environment configuration.
-
-
-### Dynamic variable definition and substitution
-
-A request can include paramters which use dynamically generated variables - 'dynvars' which can come from one of two places:
-
-*  from a definition in the dynvars folder
-*  extracted from a response earlier in the session
-
-
-##### Defnining dynamic variables in the dynvars folder
-
-Each type of dynvar is defined in its own file in the dynvars folder.  There are three types of dynvar:
-
-* random string
-* random number
-* erlang
-
-See examples in the spec/config/dynvars folder to see how they are defined.
-
-When you want to use them in the session, you must include a dynvars section in your session file which details what definition to use, and what name you will assign to it, e.g. 
-
-		session:
-			dynvars:
-				username: randomstr12
-				userid: random_num6
-
-		  snippets:
-		    - hit_landing_page
-		    - hit_register_page
-
-The above session delares that there are two dynamic variables used, the one defined in config/dynvars/randomstr12.yml and will be 
-assigned the name 'username', and the one defined in config/dynvars/randomnum6.yml and will be assigned the name userid.
-
-These dynamic variables can be referred to in subsequent snippets as %%_username%% and %%_userid%%.
-
-
-#### Extracting dynvars from responses.
-
-If you need to extract some information from a response to a request, you 
-specify this in the snippet that will generate the request in the extract_dynvars section.
-
-This section is a list of key value pairs, where the key is the name that will be given to the variable, and the value is the regular expression that will extract the value.
-
-For example:
-
-	
-	request:
-	  thinktime: 2
-	  name: Hit Register Page and store AuthURL from response
-	  url: '/user/register'
+	  name: Select which type of LPA to create
+	  thinktime: 5
+	  url: '/create/lpa-type'
 	  http_method: POST
 	  params:
-	    email: "%%_username%%"
-	    email_confirm: "%%_username%%"
-	    password: Passw0rd
-	    password_confirm: Passw0rd
-	    confirmUnderstanding: 1
-	    submit: I understand
-	    setAutoKey: "I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe+FLPTVHZho3zK0mu41ouPmxLXJlZYi"
-	  extract_dynvars:
-	    activationurl: "id='activation_link' href='(.*)'"
-	    page_title: "&lt;title&gt;(.*)&lt;/title&gt;"
+	    username: %%_username%%
+	    lpa_type: Property and financial affairs
+	    save: Save and continue
+	 extract_dynvars:
+    	activationurl: "id='activation_link' href='(.*)'"
+	    
+	    
+Explanation of the entries in the above folder:
 
-In the above example, given that the request contained:
+* __name__: The name of the request which will be included as a comment in the xml file
+* __thinktime__: the value here specifies the average number of seconds that will be used as the thinktime between the last response and submitting this request (see http://tsung.erlang-projects.org/user_manual/conf-sessions.html#thinktimes for details). This is an optional entry, and if present, will override any default_thinktime value specified the environment file.
+* __url__: the url to be GETted or POSTed.  This will be appended to the base_url specified int he environment file.
+* __http_method__: self explanatory
+* __params__: This element is optional and specifies any arameters to be submitted as key-value pairs. Either the key or the value part of the parameter (or indeed the url) can include a dynamic parameter, signified as such by being wrapped in "%%_  %%" as is username above.  The value for dynamic variables are set either by being defined at the top of the sessions file, or by a previous request extracting the value with an extract_dynvars section.  
+* __extract_dynvars__: This element specifies that a dynamic variable is to be extracted from the response and used in a subsequent request.  In the example above, a dynamic variable entitled activationurl is extracted using the specified Regex and capture group (i.e. in the response:
 
-	<a id="activation_link" href="http://test.com/activate/abc123">Activate</a>
+	``<a id='activation_link' href='/activate?abd7337fec3'>Click Here</a>``
 
-Then a dynamic variable called activationurl will be created with the contents:
+the string "/activate?abd7337fec3"	will be assigned to the variable activationurl, which can be referred to in a subsequent request as %%_actvationurl%%.
+
+
+### The dynvars Folder
+
+Files in this folder specify dynamic variables which can be automatically generated during the session.  There are three types of dynamic variables that can be specified:
+
+* __random string__: A typical dynvar configuration file to define a random string might look like:
+
+	<pre>
+	dynvar:
+	  type: random_string
+	  length: 12
+	</pre>	  
+
+* __random number__:  A typical dynvar configuration file to define a random number  might look like:
+
+	<pre>
+	dynvar:
+	  type: random_number
+	  start: 500
+	  end: 99000
+	</pre>	  
+
 	
-	http://test.com/activate/abc123
+* __erlang_funtion__: A typical dynvar configuration to define an erlang function that will be called to return the dynamic variable might look like: 
 
-This can be used in subsequent requests using the normal substitution convention, i.e. 
-
-	%%_activationurl%%
-
-
-
-## Command line usage
-The command line tool is run by executing ruby lib/wrap.rb from the root directory of the project.
-It can be used to generate xml to stdout, or a temporary file which is then piped into tsung.
-
-
-
-    Usage: wrap [-e environment] [-l load_profile] [-v] [-s] -x|-r session_name
-       wrap [-e environment] -c n
-
-	Generate Tsung XML file for session <session_name>
-
-    -e, --environment  ENV           Use specified environment (default: development)
-    -x, --xml-out                    Generate XML config and write to STDOUT
-    -r, --run-tsung                  Generate XML config and pipe into tsung
-    -l, --load-profile LOAD_PROFILE  Use specific load profile
-    -s, --generate-stats             Generate Stats (requires that -r option is set
-    -v, --verbose                    Set verbose mode ON
-    -c, --clean-log-dir HOURS        Clean log dir of directories created before N hours ago
-    
-
+	<pre>
+	dynvar:
+	  code: |
+	    fun({Pid,DynVars})->
+	           {{Y, Mo, D},_}=calendar:now_to_datetime(erlang:now()),
+	           DateAsString = io_lib:format('~2.10.0B%2F~2.10.0B%2F~4.10.0B', [D, Mo, Y]),
+	           lists:flatten(DateAsString) end.
+	  type: erlang
+	</pre>
+	
+	
+ 
 
 ## Development Server Configuration
 
