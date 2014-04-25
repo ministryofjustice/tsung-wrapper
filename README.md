@@ -11,15 +11,15 @@ Author: Stephen Richards <stephen.richards@digital.justice.gov.uk>
 	* [Usage](#usage)
 	* [Usage Examples](#usage-examples)
 * [Configuration Files](#configuration-files)
-	* [The environments folder](#the-environemnt-folder)
+	* [The environments folder](#the-environments-folder)
 	* [the load_profiles folder](#the-load_profiles-folder)
 	* [the sessions folder](#the-sessions-folder) 
 	* [the snippets folder](#the-snippets-folder)
 	* [the dynvars folder](#the-dynvars-folder)
-[Development Server Confiuration](#development-server-configuration)
+* [Development Server Confiuration](#development-server-configuration)
 	* [Log file format](#log-file-format)
 	* [Clearing the access log before a run](#clearing-the-access-log-before-a-run)
-[Tips for Creating Complex Sessions](#tips-for-createing-complex-sessions)
+* [Tips for Creating Complex Sessions](#tips-for-creating-complex-sessions)
 
 
 
