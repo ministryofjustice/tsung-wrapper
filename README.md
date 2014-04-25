@@ -2,6 +2,28 @@
 
 Author: Stephen Richards <stephen.richards@digital.justice.gov.uk>
 
+
+## Contents
+
+* [Overview](#overview)
+* [Dependencies](#dependencies)
+* Running tsung-wrapper
+	* Usage
+	* Usage Examples
+* Configuration Files
+	* The environments folder
+	* the load_profiles folder
+	* the sessions folder 
+	* the snippets folder
+	* the dynvars folder
+Development Server Confiurationa dn Tips for Creating Complex Sessions
+	* Log file format
+	* Clearing the access log before a run
+	* Creaitng complex sessions
+
+
+## Overview
+
 This project enables the creation of complex XML files for load testing using Tsung, from a series of 
 yaml configuration files.  The tool can be used to just produce the XML file, or actually run the tsung session, and the stats run to produce the graphs.
 
