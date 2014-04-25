@@ -69,21 +69,15 @@ Configuration files are located in the /config directory (for testing, they are 
 The config directory contains the dtd file to be used, plus six folders: 
 
 *  environments<br/>
-	describes the environment to run (host, log level, user agents, etc)
-	
+	describes the environment to run (host, log level, user agents, etc
 *  load_profiles<br/>
 	decsribes the load to use during the test.  This could be single user, used when developing a load test to see the user journey through the site, or a series of phases to progressively load the server
-	
-
 *  sessions<br/>
 	gives a name to a session, which comprises of a series of requests, each request being detailed in a snippet
-	
 *  snippets<br/>
 	each snippet is a single GET or POST request, with or without parameters
-	
 *  matches<br/>
 	standardised tests that can be carried out on the response, and action taken depending on the result
-
 *  dynvars<br/>
 	The definition of dynamic variables which can be used in requests, eg. to generate a random string to use as a username.
 
