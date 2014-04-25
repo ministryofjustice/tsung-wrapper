@@ -7,19 +7,20 @@ Author: Stephen Richards <stephen.richards@digital.justice.gov.uk>
 
 * [Overview](#overview)
 * [Dependencies](#dependencies)
-* Running tsung-wrapper
-	* Usage
-	* Usage Examples
-* Configuration Files
-	* The environments folder
-	* the load_profiles folder
-	* the sessions folder 
-	* the snippets folder
-	* the dynvars folder
-Development Server Confiurationa dn Tips for Creating Complex Sessions
-	* Log file format
-	* Clearing the access log before a run
-	* Creaitng complex sessions
+* [Running tsung-wrapper](#running-tsung-wrapper)
+	* [Usage](#usage)
+	* [Usage Examples](usage-examples)
+* [Configuration Files](configuration-files)
+	* [The environments folder](the-environemnt-folder)
+	* [the load_profiles folder](the-load_profiles-folder)
+	* [the sessions folder](the-sessions-folder) 
+	* [the snippets folder](the-snippets-folder)
+	* [the dynvars folder](the-dynvars-folder)
+[Development Server Confiuration](development-server-configuration)
+	* [Log file format](log-file-format)
+	* [Clearing the access log before a run](clearing-the-access-log-before-a-run)
+[Tips for Creating Complex Sessions](tips-for-createing-complex-sessions)
+
 
 
 ## Overview
@@ -314,7 +315,7 @@ Files in this folder specify dynamic variables which can be automatically genera
 	
  
 
-## Development Server Configuration and Tips for creating complex sessions
+## Development Server Configuration
 
 ### Log File Format
 
@@ -353,7 +354,7 @@ The access log can be emptied before a test run by the following command:
 
 
 
-### Creating complex sessions
+## Tips for Creating Complex Sessions
 
 I have found the best way to know exactly what requests to send to replicate a complex user session is as follows:
 
