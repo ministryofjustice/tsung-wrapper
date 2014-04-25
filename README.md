@@ -30,7 +30,7 @@ yaml configuration files.  The tool can be used to just produce the XML file, or
 
 
 ## Dependencies
-* tsung - Donwload from http://tsung.erlang-projects.org/dist/, or on mac: 
+* tsung - Download from http://tsung.erlang-projects.org/dist/, or on mac: 
 
 	``brew install tsung``
 
