@@ -3,22 +3,151 @@
 
 
 This project enables the creation of complex XML files for load testing using Tsung, from a series of 
-yaml configuration files.  The tool can be used to just produce the XML file, or actually run the tsung session.
+yaml configuration files.  The tool can be used to just produce the XML file, or actually run the tsung session, and the stats run to produce the graphs.
+
+
+## Dependencies
+* tsung - Donwload from http://tsung.erlang-projects.org/dist/, or on mac: 
+
+	<code>brew install tsung</code>
+
+* perl Template toolkit, which can be installed with:
+
+	<code>cpan Template</cpan>
+
+
+
+## Running tsung-wrapper
+
+The tsung-wrapper suite is run in three distinct phases:
+
+* Running the lib/wrap.rb executable to produce an xml file which will be used by tsung
+to control the load testing
+* Running tsung itself to send requests to the server in accordance with the instructions in the xml configuration file
+* Running the stats program to produce the HTML reports and graphs.
+
+All three of the steps above can be run using the lib/wrap.rb executable.
+
+### Usage
+
+    Usage: wrap [-e environment] [-l load_profile] [-v] [-s] -x|-r session_name
+       wrap [-e environment] -c n
+
+	Generate Tsung XML file for session <session_name>
+
+    -e, --environment  ENV           Use specified environment (default: development)
+    -x, --xml-out                    Generate XML config and write to STDOUT
+    -r, --run-tsung                  Generate XML config and pipe into tsung
+    -l, --load-profile LOAD_PROFILE  Use specific load profile
+    -s, --generate-stats             Generate Stats (requires that -r option is set
+    -v, --verbose                    Set verbose mode ON
+    -c, --clean-log-dir HOURS        Clean log dir of directories created before N hours ago
+
+
+### Usage examples
+
+* Use the "development" environment confiifuration file, with load profile "heavy" and the session file "full_run" and just produce the xml file and pipe it to tmp/heavy_full_run.xml
+
+
+	``ruby lib/wrap.rb -e development -l heavy -x full_run  > tmp/heavy_full_run.xml``
+
+    
+* Use the "dev_dump" environments, "single_user" load profile and session "full_run" to produce the XMl file, run tsung using that file, and then generate the stats afterwards.
+
+	``ruby lib/wrap.rb -e dev_dump -l single_user -rs full_run``
+	
+   
+
 
 
 
 
 ## Configuration Files
 
-Configuration files are located in the /config directory (for testing, they are located in /spec/config).
-The config directory contains the dtd file to be used, plus three folders: 
+Configuration files are located in the /config directory (for testing, they are located in /spec/config).  The contents of these files are what determines the contents of the XML file, which in turn determines how the load test is run.  The idea is that you have several standard config files, and you can pick and chooses between them to create whateve load testing session you want.
 
-*  dynvars
-*  environments
-*  load_profiles
-*  matches
-*  sessions
-*  snippets
+The config directory contains the dtd file to be used, plus six folders: 
+
+*  environments<br/>
+	describes the environment to run (host, log level, user agents, etc)
+	
+*  load_profiles<br/>
+	decsribes the load to use during the test.  This could be single user, used when developing a load test to see the user journey through the site, or a series of phases to progressively load the server
+	
+
+*  sessions<br/>
+	gives a name to a session, which comprises of a series of requests, each request being detailed in a snippet
+	
+*  snippets<br/>
+	each snippet is a single GET or POST request, with or without parameters
+	
+*  matches<br/>
+	standardised tests that can be carried out on the response, and action taken depending on the result
+
+*  dynvars<br/>
+	The definition of dynamic variables which can be used in requests, eg. to generate a random string to use as a username.
+
+
+The following sections look at each of the configuration files in more detail.
+
+
+### The environments Folder
+There should be a configuration file for each environment that you intend to run, e.g.
+ 
+ * development.yml
+ * test.yml
+ * staging.yml
+ * production.yml
+ 
+Each environment file contains global variables that will be used when building the Tsung XML configuration file.  A typical example might be:
+
+
+
+		server_host: test_server_host
+		base_url: http://test_base_url.com
+		maxusers: 9000
+		server_port: 80
+		http_version: 1.1
+		load_profile: heavy
+		dumptraffic: protocol
+		loglevel: debug
+		default_thinktime: 4
+		default_matches:
+		  - abort_unless_success_or_redirect
+
+		user_agents:
+		  - name: Linux Firefox
+		    user_agent_string: "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21"
+		    probability: 80
+		  - name: Windows Firefox
+		    user_agent_string: "Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4"
+		    probability: 20
+
+All of the above elements except default_thinktime and default_matches must be present.
+
+Most of the elements are self explanatory, but the following need a bit more explanation:
+
+* load_profile: which load profile to use.  This can be overridden by the command line swith -l at runtime.
+*  dumptraffic: this can be one of the follwing values:
+	* true: dump the entire request and response to tsung.dump
+	* false: do not dump anything
+	* light: dump the first 44 bytes of the response to tsung.dump
+	* protocol: dump the details of the request and response status to tsung.dump
+	
+See http://tsung.erlang-projects.org/user_manual/conf-file.html for details.
+	
+	The most useful setting is protocol.
+* loglevel: determines what gets logged to the tsung_cxontroller_<machine_name>.log.  Possible values are: 
+	* emergency 
+	* critical
+	* error
+	* warning
+	* notice
+	* info
+	* debug 	
+
+See http://tsung.erlang-projects.org/user_manual/conf-file.html for details.  
+
 
 
 ### The dynvars Folder
