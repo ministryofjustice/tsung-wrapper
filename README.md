@@ -32,11 +32,19 @@ yaml configuration files.  The tool can be used to just produce the XML file, or
 ## Dependencies
 * tsung - Donwload from http://tsung.erlang-projects.org/dist/, or on mac: 
 
-	<code>brew install tsung</code>
+	``brew install tsung``
 
 * perl Template toolkit, which can be installed with:
 
-	<code>cpan Template</cpan>
+	``cpan Template``
+	
+* Ruby
+
+* Rubygems
+
+* Bundler
+
+* RVM
 
 
 
