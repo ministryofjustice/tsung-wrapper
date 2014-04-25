@@ -1,6 +1,6 @@
 # tsung-wrapper
 
-
+Author: Stephen Richards <stephen.richards@digital.justice.gov.uk>
 
 This project enables the creation of complex XML files for load testing using Tsung, from a series of 
 yaml configuration files.  The tool can be used to just produce the XML file, or actually run the tsung session, and the stats run to produce the graphs.
@@ -46,6 +46,7 @@ All three of the steps above can be run using the lib/wrap.rb executable.
 
 ### Usage examples
 
+These commands should be run from the root folder of the tsung-wrapper directory.
 
 
 * Use the "development.yml" environment confiifuration file, with load profile "heavy.ymnl" and the session file "full_run.yml" and just produce the xml file and pipe it to tmp/heavy_full_run.xml
@@ -58,7 +59,7 @@ All three of the steps above can be run using the lib/wrap.rb executable.
 
 	``ruby lib/wrap.rb -e dev_dump -l single_user -rs full_run``
 	
-   
+In the latter case above, the tsung log files will be written to a folder in ~/.tsung/log - the actual name given to the folder will be displayed on the console.   
 
 
 
@@ -291,7 +292,7 @@ Files in this folder specify dynamic variables which can be automatically genera
 	
  
 
-## Development Server Configuration
+## Development Server Configuration and Tips for creating complex sessions
 
 ### Log File Format
 
@@ -327,5 +328,22 @@ Edit
 The access log can be emptied before a test run by the following command:
 
     cat /dev/nul > /var/log/nginx/[logfile]
+
+
+
+### Creating complex sessions
+
+I have found the best way to know exactly what requests to send to replicate a complex user session is as follows:
+
+1.	Ensure the nginx access logs include request information as detailed above
+2.	Clear the access log as described above
+3.	Manually go through the session on the browser, as if you were a user
+4.	copy the access log to the tsung-wrapper folder on your dev machine as ``tmp/nginx.log``
+5.	run ``ruby lib/nginx_analyser.rb`` - this will produce a CSV file which can be viewed in Excel or similar and show the url, http verb and any prameters posted
+6.	use this to make up the snippet files and session file.
+
+
+
+
 
 
