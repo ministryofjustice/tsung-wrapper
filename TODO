@@ -26,15 +26,21 @@ DONE:
 - Thinktime:
   - specify default thinktime in load_profile
   - overrride thinktime in individual request
-
-WIP:
-====
-
-scenarios - collections of sessions
+- scenarios - collections of sessions
   user can specify either scenario or session.
   if name isn't found in scenarios folder, its a session, so create a dummy scenario comprising just the one session.
   get scenario to emit itself
   get each session to emit itself.
+
+
+WIP:
+====
+- read dynvars from file:
+  - implement file type dynvar
+  - implement session with file dynvars
+  - inmplement dynvars() method on session
+  - implement dynvars() method on scenario
+  - implmement file_dynvar options in wrapper
 
 
 

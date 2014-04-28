@@ -44,7 +44,45 @@ module TsungWrapper
 				dynvar.code.should == expected_erlang_code
 				dynvar.varname.should == 'myvar'
 				dynvar.attr_hash.should == {:sourcetype => 'eval', :code => expected_erlang_code.chomp.to_sym}
+        dynvar.is_file_dynvar?.should be_false
 			end
+
+      context 'file_dynvar' do
+
+        it 'should load a file_dynvar definition and produce the expected attrs' do
+          dynvar = Dynvar.new('file_dynvar', 'username')
+          dynvar.type.should == 'file'
+          dynvar.filename.should == 'username.csv'
+          dynvar.fileid.should == '7c9d170598b5f52c4b9dc1b272c7ef38'
+          dynvar.order.should == 'iter'
+          dynvar.delimiter.should == ","
+          dynvar.varname.should == 'username'
+          dynvar.is_file_dynvar?.should be_true
+        end
+
+
+        it 'should load a random file_dynvar definition and produce the expected attrs' do
+          dynvar = Dynvar.new('file_dynvar_random', 'username')
+          dynvar.type.should == 'file'
+          dynvar.filename.should == 'username.csv'
+          dynvar.fileid.should == '7c9d170598b5f52c4b9dc1b272c7ef38'
+          dynvar.order.should == 'random'
+          dynvar.delimiter.should == ","
+          dynvar.varname.should == 'username'
+        end
+
+        it 'should raise an error if the csv file doesnt exist' do
+          expect {
+            dynvar = Dynvar.new('file_dynvar_with_missing_csv', 'username')
+          }.to raise_error ArgumentError, /^CSV file .*missing\.csv' cannot be found./
+        end
+
+        it 'should raise an error if invalid file access specified' do
+          expect {
+            dynvar = Dynvar.new('file_dynvar_with_invalid_file_access', 'username')
+          }.to raise_error ArgumentError, 'Invalid access specified for file_dynvar'
+        end
+      end
 
 		end
 
@@ -75,10 +113,58 @@ module TsungWrapper
         xml.should == random_str_12_xml
       end
 
-
+      it 'should generate a file_dynvar' do
+        dynvar = Dynvar.new('file_dynvar', 'username')
+        dynvar.to_xml(builder)
+        xml.should == file_dynvars_xml
+      end
 		end
+
+
+    context 'comparable' do
+      it 'should not be equal if the fileids are not equal' do
+        dynvar_1 = Dynvar.new('file_dynvar', 'username')
+        dynvar_2 = Dynvar.new('file_dynvar', 'username')
+        expect(dynvar_1).to receive(:fileid).and_return('676ade353')
+        expect(dynvar_2).to receive(:fileid).and_return('fff377ercab')
+        dynvar_1.should_not == dynvar_2
+      end
+
+
+      it 'should be equal if the fileids are equal' do
+        dynvar_1 = Dynvar.new('file_dynvar', 'username')
+        dynvar_2 = Dynvar.new('file_dynvar', 'username')
+        expect(dynvar_1).to receive(:fileid).and_return('676ade353')
+        expect(dynvar_2).to receive(:fileid).and_return('676ade353')
+        dynvar_1.should == dynvar_2
+      end
+
+
+      it 'should enable uniq to work if the fileids are equal' do
+        dynvar_1 = Dynvar.new('file_dynvar', 'username')
+        dynvar_2 = Dynvar.new('file_dynvar', 'username')
+        puts "++++++ #{dynvar_1.hash} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+        puts "++++++ #{dynvar_2.hash} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+        
+        array = [ dynvar_1, dynvar_2 ]
+        uniq_array = array.uniq
+        uniq_array.size.should == 1
+        puts uniq_array.map(&:fileid).inspect
+      end
+
+    end
 	end
 end
+
+
+def file_dynvars_xml
+  str = <<-EOXML
+<setdynvars sourcetype="file" fileid="7c9d170598b5f52c4b9dc1b272c7ef38" delimiter="," order="iter">
+  <var name="username"/>
+</setdynvars>
+EOXML
+end
+
 
 
 

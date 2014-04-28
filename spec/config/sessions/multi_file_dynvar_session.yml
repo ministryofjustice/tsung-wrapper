@@ -1,0 +1,8 @@
+session:
+  dynvars:
+    username: file_dynvar_a
+    password: file_dynvar_b
+    today: erlang_function
+  snippets:
+    - hit_landing_page
+    - login_using_dynvars

@@ -1,0 +1,8 @@
+dynvar:
+  type: file
+  filename: missing.csv
+  access: sequential
+  delimiter: ","
+  varnames:
+    - username
+    - password

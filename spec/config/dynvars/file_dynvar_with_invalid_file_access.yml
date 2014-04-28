@@ -1,0 +1,8 @@
+dynvar:
+  type: file
+  filename: username.csv
+  access: all
+  delimiter: ","
+  varnames:
+    - username
+    - password

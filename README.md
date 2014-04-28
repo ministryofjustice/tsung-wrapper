@@ -117,6 +117,8 @@ The config directory contains the dtd file to be used, plus six folders:
 	standardised tests that can be carried out on the response, and action taken depending on the result
 *  __dynvars__<br/>
 	The definition of dynamic variables which can be used in requests, eg. to generate a random string to use as a username.
+*  __data__<br/>
+	Any CSV files which are going to be used to supply test data should be placed in this folder.
 
 
 The following sections look at each of the configuration files in more detail.
@@ -153,6 +155,9 @@ Each environment file contains global variables that will be used when building 
 		  - name: Windows Firefox
 		    user_agent_string: "Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4"
 		    probability: 20
+		    
+		file_dynvars:
+		  - username_and_password
 
 All of the above elements except default_thinktime and default_matches must be present.
 
@@ -168,7 +173,7 @@ Most of the elements are self explanatory, but the following need a bit more exp
 See http://tsung.erlang-projects.org/user_manual/conf-file.html for details.
 	
 	The most useful setting is protocol.
-* loglevel: determines what gets logged to the tsung_cxontroller_<machine_name>.log.  Possible values are: 
+* __loglevel__: determines what gets logged to the tsung_cxontroller_<machine_name>.log.  Possible values are: 
 	* emergency 
 	* critical
 	* error
@@ -176,6 +181,8 @@ See http://tsung.erlang-projects.org/user_manual/conf-file.html for details.
 	* notice
 	* info
 	* debug 	
+	
+* __file_dynvars__: If one or more CSV files are being used to supply data (for example usernames and passwords), then the name of the relevant dynvar file should be entered here.  In this case, the dynvars folder will be checked for a file names ```username_and_password.yml``` which is a dynvar of type file.
 
 See http://tsung.erlang-projects.org/user_manual/conf-file.html for details.  
 
@@ -314,7 +321,7 @@ the string "/activate?abd7337fec3"	will be assigned to the variable activationur
 
 ### The dynvars Folder
 
-Files in this folder specify dynamic variables which can be automatically generated during the session.  There are three types of dynamic variables that can be specified:
+Files in this folder specify dynamic variables which can be automatically generated during the session.  There are four types of dynamic variables that can be specified:
 
 * __random string__: A typical dynvar configuration file to define a random string might look like:
 
@@ -347,7 +354,27 @@ Files in this folder specify dynamic variables which can be automatically genera
 	</pre>
 	
 	
+ * __file__: A CSV file can be used to supply data to dynamic variables.  A typical configuration looks like this:
  
+ 	<pre>
+ 	dynvar:
+	  type: file
+	  filename: usernames.csv
+	  access: sequential
+	  delimiter: ","
+	  fieldnames:
+	    - username
+	    - password
+ 	</pre>
+ 	
+ 	The meanings of the various entries are as follows:
+ 	* __type__: identifies this dynvar as being sourced from a CSV file
+ 	* __path__: the filename of the CSV file.  This is expected to be found in /config/data (/spec/config/data for test environment)
+	* __delimiter__: the character used to delimit one field from another 
+	* __access__: the access method: either:
+		* sequential:  lines will be read one by one, starting at the beginning of the file
+		* random: lines are read in a random order
+	* __fieldnames__: the names of the parameters that will be read from the file.  In this case the contents of column 1 will be assigned to the dynamic variable "username" and the contents of column 2 will be assigned to dynamic variable "password".
 
 ## Development Server Configuration
 
