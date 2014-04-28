@@ -45,9 +45,7 @@ describe 'TsungWrapper module methods' do
 				ENV['TSUNG_WRAPPER_ENV'].should == 'development'
 				ENV['TSUNG_WRAPPER_ENV'] = saved_env
 			end
-
 		end
-
 	end
 
 
@@ -81,6 +79,17 @@ describe 'TsungWrapper module methods' do
 			
 		end		
 	end
+
+
+
+	describe '.formatted_time' do 
+		it 'should output the time is the spedified format' do 
+			Timecop.freeze(Time.local(2014, 4, 28, 15, 43, 12)) do
+				TsungWrapper.formatted_time.should == '20140428-154312'
+			end
+		end
+	end
+
 end
 
 

@@ -15,10 +15,11 @@ module TsungWrapper
 
 		attr_reader :snippets, :session_name, :dynvars
 
-		def initialize(session_name, builder, config)
+		def initialize(session_name, builder, config, probability)
 			@session_name = session_name
 			@builder      = builder
 			@config       = config
+			@probability	= probability
 			@dynvars      = []
 			@snippets     = []
 			filename      = "#{TsungWrapper.config_dir}/sessions/#{@session_name}.yml"
@@ -36,6 +37,17 @@ module TsungWrapper
 		
 		def has_dynvars?
 			@dynvars.any?
+		end
+
+		def to_xml
+				@builder.session(:name => "#{@session_name}-#{TsungWrapper.formatted_time}", :probability => @probability, :type => 'ts_http') do 
+				@dynvars.each do |dynvar|
+					dynvar.to_xml(@builder)
+				end
+				@snippets.each do |snippet|
+					snippet.to_xml
+				end
+			end
 		end
 
 

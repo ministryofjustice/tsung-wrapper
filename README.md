@@ -12,10 +12,11 @@ Author: Stephen Richards <stephen.richards@digital.justice.gov.uk>
 	* [Usage Examples](#usage-examples)
 * [Configuration Files](#configuration-files)
 	* [The environments folder](#the-environments-folder)
-	* [the load_profiles folder](#the-load_profiles-folder)
-	* [the sessions folder](#the-sessions-folder) 
-	* [the snippets folder](#the-snippets-folder)
-	* [the dynvars folder](#the-dynvars-folder)
+	* [The load_profiles folder](#the-load_profiles-folder)
+	* [The scenarios folder](#the-scenarios-folder)
+	* [The sessions folder](#the-sessions-folder) 
+	* [The snippets folder](#the-snippets-folder)
+	* [The dynvars folder](#the-dynvars-folder)
 * [Development Server Confiuration](#development-server-configuration)
 	* [Log file format](#log-file-format)
 	* [Clearing the access log before a run](#clearing-the-access-log-before-a-run)
@@ -108,6 +109,8 @@ The config directory contains the dtd file to be used, plus six folders:
 	decsribes the load to use during the test.  This could be single user, used when developing a load test to see the user journey through the site, or a series of phases to progressively load the server
 *  __sessions__<br/>
 	gives a name to a session, which comprises of a series of requests, each request being detailed in a snippet
+*  __scenarios__<br/>
+	given a name to a scenario, which enables a number of different sessions to be run simultaneously
 *  __snippets__<br/>
 	each snippet is a single GET or POST request, with or without parameters
 *  __matches__<br/>
@@ -218,6 +221,7 @@ As you can see, each load profile is a colleciton of 1 or more "arrival phases".
 	    	arrival_rate_unit: second
 
 
+
 ### The sessions Folder
 
 This folder contains yaml files that describe the sessions that you want to run.
@@ -249,6 +253,28 @@ The snippets section simply lists the snippet files which are to be executed one
 
 * config/snippets/hit_landing_page.yml
 * config/snippets/hit_register_page.yml
+
+
+
+### The scenarios folder
+
+A scenario is a collection of sessions that are run simultaneously, with a percentage applied to each session in the scenario that governs
+the ratio between the sessions as they are started.
+ 
+
+A typical scenario file might look like this:
+
+			scenario:
+				full_run: 75
+				login_only: 12
+				print_pdf: 13
+
+	In the above scenario, 75% of the sessions started will be the session defined in ```full_run.yml```, 12%  will be that defined in 
+	```login_only.yml``` and 13% that defined in ```print_pdf.yml```.
+
+	The total numbe of percentages must add up to 100%.
+
+	The command line accepts either scenario_name or session name as a parameter.  If looks for the name in the scenarios folder first, and if not there, then looks in the sessions folder.
 
 
 

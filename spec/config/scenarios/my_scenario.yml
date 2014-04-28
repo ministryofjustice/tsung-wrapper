@@ -1,0 +1,3 @@
+scenario:
+  dynvar_session: 20
+  hit_landing_page: 80

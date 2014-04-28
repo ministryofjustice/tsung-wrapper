@@ -16,19 +16,19 @@ module TsungWrapper
 
 			it 'should raise an exception if no session file exists with the specified name' do
 				expect {
-					Session.new('non_existent_session', builder, config)
+					Session.new('non_existent_session', builder, config, 40)
 				}.to raise_error ArgumentError, "No session found with name 'non_existent_session'"
 			end
 
 
 			it 'should raise an exception if the session contains non-existent snippets' do
 				expect{
-					Session.new('session_including_missing_snippet', builder, config)
+					Session.new('session_including_missing_snippet', builder, config, 70)
 				}.to raise_error ArgumentError, "No Snippet with the name 'no_such_snippet' can be found."
 			end
 
 			it 'should load dynvars' do
-				session = Session.new('dynvar_session', builder, config)
+				session = Session.new('dynvar_session', builder, config, 30)
 				session.has_dynvars?.should be_true
 				dv = session.dynvars.first
 				dv.type.should == 'random_string'
@@ -37,10 +37,11 @@ module TsungWrapper
 
 
 			it 'should load the session and component snippets' do
-				session = Session.new('hit_landing_page', builder, config)
+				session = Session.new('hit_landing_page', builder, config, 20)
 				session.session_name.should == 'hit_landing_page'
 				session.snippets.size.should == 2
 				session.has_dynvars?.should be_false
+				session.instance_variable_get(:@probability).should == 20
 
 				snippet = session.snippets.first
 				snippet.name.should == "Hit Landing Page"

@@ -15,7 +15,7 @@ module TsungWrapper
 
 		it 'should return error message if non_existent session specified' do 
 			output = capture_stdout("#{wrap} -e test missing_session 2>&1")
-			output.first.should == "ArgumentError: No session found with name 'missing_session'\n"
+			output.first.should == "ArgumentError: No scenario or snippet with name 'missing_session'.\n"
 		end
 
 		it 'should return error message if non-existent env specified' do 

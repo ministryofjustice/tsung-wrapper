@@ -30,11 +30,18 @@ DONE:
 WIP:
 ====
 
+scenarios - collections of sessions
+  user can specify either scenario or session.
+  if name isn't found in scenarios folder, its a session, so create a dummy scenario comprising just the one session.
+  get scenario to emit itself
+  get each session to emit itself.
+
 
 
 
 STILL TO DO:
 ============
+- read dynvars from csv file
 - execute perl_stats
 
 - add tsung.yml details  to readme

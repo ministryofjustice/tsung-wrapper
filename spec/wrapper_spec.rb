@@ -13,7 +13,7 @@ module TsungWrapper
       it 'should raise an exception if the session cannot be found' do
         expect {
           Wrapper.new('missing sesssion', 'test')
-        }.to raise_error ArgumentError, "No session found with name 'missing sesssion'"
+        }.to raise_error ArgumentError, "No scenario or snippet with name 'missing sesssion'."
       end
 
 
@@ -35,9 +35,7 @@ module TsungWrapper
           expected = session_with_dynvar
           wrapper = Wrapper.new('dynvar_session', 'test')
           actual = wrapper.wrap
-          # dump_to_file(actual, 'actual')
-          # dump_to_file(expected, 'expected')
-          # actual.should == expected
+          actual.should == expected
         end
       end
     end
@@ -180,7 +178,7 @@ def session_with_dynvar
 str = <<-EOXML
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tsung SYSTEM "#{TsungWrapper.dtd}">
-<tsung loglevel="notice" version="1.0">
+<tsung loglevel="notice" dumptraffic="false" version="1.0">
   <!-- Client Side Setup -->
   <clients>
     <client host="localhost" use_controller_vm="true" maxusers="1500"/>
@@ -226,10 +224,14 @@ str = <<-EOXML
       </setdynvars>
       <!-- Hit Landing Page -->
       <request>
+        <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
+        <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
         <http url="http://test_base_url.com" version="1.1" method="GET"/>
       </request>
       <!-- Login -->
       <request subst="true">
+        <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
+        <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
         <http url="http://test_base_url.com/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
       </request>
     </session>

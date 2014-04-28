@@ -4,6 +4,7 @@ require_relative 'tsung_wrapper.rb'
 require_relative 'config_loader'
 require_relative 'session'
 require_relative 'load_profile'
+require_relative 'scenario'
 
 module TsungWrapper
 
@@ -11,15 +12,11 @@ module TsungWrapper
 
 		# Instantiate a Wrapper.  Usual invocation is:
 		#
-		#    TsungWrapper::Wrapper.new("my_session") 
-		#    TsungWrapper::Wrapper.new("my_session", "staging")
+		#    TsungWrapper::Wrapper.new("session_or_scenario_name") 
+		#    TsungWrapper::Wrapper.new("session_or_scenario_name", "staging")
 		#
-		# For testing purposes, Wrapper objects can be instantiated just to emit the xml for snippets or dynvars:
-		#
-		# 		TsungWrapper::Wrapper.new("my_session", "test", :snippet, 'my_snippet')
-		#  		TsungWrapper::Wrapper.new("my_session", "test", :dynvar, '"my_dynvar"')
-		#
-		def initialize(session, env = nil)
+		
+		def initialize(session_or_scenario, env = nil)
 			TsungWrapper.env = env
 			@env             = env.nil? ? 'development' : env
 			@config          = ConfigLoader.new(@env)
@@ -27,7 +24,10 @@ module TsungWrapper
 		  @builder 				 = Builder::XmlMarkup.new(:target => @xml, :indent => 2)
 
 		  @config.load_profile.set_xml_builder(@builder)
-	  	@session = Session.new(session, @builder, @config)
+		  @scenario = Scenario.new(session_or_scenario, @builder, @config)
+
+
+	  	# @session = Session.new(session, @builder, @config)
 		  @builder.instruct! :xml, :encoding => "UTF-8"
 		  @builder.declare! :DOCTYPE, :tsung, :SYSTEM, "#{TsungWrapper.dtd}"
 		end
@@ -44,7 +44,7 @@ module TsungWrapper
 				add_standard_server_element
 				add_load_element
 				add_user_agent_element
-				add_sessions
+				add_scenario
 			end
 			@xml
 		end		
@@ -55,24 +55,8 @@ module TsungWrapper
 
 		private
 
-
-		def formatted_time
-			Time.now.strftime('%Y%m%d-%H%M%S')
-		end
-
-
-
-		def add_sessions
-			@builder.sessions do
-				@builder.session(:name => "#{@session.session_name}-#{formatted_time}", :probability => 100, :type => 'ts_http') do 
-					@session.dynvars.each do |dynvar|
-						dynvar.to_xml(@builder)
-					end
-					@session.snippets.each do |snippet|
-						snippet.to_xml
-					end
-				end
-			end
+		def add_scenario
+			@scenario.to_xml
 		end
 
 

@@ -51,4 +51,9 @@ module TsungWrapper
 	end
 
 
+	def self.formatted_time
+		Time.now.strftime('%Y%m%d-%H%M%S')
+	end
+
+
 end
