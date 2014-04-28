@@ -76,10 +76,8 @@ module TsungWrapper
 		end
 
 
-		def ==(other)
-			self.fileid == other.fileid
-		end
 
+		# These two methods are here so that file_dynvars can be uniqued by fileid
 		def eql?(other)
 			self.fileid.eql?(other.fileid)
 		end

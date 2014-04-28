@@ -122,34 +122,30 @@ module TsungWrapper
 
 
     context 'comparable' do
-      it 'should not be equal if the fileids are not equal' do
+
+      it 'should uniq dynvars with equal fileids' do
         dynvar_1 = Dynvar.new('file_dynvar', 'username')
         dynvar_2 = Dynvar.new('file_dynvar', 'username')
-        expect(dynvar_1).to receive(:fileid).and_return('676ade353')
-        expect(dynvar_2).to receive(:fileid).and_return('fff377ercab')
-        dynvar_1.should_not == dynvar_2
-      end
-
-
-      it 'should be equal if the fileids are equal' do
-        dynvar_1 = Dynvar.new('file_dynvar', 'username')
-        dynvar_2 = Dynvar.new('file_dynvar', 'username')
-        expect(dynvar_1).to receive(:fileid).and_return('676ade353')
-        expect(dynvar_2).to receive(:fileid).and_return('676ade353')
-        dynvar_1.should == dynvar_2
-      end
-
-
-      it 'should enable uniq to work if the fileids are equal' do
-        dynvar_1 = Dynvar.new('file_dynvar', 'username')
-        dynvar_2 = Dynvar.new('file_dynvar', 'username')
-        puts "++++++ #{dynvar_1.hash} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
-        puts "++++++ #{dynvar_2.hash} ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+        
         
         array = [ dynvar_1, dynvar_2 ]
+        array.map(&:fileid).should == [ '7c9d170598b5f52c4b9dc1b272c7ef38', '7c9d170598b5f52c4b9dc1b272c7ef38' ]
         uniq_array = array.uniq
         uniq_array.size.should == 1
-        puts uniq_array.map(&:fileid).inspect
+        uniq_array.map(&:fileid).should == [ '7c9d170598b5f52c4b9dc1b272c7ef38' ]
+      end
+
+      it 'should not unique dynvars with different filedids' do
+        dynvar_1 = Dynvar.new('file_dynvar', 'username')
+        dynvar_2 = Dynvar.new('file_dynvar_a', 'username')
+        dynvar_3 = Dynvar.new('file_dynvar_a', 'username')
+        array = [ dynvar_1, dynvar_2, dynvar_3 ]
+
+
+        array.map(&:fileid).should == ["7c9d170598b5f52c4b9dc1b272c7ef38", "dd772e53dd00493a6e4013e4da48615b", "dd772e53dd00493a6e4013e4da48615b"]
+        uniq_array = array.uniq
+        uniq_array.size.should == 2
+        uniq_array.map(&:fileid).should == ["7c9d170598b5f52c4b9dc1b272c7ef38", "dd772e53dd00493a6e4013e4da48615b" ]
       end
 
     end
