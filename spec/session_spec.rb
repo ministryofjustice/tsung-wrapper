@@ -69,7 +69,7 @@ module TsungWrapper
 				session.file_dynvars.should be_empty
 			end
 
-			it 'should return an array of multiple file_dynvars if' do
+			it 'should return an array of multiple file_dynvars if more than one dynvar in session' do
 				session = Session.new('multi_file_dynvar_session', builder, config, 20)
 				session.file_dynvars.size.should == 2
 				session.file_dynvars.map(&:fileid).should == [ Digest::MD5.hexdigest('username_a.csv'), Digest::MD5.hexdigest('username_b.csv') ]

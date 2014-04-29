@@ -1,0 +1,3 @@
+scenario:
+  hit_landing_page: 80
+  login_match: 20

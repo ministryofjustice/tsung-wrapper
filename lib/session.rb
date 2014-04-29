@@ -41,7 +41,7 @@ module TsungWrapper
 
 
 		def file_dynvars
-			@dynvars.select(&:is_file_dynvar?)
+			@dynvars.select(&:is_file_dynvar?).uniq
 		end
 
 		def to_xml
