@@ -1,0 +1,11 @@
+session:
+  dynvars:
+    username: random_str_12
+  snippets:
+    - hit_landing_page_with_auto_test_key
+    - get_user_register
+    - post_user_register
+    - activate_account
+    - get_user_login
+    - login_using_dynvars
+    - get_about_you

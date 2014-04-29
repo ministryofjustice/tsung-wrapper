@@ -1,12 +1,15 @@
+  
 server_host: test_server_host
-base_url: https://staging-lpa.dsd.io/
-maxusers: 1500
+base_url: http://ec2-54-72-149-249.eu-west-1.compute.amazonaws.com
+maxusers: 9000
 server_port: 80
 http_version: 1.1
-load_profile: minimal
-loglevel: debug
-dumptraffic: true
-default_thinktime: 1
+load_profile: very_heavy
+loglevel: warning
+dumptraffic: protocol
+default_thinktime: 4
+default_matches:
+  - abort_unless_success_or_redirect
 
 
 user_agents:
@@ -16,4 +19,5 @@ user_agents:
   - name: Windows Firefox
     user_agent_string: "Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4"
     probability: 20
+
 

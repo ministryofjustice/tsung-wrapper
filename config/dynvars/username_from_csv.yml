@@ -1,0 +1,8 @@
+dynvar:
+  type: file
+  filename: google_usernames.csv
+  access: random
+  delimiter: ","
+  varnames:
+    - username
+
