@@ -1,0 +1,8 @@
+request:
+  name: GET User Dashboard and extract document id
+  url: "/user/dashboard"
+  http_method: GET    
+  extract_dynvars:
+    document_id: "id=.delete-lpa-([0-9]+)"
+
+

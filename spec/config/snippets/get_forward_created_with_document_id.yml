@@ -1,0 +1,5 @@
+request:
+  name: GET User Dashboard and extract document id
+  url: "/forward/created/%%_document_id%%"
+  http_method: GET   
+

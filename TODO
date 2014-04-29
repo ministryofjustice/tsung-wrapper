@@ -31,10 +31,6 @@ DONE:
   if name isn't found in scenarios folder, its a session, so create a dummy scenario comprising just the one session.
   get scenario to emit itself
   get each session to emit itself.
-
-
-WIP:
-====
 - read dynvars from file:
   - implement file type dynvar
   - implement session with file dynvars
@@ -44,16 +40,26 @@ WIP:
 
 
 
+WIP:
+====
+- make load testing scenario
+  - finish exising_customer_print_pdf session
+
 
 STILL TO DO:
 ============
-- read dynvars from csv file
-- execute perl_stats
+- do a dry run switch which will print out:
+  - server being used
+  - logging level
+  - dumptraffic 
+  - load_profile 
+    - name each of the arrivalphases (or construct from params)
+  - default request time
+  - what sessions
+    - names of each request in the session
 
-- add tsung.yml details  to readme
-- handle multiple scenarios
-  - rename sessions as scenarios
-  - include multiple scenarios in one session
+
+- execute perl_stats
 - print url for viewing graphs
 
 
