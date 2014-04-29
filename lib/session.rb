@@ -39,6 +39,11 @@ module TsungWrapper
 			@dynvars.any?
 		end
 
+
+		def file_dynvars
+			@dynvars.select(&:is_file_dynvar?).uniq
+		end
+
 		def to_xml
 				@builder.session(:name => "#{@session_name}-#{TsungWrapper.formatted_time}", :probability => @probability, :type => 'ts_http') do 
 				@dynvars.each do |dynvar|

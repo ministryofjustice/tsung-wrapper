@@ -41,6 +41,15 @@ module TsungWrapper
       end
     end
 
+
+    def file_dynvars
+      @sessions.map(&:file_dynvars).flatten.uniq
+    end
+
   end
 end
-    
+
+
+
+
+

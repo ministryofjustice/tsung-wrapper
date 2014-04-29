@@ -56,4 +56,14 @@ module TsungWrapper
 	end
 
 
+	def self.md5_to_i(str)
+	  i = 0
+	  j = 1
+	  str.each_byte do |n|
+	    i += (n * j)
+	    j *= 10
+	  end
+	  i
+	end
+
 end

@@ -43,7 +43,7 @@ module TsungWrapper
 				add_standard_client_element
 				add_standard_server_element
 				add_load_element
-				add_user_agent_element
+				add_options_element
 				add_scenario
 			end
 			@xml
@@ -59,18 +59,31 @@ module TsungWrapper
 			@scenario.to_xml
 		end
 
+		def add_options_element
+			@builder.options do
+				add_file_dynvar_options
+				add_user_agent_element
+			end
+		end
+
 
 		def add_user_agent_element
 			@builder.comment! "Define User Agents"
-			@builder.options do
-				@builder.option(:type => 'ts_http', :name => 'user_agent') do
-					@config.user_agents.each do |ua|
-						@builder.user_agent(ua.user_agent_string, :probability => ua.probability) 
-					end
+			@builder.option(:type => 'ts_http', :name => 'user_agent') do
+				@config.user_agents.each do |ua|
+					@builder.user_agent(ua.user_agent_string, :probability => ua.probability) 
 				end
 			end
 		end
 
+
+		def add_file_dynvar_options
+			if @scenario.file_dynvars.any?
+				@scenario.file_dynvars.each do |fd|
+					@builder.option(:name => 'file_server', :id => fd.fileid, :value => fd.filepath)
+				end
+			end
+		end
 
 
 		def add_load_element

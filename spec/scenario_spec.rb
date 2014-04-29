@@ -44,6 +44,33 @@ module TsungWrapper
     end
 
 
+
+    describe '#file_dynvars' do
+      
+      it 'should return an empty array if no sessions have file_dynvars' do
+        # given a scenario with two sessions, none of which use file dynvars
+        scenario = Scenario.new('scenario_without_file_dynvars', builder, config)
+        scenario.file_dynvars.should be_instance_of(Array)
+        scenario.file_dynvars.should be_empty
+      end
+
+      it 'should return an array of all the file_dynvars across all sessions' do
+        # given a scenario with multiple file_dynvars of the same name
+        scenario = Scenario.new('scenario_with_multiple_file_dynvars', builder, config)
+
+        # when I call file dynvars
+        file_dynvars = scenario.file_dynvars
+
+        # it should return a uniq list of all the file dynvars used
+        # file_dynvar_session => [ file_dynvar, file_dynvar ] => 7c9d170598b5f52c4b9dc1b272c7ef38
+        # file_dynvar_session_2 => [file_dynvar_a, file_dynvar_b] => dd772e53dd00493a6e4013e4da48615b, 429c7de01176ddb9526c0bac4e961528
+        # file_dynvar_session_3 => [file_dynvar_a, file_dynvar_b] => dd772e53dd00493a6e4013e4da48615b, 429c7de01176ddb9526c0bac4e961528
+        file_dynvars.size.should == 3
+        file_dynvars.map(&:fileid).should == [ '7c9d170598b5f52c4b9dc1b272c7ef38', 'dd772e53dd00493a6e4013e4da48615b', '429c7de01176ddb9526c0bac4e961528' ]
+      end
+    end
+
+
   end
 
 end

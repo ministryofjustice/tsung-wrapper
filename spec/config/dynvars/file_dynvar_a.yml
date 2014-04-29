@@ -1,0 +1,8 @@
+dynvar:
+  type: file
+  filename: username_a.csv
+  access: sequential
+  delimiter: ","
+  varnames:
+    - username
+    - password
