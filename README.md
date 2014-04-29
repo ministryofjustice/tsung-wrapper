@@ -374,7 +374,13 @@ Files in this folder specify dynamic variables which can be automatically genera
 	* __access__: the access method: either:
 		* sequential:  lines will be read one by one, starting at the beginning of the file
 		* random: lines are read in a random order
-	* __fieldnames__: the names of the parameters that will be read from the file.  In this case the contents of column 1 will be assigned to the dynamic variable "username" and the contents of column 2 will be assigned to dynamic variable "password".
+	* __varnames__: the names of the variable parameters that will be read from the file.  In this case the contents of column 1 will be assigned to the dynamic variable "username" and the contents of column 2 will be assigned to dynamic variable "password".
+
+
+### The data folder
+
+The data folder contains any CSV files that are used to provide values for file_dynvars.  The fields should be enclosed in double quotes, and separated by a delimiter which is specified in the relavant configuration file in the ``dynvars`` folder.
+
 
 ## Development Server Configuration
 
