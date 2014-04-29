@@ -87,6 +87,11 @@ module TsungWrapper
 			is_file_dynvar? ? TsungWrapper.md5_to_i(@fileid) : super
 		end
 
+		# returns the full filepath of the csv file
+		def filepath
+			File.join(TsungWrapper.config_dir, 'data', @filename)
+		end
+
 
 
 		private

@@ -58,6 +58,7 @@ module TsungWrapper
           dynvar.delimiter.should == ","
           dynvar.varname.should == 'username'
           dynvar.is_file_dynvar?.should be_true
+          dynvar.filepath.should =~ /config\/data\/username\.csv$/
         end
 
 
