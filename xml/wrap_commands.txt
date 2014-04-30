@@ -1,0 +1,20 @@
+
+
+# Full run heavy usage (1 customer per second for 10 minutes) - no dump
+ruby lib/wrap.rb -e development -l heavy -x full_run  > tmp/heavy_full_run.xml
+
+
+# Full run single_user (just 1 customer) with full dump of output
+ruby lib/wrap.rb -e dev_dump -l single_user -x full_run  > tmp/single_user_full_run.xml
+
+
+# full run phased 
+ruby lib/wrap.rb -e development -l phased -x full_run > tmp/phased_full_run.xml
+
+
+# full run phased medium
+ruby lib/wrap.rb -e development -l phased_medium -x full_run > tmp/phased_medium_full_run.xml
+
+
+# load test 1
+ruby lib/wrap.rb -e full_load_test -x load_test_1 > tmp/load_test_1.xml
