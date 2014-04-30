@@ -31,9 +31,18 @@ yaml configuration files.  The tool can be used to just produce the XML file, or
 
 
 ## Dependencies
-* tsung - Download from http://tsung.erlang-projects.org/dist/, or on mac: 
+* erlang compiled with ssl
+	
+	``sudo port install erlang +ssl``
 
-	``brew install tsung``
+* tsung - Download from http://tsung.erlang-projects.org/dist/ and compile from source.  __Despite what the documnetation on the tsung site says, do not install it using homebrew - you will not be able to use it on ssl sites__ 
+
+	<pre>
+	./configure
+	make
+	sudo make install
+	</pre>
+
 
 * perl Template toolkit, which can be installed with:
 

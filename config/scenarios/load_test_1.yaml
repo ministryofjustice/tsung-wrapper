@@ -1,8 +1,0 @@
-scenario
-  - hit_landing_page_only: 70
-  - hit_landing_page_and_register: 20
-  - full_run: 5
-  - exising_customer_print_pdf: 5
-
-
-

@@ -24,9 +24,16 @@ module TsungWrapper
 
 		def run
 			clean_log_dir unless @options[:clean].nil?
-			generate_xml unless @options[:output].nil?
-			run_tsung if @options[:output] == :tsung
-			run_stats unless @options[:stats].nil?
+			unless @session_name.nil?
+				generate_xml unless @options[:output].nil?
+				run_tsung if @options[:output] == :tsung
+				run_stats unless @options[:stats].nil?
+			end
+		end
+
+
+		def  verbose?
+			@options[:verbose] == true
 		end
 
 
@@ -50,10 +57,18 @@ module TsungWrapper
 		def clean_log_dir
 			if File.exist?(@config['log_dir'])
 				cutoff_time = Time.now - (@options[:clean] * 60 * 60)
+				puts "Removing all directories from #{@config['log_dir']} created before #{cutoff_time}." if verbose?
 				files = Dir["#{@config['log_dir']}/*"]
-				files.each do |file|
-					mtime = File.stat(file).mtime
-					FileUtils.remove_entry_secure(file) if mtime < cutoff_time
+				if files.empty?  && verbose?
+					puts "No directories to delete"
+				else
+					files.each do |file|
+						mtime = File.stat(file).mtime
+						if mtime < cutoff_time
+							FileUtils.remove_entry_secure(file) 
+							puts "Removing #{file}" if verbose?
+						end
+					end
 				end
 			end
 		end
@@ -62,7 +77,7 @@ module TsungWrapper
 
 		def generate_xml
 			output = ""
-			if @verbose
+			if verbose?
 				puts "Calling TsungWrapper::Wrapper.new(#{@session_name}, #{@options[:env]})"
 			end
 
@@ -88,7 +103,7 @@ module TsungWrapper
 			FileUtils.mkdir_p(@config['log_dir']) unless File.exist?(@config['log_dir'])
 
 			command = "tsung -f #{@tmp_file} -l #{@config['log_dir']} start "
-			if @verbose
+			if verbose?
 				puts "Running commnad: #{command}"
 			end
 
@@ -156,15 +171,17 @@ module TsungWrapper
 			end
 
 
-			@verbose = @options[:verbose]
-			if @verbose
+			
+			if verbose?
 				puts "Options: #{@options.inspect}"
 				puts "ARGS:    #{ARGV.inspect}"
 			end
 
 			if ARGV.empty?
-				$stderr.puts "Error: No session name specified" if ARGV.empty?
-				exit(1)
+				unless verbose?
+					$stderr.puts "Error: No session name specified" if ARGV.empty?
+					exit(1)
+				end
 			end
 			@session_name = ARGV.first
 		end
@@ -201,6 +218,8 @@ module TsungWrapper
 
 	end
 end
+
+
 
 
 begin

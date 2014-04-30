@@ -1,19 +1,19 @@
-jmarrivalphases:
-  - name: "Phase 1: 1 customer every 15 seconds for 10 minutes
+arrivalphases:
+  - name: "Phase 1: 1 customer every 15 seconds for 10 minutes"
     sequence: 1
     duration: 10
     duration_unit: minute
     arrival_interval: 15
     arrival_interval_unit: second
 
-  - name: "Phase 2: 1 new cutomer every 10 seconds for 10 minutes
+  - name: "Phase 2: 1 new cutomer every 10 seconds for 10 minutes"
     sequence: 2
     duration: 10
     duration_unit: minute
     arrival_interval: 10
     arrival_interval_unit: second
 
-  - name: "Phase 3: 1 new customer every 5 seconds for 10 minutes
+  - name: "Phase 3: 1 new customer every 5 seconds for 10 minutes"
     sequence: 3
     duration: 10
     duration_unit: minute
@@ -35,21 +35,21 @@ jmarrivalphases:
     arrival_interval_unit: second
 
   - name: "Phase 6: 1 new customer every 2 seconds for 10 minutes"
-    sequence: 5
+    sequence: 6
     duration: 10
     duration_unit: minute
     arrival_interval: 2
     arrival_interval_unit: second
 
   - name: "Phase 7: 1 new customer every 1 seconds for 10 minutes"
-    sequence: 5
+    sequence: 7
     duration: 10
     duration_unit: minute
     arrival_interval: 1
     arrival_interval_unit: second
 
   - name: "Phase 7: 1 new customer every 0.5 seconds for 10 minutes"
-    sequence: 5
+    sequence: 8
     duration: 10
     duration_unit: minute
     arrival_interval: 0.5
