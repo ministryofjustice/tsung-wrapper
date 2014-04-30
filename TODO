@@ -37,13 +37,13 @@ DONE:
   - inmplement dynvars() method on session
   - implement dynvars() method on scenario
   - implmement file_dynvar options in wrapper
-
+- make load testing scenario
+  - finish exising_customer_print_pdf session
 
 
 WIP:
 ====
-- make load testing scenario
-  - finish exising_customer_print_pdf session
+
 
 
 STILL TO DO:
