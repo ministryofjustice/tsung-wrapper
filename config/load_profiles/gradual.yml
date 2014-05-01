@@ -90,7 +90,7 @@ arrivalphases:
     arrival_interval: 0.0769
     arrival_interval_unit: second
 
-   - name: "Phase 14: 14 new customers per seconds for 100 seconds "
+  - name: "Phase 14: 14 new customers per seconds for 100 seconds "
     sequence: 14
     duration: 100
     duration_unit: second
@@ -98,7 +98,7 @@ arrivalphases:
     arrival_interval_unit: second
 
   - name: "Phase 15: 15 new customers per seconds for 100 seconds "
-    sequence: 14
+    sequence: 15
     duration: 100
     duration_unit: second
     arrival_interval: 0.0667
