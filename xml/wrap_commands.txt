@@ -21,4 +21,7 @@ ruby lib/wrap.rb -e full_load_test -x load_test_1 > xml/load_test_1.xml
 
 
 # the Dot Cotton scneario
-ruby lib/wrap.rb -e full_load_tst -x hit_landing_page_only > xml/dot_cotton.xml
+ruby lib/wrap.rb -e full_load_test -l hard_and_fast -x hit_landing_page_only > xml/dot_cotton.xml
+
+
+# 
