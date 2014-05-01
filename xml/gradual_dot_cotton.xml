@@ -70,6 +70,62 @@
     <arrivalphase phase="15" duration="100" unit="second">
       <users interarrival="0.0667" unit="second"/>
     </arrivalphase>
+    <!-- Scenario 16: Phase 16: 16 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="16" duration="100" unit="second">
+      <users interarrival="0.0625" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 17: Phase 17: 17 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="17" duration="100" unit="second">
+      <users interarrival="0.0588" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 18: Phase 18: 18 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="18" duration="100" unit="second">
+      <users interarrival="0.0556" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 19: Phase 19: 19 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="19" duration="100" unit="second">
+      <users interarrival="0.0526" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 20: Phase 20: 20 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="20" duration="100" unit="second">
+      <users interarrival="0.05" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 21: Phase 21: 21 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="21" duration="100" unit="second">
+      <users interarrival="0.0714" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 22: Phase 22: 22 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="22" duration="100" unit="second">
+      <users interarrival="0.0455" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 23: Phase 23: 23 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="23" duration="100" unit="second">
+      <users interarrival="0.0435" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 24: Phase 24: 24 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="24" duration="100" unit="second">
+      <users interarrival="0.0417" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 25: Phase 25: 25 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="25" duration="100" unit="second">
+      <users interarrival="0.04" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 26: Phase 26: 26 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="26" duration="100" unit="second">
+      <users interarrival="0.0385" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 27: Phase 27: 27 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="27" duration="100" unit="second">
+      <users interarrival="0.037" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 28: Phase 28: 28 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="28" duration="100" unit="second">
+      <users interarrival="0.0357" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 29: Phase 29: 29 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="29" duration="100" unit="second">
+      <users interarrival="0.0345" unit="second"/>
+    </arrivalphase>
   </load>
   <options>
     <!-- Define User Agents -->
@@ -79,7 +135,7 @@
     </option>
   </options>
   <sessions>
-    <session name="hit_landing_page_only-20140501-163140" probability="100" type="ts_http">
+    <session name="hit_landing_page_only-20140501-174049" probability="100" type="ts_http">
       <!-- Hit Landing Page -->
       <thinktime random="true" value="4"/>
       <request>

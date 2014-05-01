@@ -104,6 +104,138 @@ arrivalphases:
     arrival_interval: 0.0667
     arrival_interval_unit: second
 
+  - name: "Phase 16: 16 new customers per seconds for 100 seconds "
+    sequence: 16
+    duration: 100
+    duration_unit: second
+    arrival_interval: 0.0625
+    arrival_interval_unit: second
+
+  - name: "Phase 17: 17 new customers per seconds for 100 seconds "
+    sequence: 17
+    duration: 100
+    duration_unit: second
+    arrival_interval: 0.0588
+    arrival_interval_unit: second
+
+  - name: "Phase 18: 18 new customers per seconds for 100 seconds "
+    sequence: 18
+    duration: 100
+    duration_unit: second
+    arrival_interval: 0.0556
+    arrival_interval_unit: second
+
+  - name: "Phase 19: 19 new customers per seconds for 100 seconds "
+    sequence: 19
+    duration: 100
+    duration_unit: second
+    arrival_interval: 0.0526
+    arrival_interval_unit: second
+
+  - name: "Phase 20: 20 new customers per seconds for 100 seconds "
+    sequence: 20
+    duration: 100
+    duration_unit: second
+    arrival_interval: 0.0500
+    arrival_interval_unit: second
+
+  - name: "Phase 21: 21 new customers per seconds for 100 seconds "
+    sequence: 21
+    duration: 100
+    duration_unit: second
+    arrival_interval: 0.0714
+    arrival_interval_unit: second
+
+  - name: "Phase 22: 22 new customers per seconds for 100 seconds "
+    sequence: 22
+    duration: 100
+    duration_unit: second
+    arrival_interval: 0.0455
+    arrival_interval_unit: second
+
+  - name: "Phase 23: 23 new customers per seconds for 100 seconds "
+    sequence: 23
+    duration: 100
+    duration_unit: second
+    arrival_interval: 0.0435
+    arrival_interval_unit: second
+
+  - name: "Phase 24: 24 new customers per seconds for 100 seconds "
+    sequence: 24
+    duration: 100
+    duration_unit: second
+    arrival_interval: 0.0417
+    arrival_interval_unit: second
+
+  - name: "Phase 25: 25 new customers per seconds for 100 seconds "
+    sequence: 25
+    duration: 100
+    duration_unit: second
+    arrival_interval: 0.04
+    arrival_interval_unit: second
+
+  - name: "Phase 26: 26 new customers per seconds for 100 seconds "
+    sequence: 26
+    duration: 100
+    duration_unit: second
+    arrival_interval: 0.0385
+    arrival_interval_unit: second
+
+  - name: "Phase 27: 27 new customers per seconds for 100 seconds "
+    sequence: 27
+    duration: 100
+    duration_unit: second
+    arrival_interval: 0.037
+    arrival_interval_unit: second
+
+  - name: "Phase 28: 28 new customers per seconds for 100 seconds "
+    sequence: 28
+    duration: 100
+    duration_unit: second
+    arrival_interval: 0.0357
+    arrival_interval_unit: second
+
+  - name: "Phase 29: 29 new customers per seconds for 100 seconds "
+    sequence: 29
+    duration: 100
+    duration_unit: second
+    arrival_interval: 0.0345
+    arrival_interval_unit: second
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
