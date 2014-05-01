@@ -24,4 +24,16 @@ ruby lib/wrap.rb -e full_load_test -x load_test_1 > xml/load_test_1.xml
 ruby lib/wrap.rb -e full_load_test -l hard_and_fast -x hit_landing_page_only > xml/dot_cotton.xml
 
 
-# 
+# to find out where the Template toolkit is installed
+find / -name Template.pm 2>&1 | grep -v "Permission denied"
+
+
+# find out where perl-state is installed
+find / -name tsung_stats.pl 2>&1 | grep -v "Permission denied"
+
+
+# to run the stets on pressure
+PERL5LIB="/usr/share/perl5/Debconf" /usr/lib/tsung/bin/tsung_stats.pl
+
+# to run the stats on mimi
+PERL5LIB="/Users/stephen/perl5/lib/perl5/darwin-thread-multi-2level" /opt/local/lib/tsung/bin/tsung_stats.pl
