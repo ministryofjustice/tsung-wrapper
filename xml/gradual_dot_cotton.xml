@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tsung SYSTEM "/Users/stephen/src/tsung-wrapper/config/tsung-1.0.dtd">
+<tsung loglevel="warning" dumptraffic="protocol" version="1.0">
+  <!-- Client Side Setup -->
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="9000"/>
+  </clients>
+  <!-- Server Side Setup -->
+  <servers>
+    <server host="staging-lpa.service.dsd.io" port="443" type="tcp"/>
+  </servers>
+  <load>
+    <!-- Scenario 1: Phase 1: 1 new customer every 1 seconds for 5 minutes -->
+    <arrivalphase phase="1" duration="5" unit="minute">
+      <users interarrival="1" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 2: Phase 2: 2 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="2" duration="100" unit="second">
+      <users interarrival="0.5" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 3: Phase 3: 3 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="3" duration="100" unit="second">
+      <users interarrival="0.33" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 4: Phase 4: 4 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="4" duration="100" unit="second">
+      <users interarrival="0.25" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 5: Phase 5: 5 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="5" duration="100" unit="second">
+      <users interarrival="0.2" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 6: Phase 6: 6 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="6" duration="100" unit="second">
+      <users interarrival="0.16" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 7: Phase 7: 7 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="7" duration="100" unit="second">
+      <users interarrival="0.14" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 8: Phase 8: 8 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="8" duration="100" unit="second">
+      <users interarrival="0.14" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 9: Phase 9: 9 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="9" duration="100" unit="second">
+      <users interarrival="0.11" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 10: Phase 10: 10 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="10" duration="100" unit="second">
+      <users interarrival="0.1" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 11: Phase 11: 11 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="11" duration="100" unit="second">
+      <users interarrival="0.0909" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 12: Phase 12: 12 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="12" duration="100" unit="second">
+      <users interarrival="0.0833" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 13: Phase 13: 13 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="13" duration="100" unit="second">
+      <users interarrival="0.0769" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 14: Phase 14: 14 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="14" duration="100" unit="second">
+      <users interarrival="0.0714" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 15: Phase 15: 15 new customers per seconds for 100 seconds  -->
+    <arrivalphase phase="15" duration="100" unit="second">
+      <users interarrival="0.0667" unit="second"/>
+    </arrivalphase>
+  </load>
+  <options>
+    <!-- Define User Agents -->
+    <option type="ts_http" name="user_agent">
+      <user_agent probability="80">Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21</user_agent>
+      <user_agent probability="20">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</user_agent>
+    </option>
+  </options>
+  <sessions>
+    <session name="hit_landing_page_only-20140501-163140" probability="100" type="ts_http">
+      <!-- Hit Landing Page -->
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io" version="1.1" method="GET"/>
+      </request>
+    </session>
+  </sessions>
+</tsung>
