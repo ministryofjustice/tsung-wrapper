@@ -1,0 +1,15 @@
+>>> This isn't what I expect on the first line <<<
+#date;pid;id;http method;host;URL;HTTP status;size;duration;transaction;match;error;tag
+1398962662.309014;<0.94.0>;1;get;staging-lpa.service.dsd.io;/;200;13118;238.420;-;;;
+1398962662.958361;<0.100.0>;7;get;staging-lpa.service.dsd.io;/;200;13110;190.190;-;;;
+1398962663.912503;<0.98.0>;5;get;staging-lpa.service.dsd.io;/;200;13118;202.328;-;;;
+1398962664.995099;<0.107.0>;9;get;staging-lpa.service.dsd.io;/;200;13118;194.920;-;;;
+1398962665.058312;<0.106.0>;8;get;staging-lpa.service.dsd.io;/;200;13118;188.180;-;;;
+1398962665.291475;<0.97.0>;4;get;staging-lpa.service.dsd.io;/;200;13118;196.343;-;;;
+1398962665.318448;<0.99.0>;6;get;staging-lpa.service.dsd.io;/;200;13118;198.345;-;;;
+1398962667.014994;<0.96.0>;3;get;staging-lpa.service.dsd.io;/;200;13118;190.858;-;;;
+1398962667.03435;<0.111.0>;12;get;staging-lpa.service.dsd.io;/;200;13118;188.263;-;;;
+1398962667.439038;<0.109.0>;10;get;staging-lpa.service.dsd.io;/;200;13118;194.878;-;;;
+1398962667.681861;<0.113.0>;13;get;staging-lpa.service.dsd.io;/;200;13118;179.692;-;;;
+1398962668.43698;<0.110.0>;11;get;staging-lpa.service.dsd.io;/;200;13118;204.824;-;;;
+1398962669.659142;<0.119.0>;16;get;staging-lpa.service.dsd.io;/;200;13118;188.986;-;;;

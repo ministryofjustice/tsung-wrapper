@@ -1,0 +1,25 @@
+
+require 'optparse'
+require_relative 'dump_file_analyser'
+
+@options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage dfa -f <dumpfile> -s [interval]\n" +
+                "             summarise tsung dump file by intervals of <interval> seconds"
+
+  opts.on("-f", "--file FILE", "Specify input file") do |file|
+    @options[:file] = file
+  end
+
+  opts.on("-s", "--summaris INTERVAL", "Summarise by interval in seconds") do |secs|
+    @options[:interval] = secs
+  end
+end.parse!
+    
+raise "You must specify an input file with the -f switch" if @options[:file].nil?
+raise "You must specify an interval to summarise by with the -s switch" if @options[:interval].nil?
+
+
+dfa = TsungWrapper::DumpFileAnalyser.new(@options[:file], @options[:interval].to_i)
+dfa.run
+
