@@ -24,6 +24,11 @@ ruby lib/wrap.rb -e full_load_test -x load_test_1 > xml/load_test_1.xml
 ruby lib/wrap.rb -e full_load_test -l hard_and_fast -x hit_landing_page_only > xml/dot_cotton.xml
 
 
+# the gradual dot cotton
+ruby lib/wrap.rb -e full_load_test -l gradual -x hit_landing_page_only > xml/gradual_dot_cotton.xml
+
+
+
 # to find out where the Template toolkit is installed
 find / -name Template.pm 2>&1 | grep -v "Permission denied"
 
