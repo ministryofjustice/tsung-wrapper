@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tsung SYSTEM "/home/stephen/src/tsung-wrapper/config/tsung-1.0.dtd">
+<tsung loglevel="warning" dumptraffic="protocol" version="1.0">
+  <!-- Client Side Setup -->
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="9000"/>
+  </clients>
+  <!-- Server Side Setup -->
+  <servers>
+    <server host="staging-lpa.service.dsd.io" port="443" type="tcp"/>
+  </servers>
+  <load>
+    <!-- Scenario 1: Phase 1: Full load at 25 requests per second for 5 mins -->
+    <arrivalphase phase="1" duration="10" unit="minute">
+      <users interarrival="0.04" unit="second"/>
+    </arrivalphase>
+  </load>
+  <options>
+    <!-- Define User Agents -->
+    <option type="ts_http" name="user_agent">
+      <user_agent probability="80">Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21</user_agent>
+      <user_agent probability="20">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</user_agent>
+    </option>
+  </options>
+  <sessions>
+    <session name="hit_landing_page_only-20140506-091318" probability="100" type="ts_http">
+      <!-- Hit Landing Page -->
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io" version="1.1" method="GET"/>
+      </request>
+    </session>
+  </sessions>
+</tsung>
