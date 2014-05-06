@@ -10,11 +10,24 @@ AUTH 5
 ACCOUNT 5
 API 20
 
+results are stored in the runlogs directory
+
 
 TESTS
 ============
+
+
 name: 20140506-1444
+===================
 desc: hit the front page at 50 requests per second for 30 minutes
 xml:  xml/front_page_50_per_sec_for_30_mins.xml
 gen:  ruby lib/wrap -xe full_load_test -l 5_per_sec_for_30_mins hit_landing_page_only > xml/front_page_50_per_sec_for_30_mins.xml
+
 result:
+
+The server responded to all requests for the first 770 seconds (~12 mins), with the response time gradually increasing from 200 
+milliseconds to  1.2 seconds after running for 2 minutes, 4 seconds at 3 minutes, to almost a minute at 12 minutes into the test.
+
+As the response time goes up, tsung reduces the number of requests per second from 50 per second for the first 3 minutes to 19 
+or 20 per second after 15 minutes.  From 12 minutes onwards, the server wasn't really able to respond at all, and tsung was only 
+sending 1 request every 10 seconds.
