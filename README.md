@@ -363,7 +363,7 @@ Files in this folder specify dynamic variables which can be automatically genera
 	</pre>
 	
 	
- * __file__: A CSV file can be used to supply data to dynamic variables.  A typical configuration looks like this:
+* __file__: A CSV file can be used to supply data to dynamic variables.  A typical configuration looks like this:
  
  	<pre>
  	dynvar:

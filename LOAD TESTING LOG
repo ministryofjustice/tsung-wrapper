@@ -1,0 +1,20 @@
+LOAD TESTING LOG
+================
+
+
+SERVER CONFIGURATION
+====================
+
+FRONT 30 WORKERS
+AUTH 5
+ACCOUNT 5
+API 20
+
+
+TESTS
+============
+name: 20140506-1444
+desc: hit the front page at 50 requests per second for 30 minutes
+xml:  xml/front_page_50_per_sec_for_30_mins.xml
+gen:  ruby lib/wrap -xe full_load_test -l 5_per_sec_for_30_mins hit_landing_page_only > xml/front_page_50_per_sec_for_30_mins.xml
+result:

@@ -5,4 +5,4 @@ session:
     - login_with_username_from_csv
     - get_user_dashboard_and_extract_doc_id
     - get_forward_created_with_document_id
-    # - get_pda_draft_lpa
+    - get_pda_draft_lpa
