@@ -60,7 +60,7 @@ arrivalphases:
     duration: 100
     duration_unit: second
     arrival_interval: 0.11
-    arrival_interval_unit: second
+    arrival_interval_unit: second 
 
   - name: "Phase 10: 10 new customers per seconds for 100 seconds "
     sequence: 10

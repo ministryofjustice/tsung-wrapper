@@ -32,6 +32,9 @@ ruby lib/wrap.rb -e full_load_test -l gradual -x hit_landing_page_only > xml/gra
 ruby lib/wrap.rb -e full_load_test -l full_on_5_mins -x hit_landing_page_only > xml/full_on_5_mins.xml
 
 
+# grad_10_30
+ruby lib/wrap.rb -e full_load_test -l grad_10_30 -x load_test_1 > xml/grad_10_30.xml
+
 
 ################ FIND INSTALL LOCATIONS
 

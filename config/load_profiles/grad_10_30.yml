@@ -1,0 +1,75 @@
+# gradually increaset to 10 per second for 100 secs, then 12, then 14 etc
+
+
+arrivalphases:
+  - name: "Phase 1: 10 new customer every 1 second for 100 seconds"
+    sequence: 1
+    duration: 200
+    duration_unit: second
+    arrival_interval: 0.5
+    arrival_interval_unit: second
+
+  - name: "Phase 2: 12 new customer every 1 second for 100 seconds"
+    sequence: 1
+    duration: 200
+    duration_unit: second
+    arrival_interval: 0.0833
+    arrival_interval_unit: second
+
+  - name: "Phase 3: 14 new customer every 1 second for 100 seconds"
+    sequence: 1
+    duration: 200
+    duration_unit: second
+    arrival_interval: 0.0714
+    arrival_interval_unit: second
+
+
+  - name: "Phase 4: 16 new customer every 1 second for 100 seconds"
+    sequence: 1
+    duration: 200
+    duration_unit: second
+    arrival_interval: 0.0556
+
+    arrival_interval_unit: second
+
+  - name: "Phase 5: 20 new customer every 1 second for 100 seconds"
+    sequence: 1
+    duration: 200
+    duration_unit: second
+    arrival_interval: 0.0500
+    arrival_interval_unit: second
+
+  - name: "Phase 6: 22 new customer every 1 second for 100 seconds"
+    sequence: 1
+    duration: 200
+    duration_unit: second
+    arrival_interval: 0.0455
+    arrival_interval_unit: second
+
+  - name: "Phase 7: 24 new customer every 1 second for 100 seconds"
+    sequence: 1
+    duration: 200
+    duration_unit: second
+    arrival_interval: 0.0417
+    arrival_interval_unit: second
+
+  - name: "Phase 8: 26 new customer every 1 second for 100 seconds"
+    sequence: 1
+    duration: 200
+    duration_unit: second
+    arrival_interval: 0.0385
+    arrival_interval_unit: second
+
+  - name: "Phase 9: 28 new customer every 1 second for 100 seconds"
+    sequence: 1
+    duration: 200
+    duration_unit: second
+    arrival_interval: 0.0357
+    arrival_interval_unit: second
+
+  - name: "Phase 10: 30 new customer every 1 second for 100 seconds"
+    sequence: 1
+    duration: 200
+    duration_unit: second
+    arrival_interval: 0.0333
+    arrival_interval_unit: second
