@@ -11,7 +11,7 @@
   </servers>
   <load>
     <!-- Scenario 1: Phase 1: Full load at 25 requests per second for 5 mins -->
-    <arrivalphase phase="1" duration="5" unit="minute">
+    <arrivalphase phase="1" duration="30" unit="minute">
       <users interarrival="0.02" unit="second"/>
     </arrivalphase>
   </load>
