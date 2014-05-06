@@ -1,5 +1,5 @@
 arrivalphases:
-  - name: "Phase 1: Full load at 25 requests per second for 5 mins
+  - name: "Phase 1: Full load at 25 requests per second for 5 mins"
     sequence: 1
     duration: 5
     duration_unit: minute
