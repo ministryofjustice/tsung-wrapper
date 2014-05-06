@@ -1,7 +1,7 @@
 scenario:
-  hit_landing_page_only: 70
-  hit_landing_page_and_register: 20
-  full_run: 10
+  hit_landing_page_only: 50
+  hit_landing_page_and_register: 30
+  full_run: 20
   # existing_customer_print_pdf: 5
 
 

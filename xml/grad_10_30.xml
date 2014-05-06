@@ -14,40 +14,40 @@
     <arrivalphase phase="1" duration="200" unit="second">
       <users interarrival="0.5" unit="second"/>
     </arrivalphase>
-    <!-- Scenario 1: Phase 2: 12 new customer every 1 second for 100 seconds -->
-    <arrivalphase phase="1" duration="200" unit="second">
+    <!-- Scenario 2: Phase 2: 12 new customer every 1 second for 100 seconds -->
+    <arrivalphase phase="2" duration="200" unit="second">
       <users interarrival="0.0833" unit="second"/>
     </arrivalphase>
-    <!-- Scenario 1: Phase 3: 14 new customer every 1 second for 100 seconds -->
-    <arrivalphase phase="1" duration="200" unit="second">
+    <!-- Scenario 3: Phase 3: 14 new customer every 1 second for 100 seconds -->
+    <arrivalphase phase="3" duration="200" unit="second">
       <users interarrival="0.0714" unit="second"/>
     </arrivalphase>
-    <!-- Scenario 1: Phase 4: 16 new customer every 1 second for 100 seconds -->
-    <arrivalphase phase="1" duration="200" unit="second">
+    <!-- Scenario 4: Phase 4: 16 new customer every 1 second for 100 seconds -->
+    <arrivalphase phase="4" duration="200" unit="second">
       <users interarrival="0.0556" unit="second"/>
     </arrivalphase>
-    <!-- Scenario 1: Phase 5: 20 new customer every 1 second for 100 seconds -->
-    <arrivalphase phase="1" duration="200" unit="second">
+    <!-- Scenario 5: Phase 5: 20 new customer every 1 second for 100 seconds -->
+    <arrivalphase phase="5" duration="200" unit="second">
       <users interarrival="0.05" unit="second"/>
     </arrivalphase>
-    <!-- Scenario 1: Phase 6: 22 new customer every 1 second for 100 seconds -->
-    <arrivalphase phase="1" duration="200" unit="second">
+    <!-- Scenario 6: Phase 6: 22 new customer every 1 second for 100 seconds -->
+    <arrivalphase phase="6" duration="200" unit="second">
       <users interarrival="0.0455" unit="second"/>
     </arrivalphase>
-    <!-- Scenario 1: Phase 7: 24 new customer every 1 second for 100 seconds -->
-    <arrivalphase phase="1" duration="200" unit="second">
+    <!-- Scenario 7: Phase 7: 24 new customer every 1 second for 100 seconds -->
+    <arrivalphase phase="7" duration="200" unit="second">
       <users interarrival="0.0417" unit="second"/>
     </arrivalphase>
-    <!-- Scenario 1: Phase 8: 26 new customer every 1 second for 100 seconds -->
-    <arrivalphase phase="1" duration="200" unit="second">
+    <!-- Scenario 8: Phase 8: 26 new customer every 1 second for 100 seconds -->
+    <arrivalphase phase="8" duration="200" unit="second">
       <users interarrival="0.0385" unit="second"/>
     </arrivalphase>
-    <!-- Scenario 1: Phase 9: 28 new customer every 1 second for 100 seconds -->
-    <arrivalphase phase="1" duration="200" unit="second">
+    <!-- Scenario 9: Phase 9: 28 new customer every 1 second for 100 seconds -->
+    <arrivalphase phase="9" duration="200" unit="second">
       <users interarrival="0.0357" unit="second"/>
     </arrivalphase>
-    <!-- Scenario 1: Phase 10: 30 new customer every 1 second for 100 seconds -->
-    <arrivalphase phase="1" duration="200" unit="second">
+    <!-- Scenario 10: Phase 10: 30 new customer every 1 second for 100 seconds -->
+    <arrivalphase phase="10" duration="200" unit="second">
       <users interarrival="0.0333" unit="second"/>
     </arrivalphase>
   </load>
@@ -59,7 +59,7 @@
     </option>
   </options>
   <sessions>
-    <session name="hit_landing_page_only-20140506-141346" probability="70" type="ts_http">
+    <session name="hit_landing_page_only-20140506-141703" probability="50" type="ts_http">
       <!-- Hit Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
@@ -67,7 +67,7 @@
         <http url="https://staging-lpa.service.dsd.io" version="1.1" method="GET"/>
       </request>
     </session>
-    <session name="hit_landing_page_and_register-20140506-141346" probability="20" type="ts_http">
+    <session name="hit_landing_page_and_register-20140506-141703" probability="30" type="ts_http">
       <setdynvars sourcetype="random_string" length="12">
         <var name="username"/>
       </setdynvars>
@@ -115,7 +115,7 @@
         <http url="https://staging-lpa.service.dsd.io/user/about-you" version="1.1" method="GET"/>
       </request>
     </session>
-    <session name="full_run-20140506-141346" probability="10" type="ts_http">
+    <session name="full_run-20140506-141703" probability="20" type="ts_http">
       <setdynvars sourcetype="random_string" length="12">
         <var name="username"/>
       </setdynvars>
