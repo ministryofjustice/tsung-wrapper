@@ -23,7 +23,7 @@
     </option>
   </options>
   <sessions>
-    <session name="hit_landing_page_only-20140507-143754" probability="50" type="ts_http">
+    <session name="hit_landing_page_only-20140507-144016" probability="50" type="ts_http">
       <!-- Hit Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
@@ -31,7 +31,7 @@
         <http url="https://staging-lpa.service.dsd.io" version="1.1" method="GET"/>
       </request>
     </session>
-    <session name="hit_landing_page_and_register-20140507-143754" probability="30" type="ts_http">
+    <session name="hit_landing_page_and_register-20140507-144016" probability="30" type="ts_http">
       <setdynvars sourcetype="random_string" length="12">
         <var name="username"/>
       </setdynvars>
@@ -79,7 +79,7 @@
         <http url="https://staging-lpa.service.dsd.io/user/about-you" version="1.1" method="GET"/>
       </request>
     </session>
-    <session name="full_run-20140507-143754" probability="20" type="ts_http">
+    <session name="full_run-20140507-144016" probability="20" type="ts_http">
       <setdynvars sourcetype="random_string" length="12">
         <var name="username"/>
       </setdynvars>
