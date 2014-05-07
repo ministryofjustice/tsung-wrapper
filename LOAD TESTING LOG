@@ -36,30 +36,44 @@ sending 1 request every 10 seconds.
 
 name: 20140506-1647
 ===================
-desc: a mixture of hitting front page (50%), registering (30%), and a full run printing pdf's at every stage, at the rate 
-      of 1 request per second for 10 minutes, increasing every 10 minutes by 1 prequest per second up to a maximum of 29 per second.
-xml:  xml/full_load_long_gradual.xml
-gen:  ruby lib/wrap.rb -e full_load_test -l long_gradual -x load_test_1 > xml/full_load_long_gradual.xml
-result:
+desc:   a mixture of hitting front page (50%), registering (30%), and a full run printing pdf's at every stage, at the rate 
+        of 1 request per second for 10 minutes, increasing every 10 minutes by 1 prequest per second up to a maximum of 29 per second.
+xml:    xml/full_load_long_gradual.xml
+gen:    ruby lib/wrap.rb -e full_load_test -l long_gradual -x load_test_1 > xml/full_load_long_gradual.xml
+result: ERROR: 400 returned on all postcode and address lookups becuase url in snippet had HTTP/1.1 on the end
   
-  We immediatley got timeouts on all address and postcode lookups.
-  OK, this was caused by an error in the snippet url, which generated and invalid url in the XML file
-
+  
 
 
 name: ms-1-1-5-20140507-1304
 ============================
-desc: desc: a mixture of hitting front page (50%), registering (30%), and a full run printing pdf's at every stage, at the rate 
-      of 1 request per second for 10 minutes
-xml:  xml/full_load_slow_5_mins.xml
-gen:  ruby lib/wrap.rb -e full_load_test -l 1_per_sec_for_5_mins -x load_test_1 > xml/full_load_1_per_sec_for_5_mins.xml
-result:
-      Perfect result in that every request got a 200 or 302 response.
-      Longest request took 17.45 seconds
-      Longest non-pdf request was /create/complete which took 11.3 seconds after 308 seconds
-      Number of requests taking more than 1 second: 627 of 3807  (16.5%)
+desc:   desc: a mixture of hitting front page (50%), registering (30%), and a full run printing pdf's at every stage, at the rate 
+        of 1 request per second for 10 minutes
+xml:    xml/full_load_slow_5_mins.xml
+gen:    ruby lib/wrap.rb -e full_load_test -l 1_per_sec_for_5_mins -x load_test_1 > xml/full_load_1_per_sec_for_5_mins.xml
+result: Perfect result in that every request got a 200 or 302 response.
+        Longest request took 17.45 seconds
+        Longest non-pdf request was /create/complete which took 11.3 seconds after 308 seconds
+        Number of requests taking more than 1 second: 627 of 3807  (16.5%)
 
     
+name: ms-10-10-10-20140507-1341
+===============================
+desc:   desc: a mixture of hitting front page (50%), registering (30%), and a full run printing pdf's at every stage, at the rate 
+        of 10 request per second for 10 minutes
+xml:    xml/full_load_10_per_sec_for_10_mins.xml
+gen:    ruby lib/wrap.rb -e full_load_test -l 10_per_sec_for_10_mins -x load_test_1 > xml/full_load_10_per_sec_for_10_mins.xml
+result: 
+
+
+name: ms-15-25-15
+desc:   desc: a mixture of hitting front page (50%), registering (30%), and a full run printing pdf's at every stage, at the rate 
+        of 10 request per second increasing to 20 rps then 25 rsps after 5 minutes each
+xml:    xml/full_load_15_25_per_sec_for_10_mins.xml
+gen:    ruby lib/wrap.rb -e full_load_test -l 15_to_25_fo_5_mins_each -x load_test_1 > xml/full_load_15_25_per_sec_for_10_mins.xml
+result: 
+
+
 
 
 

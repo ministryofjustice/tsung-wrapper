@@ -1,0 +1,355 @@
+<?xml version="1.0"?><tsung loglevel="warning" dumptraffic="protocol" version="1.0">
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="9000"/>
+  </clients>
+  <servers>
+    <server host="staging-lpa.service.dsd.io" port="443" type="tcp"/>
+  </servers>
+  <load>
+    <arrivalphase phase="1" duration="10" unit="minute">
+      <users interarrival="10" unit="second"/>
+    </arrivalphase>
+  </load>
+  <options>
+    <option type="ts_http" name="user_agent">
+      <user_agent probability="80">Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21</user_agent>
+      <user_agent probability="20">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</user_agent>
+    </option>
+  </options>
+  <sessions>
+    <session name="hit_landing_page_only-20140507-144016" probability="50" type="ts_http">
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io" version="1.1" method="GET"/>
+      </request>
+    </session>
+    <session name="hit_landing_page_and_register-20140507-144016" probability="30" type="ts_http">
+      <setdynvars sourcetype="random_string" length="12">
+        <var name="username"/>
+      </setdynvars>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/?autoTestKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe+FLPTVHZho3zK0mu41ouPmxLXJlZYi" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/user/register" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="2"/>
+      <request subst="true">
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <dyn_variable name="activationurl" re="id='activation_link' href='(.*)'"/>
+        <http url="https://staging-lpa.service.dsd.io/user/register" version="1.1" contents="email=%%_username%%%40test.com&amp;email_confirm=%%_username%%%40test.com&amp;password=Passw00rd&amp;password_confirm=Passw00rd&amp;confirmUnderstanding=1&amp;submit=I+understand" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request subst="true">
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="%%_activationurl%%" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/user/login" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request subst="true">
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=Passw00rd&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/user/about-you" version="1.1" method="GET"/>
+      </request>
+    </session>
+    <session name="full_run-20140507-144016" probability="20" type="ts_http">
+      <setdynvars sourcetype="random_string" length="12">
+        <var name="username"/>
+      </setdynvars>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/?autoTestKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe+FLPTVHZho3zK0mu41ouPmxLXJlZYi" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/user/register" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="2"/>
+      <request subst="true">
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <dyn_variable name="activationurl" re="id='activation_link' href='(.*)'"/>
+        <http url="https://staging-lpa.service.dsd.io/user/register" version="1.1" contents="email=%%_username%%%40test.com&amp;email_confirm=%%_username%%%40test.com&amp;password=Passw00rd&amp;password_confirm=Passw00rd&amp;confirmUnderstanding=1&amp;submit=I+understand" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request subst="true">
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="%%_activationurl%%" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/user/login" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request subst="true">
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=Passw00rd&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/user/about-you" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/user/about-you" version="1.1" contents="title=Mr&amp;firstname=Stephen&amp;middlename=Philip&amp;surname=Richards&amp;dob%5Bday%5D=13&amp;dob%5Bmonth%5D=08&amp;dob%5Byear%5D=1963&amp;addr1=50+Tregunter+Road&amp;addr2=West+Brompton&amp;addr3=&amp;town=London&amp;county=&amp;postcode=SW10+9XX&amp;country=UK&amp;save=Save+and+continue" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/lpa-type" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="5"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/lpa-type" version="1.1" contents="lpa_type=Property+and+financial+affairs&amp;save=Save+and+continue" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/add-donor" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/add-donor" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/postcode/lookup?postcode=SW10+9LB" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/address/lookup?addressid=23911113" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="5"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/add-donor" version="1.1" contents="title=Mr&amp;firstname=test&amp;middlename=&amp;surname=test&amp;othername=&amp;dob%5Bday%5D=02&amp;dob%5Bmonth%5D=03&amp;dob%5Byear%5D=1920&amp;phone=&amp;email=&amp;address%5Baddr1%5D=aaa&amp;address%5Baddr2%5D=&amp;address%5Baddr3%5D=&amp;address%5Btown%5D=bbb&amp;address%5Bcounty%5D=ccc&amp;address%5Bpostcode%5D=ddd&amp;address%5Bcountry%5D=UK&amp;donor_cannot_sign=0" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/donor" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/when-to-use" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/when-to-use" version="1.1" contents="whenToStart=0&amp;save=Save+and+continue" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/attorneys" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/add-attorney" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/postcode/lookup?postcode=SW10+9LB" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/address/lookup?addressid=23911113" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/add-attorney" version="1.1" contents="title=Mrs&amp;firstname=Christina&amp;middlename=Adelaide&amp;surname=Richards&amp;dob%5Bday%5D=07&amp;dob%5Bmonth%5D=12&amp;dob%5Byear%5D=1918&amp;address%5Baddr1%5D=3+Melbury+Close&amp;address%5Baddr2%5D=Ferndown&amp;address%5Baddr3%5D=&amp;address%5Btown%5D=Christchurch&amp;address%5Bcounty%5D=Dorset&amp;address%5Bpostcode%5D=BH22+8HR&amp;address%5Bcountry%5D=UK&amp;email=car%40test.com&amp;phone=01245+7855444&amp;occupation=Retired&amp;relationshipToDonor=Child" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/attorneys" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="2"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/pdf/draft/Lasting-Power-of-Attorney-Draft.pdf" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/replacement-attorneys" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/postcode/lookup?postcode=SW10+9LB" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/address/lookup?addressid=23911113" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/add-replacement-attorney" version="1.1" contents="title=Mr&amp;firstname=David&amp;middlename=Charles+Nimmo&amp;surname=Macfarlane&amp;dob%5Bday%5D=28&amp;dob%5Bmonth%5D=11&amp;dob%5Byear%5D=1926&amp;email=dm%40test.com&amp;phone=073476363&amp;address%5Baddr1%5D=Flat+102&amp;address%5Baddr2%5D=560+Chiswick+High+Road&amp;address%5Baddr3%5D=&amp;address%5Btown%5D=London&amp;address%5Bcounty%5D=&amp;address%5Bpostcode%5D=W4+5RR&amp;address%5Bcountry%5D=UK" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/replacement-attorneys" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="2"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/pdf/draft/Lasting-Power-of-Attorney-Draft.pdf" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/certificate-provider" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/add-certificate-provider" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/postcode/lookup?postcode=SW10+9LB" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/address/lookup?addressid=23911113" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/add-certificate-provider" version="1.1" contents="title=Mr&amp;firstname=Daryl&amp;middlename=&amp;surname=McKeown&amp;email=dm%40test.com&amp;address%5Baddr1%5D=Flat+6&amp;address%5Baddr2%5D=Rosewood+House&amp;address%5Baddr3%5D=35-39+Vauxhall+Grove&amp;address%5Btown%5D=London&amp;address%5Bcounty%5D=&amp;address%5Bpostcode%5D=SW8+1TB&amp;address%5Bcountry%5D=UK&amp;certificateProviderStatementType=I+want+them+to+complete+these+details+on+the+print+LPA+form+themselves" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/certificate-provider" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/certificate-provider" version="1.1" contents="certificateProviderStatementType=1&amp;certificateProviderKnowledgeOfDonor=I+have+been+the+donor%27s+friend+for+25+years&amp;certificateProviderProfessionalSkills=&amp;save=Save+and+continue" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/people-to-be-told" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/add-notified-person" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/postcode/lookup?postcode=SW10+9LB" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/address/lookup?addressid=23911113" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/add-notified-person" version="1.1" contents="title=Mr&amp;firstname=Beverley&amp;surname=Meyers&amp;email=bev%40test.com&amp;phone=02552823626&amp;address%5Baddr1%5D=10+Edge+Street&amp;address%5Baddr2%5D=&amp;address%5Baddr3%5D=&amp;address%5Btown%5D=London&amp;address%5Bcounty%5D=&amp;address%5Bpostcode%5D=W8+7PN&amp;address%5Bcountry%5D=UK" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/people-to-be-told" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="2"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/pdf/draft/Lasting-Power-of-Attorney-Draft.pdf" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/review" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/review" version="1.1" contents="restrictions=&amp;guidance=&amp;charges=&amp;save=Save+and+continue" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/create/complete" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/register/applicant" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/register/applicant" version="1.1" contents="whoIsMakingThisApplication=attorney&amp;save=Save+and+continue" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/register/notice-dates" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="2"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/pdf/draft/Lasting-Power-of-Attorney-Draft.pdf" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/register/notice-dates" version="1.1" contents="notifiedPerson_0=17%2F04%2F2014&amp;submit=Continue+to+next+question" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/register/further-info" version="1.1" method="GET"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/register/further-info" version="1.1" contents="previousLpa=0&amp;notesForPreviousLpa=&amp;additionalInfo=&amp;submit=Continue+to+next+question" content_type="application/x-www-form-urlencoded" method="POST"/>
+      </request>
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://staging-lpa.service.dsd.io/register/fees" version="1.1" method="GET"/>
+      </request>
+    </session>
+  </sessions>
+</tsung>

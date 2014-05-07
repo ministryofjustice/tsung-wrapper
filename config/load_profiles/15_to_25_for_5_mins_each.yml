@@ -1,0 +1,28 @@
+arrivalphases:
+  - name: "Phase 1: Full load at 10 requests per second for 5 mins"
+    sequence: 1
+    duration: 5
+    duration_unit: minute
+    arrival_interval: 0.1
+    arrival_interval_unit: second
+
+  - name: "Phase 2: Full load at 15 requests per second for 5 mins"
+    sequence: 2
+    duration: 10
+    duration_unit: minute
+    arrival_interval: 0.667
+    arrival_interval_unit: second
+
+  - name: "Phase 3: Full load at 20 requests per second for 5 mins"
+    sequence: 3
+    duration: 5
+    duration_unit: minute
+    arrival_interval: 0.05
+    arrival_interval_unit: second
+
+  - name: "Phase 3: Full load at 25 requests per second for 5 mins"
+    sequence: 4
+    duration: 5
+    duration_unit: minute
+    arrival_interval: 0.04
+    arrival_interval_unit: second
