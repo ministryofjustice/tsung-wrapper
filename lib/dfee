@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+
+require 'optparse'
+require_relative 'dump_file_error_extractor'
+
+@options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage dfe -f <dumpfile> \n" +
+                "             extract error records from dumpfile"
+
+  opts.on("-f", "--file FILE", "Specify input file") do |file|
+    @options[:file] = file
+  end
+
+end.parse!
+    
+raise "You must specify an input file with the -f switch" if @options[:file].nil?
+
+
+dfee = TsungWrapper::DumpFileErrorExtractor.new(@options[:file])
+dfee.run
+

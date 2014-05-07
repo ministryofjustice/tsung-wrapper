@@ -31,3 +31,24 @@ milliseconds to  1.2 seconds after running for 2 minutes, 4 seconds at 3 minutes
 As the response time goes up, tsung reduces the number of requests per second from 50 per second for the first 3 minutes to 19 
 or 20 per second after 15 minutes.  From 12 minutes onwards, the server wasn't really able to respond at all, and tsung was only 
 sending 1 request every 10 seconds.
+
+
+
+name: 20140506-1647
+===================
+desc: a mixture of hitting front page (50%), registering (30%), and a full run printing pdf's at every stage, at the rate 
+      of 1 request per second for 10 minutes, increasing every 10 minutes by 1 prequest per second up to a maximum of 29 per second.
+xml:  xml/full_load_long_gradual.xml
+gen:  ruby lib/wrap.rb -e full_load_test -l long_gradual -x load_test_1 > xml/full_load_long_gradual.xml
+result:
+  
+  We immediatley got timeouts on all address and postcode lookups.
+
+
+
+name: 
+desc: desc: a mixture of hitting front page (50%), registering (30%), and a full run printing pdf's at every stage, at the rate 
+      of 1 request per second for 10 minutes
+xml:  xml/full_load_slow_5_mins.xml
+gen:  ruby lib/wrap.rb -e full_load_test -l 1_per_sec_for_5_mins -x load_test_1 > xml/full_load_1_per_sec_for_5_mins.xml
+result:
