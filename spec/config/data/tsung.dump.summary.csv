@@ -1,4 +1,4 @@
-"elapsed_time,","num_reqs,","num_reqs_per_sec,","min_req_time,","max_req_time,",avg_req_time,200,302,500,502,not recognised
+elapsed_time,num_reqs,num_reqs_per_sec,min_req_time,max_req_time,avg_req_time,200,302,500,502,not recognised
 0,9,1.8,188.18,238.42,198.6497,9,,,,
 5,11,2.2,177.228,220.488,194.1921,11,,,,
 10,4,0.8,181.444,232.449,200.4742,4,,,,

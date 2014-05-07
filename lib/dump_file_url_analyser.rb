@@ -5,7 +5,7 @@ module TsungWrapper
     def initialize(filename)
       @ifile      = File.open(filename, 'r')
       @ofile      = File.open(format_ofile_name(filename), 'w')
-      @urls       = Hash.new
+      @urls       = Hash.new(Array.new)
       @start_time = nil
 
       check_header_line
@@ -50,8 +50,12 @@ module TsungWrapper
       if is_first_line?
         @start_time = fields.first.to_f
       end
+      normalised_url = normalise_url(fields[5])
       url = OpenStruct.new
       url.esecs = calculate_elapsed_time(fields.first)
+      url.duration = fields[8].to_f
+      url.response_status = fields[6].to_s
+      @urls[normalised_url] << url
     end
 
     def calculate_elapsed_time(field)
@@ -71,6 +75,17 @@ module TsungWrapper
       end
     end
 
+
+    def normalise_url(url)
+      if url =~ /\/activate\/.+/
+        normalised_url = '/activate'
+      elsif url =~ /(.*)\/\?.+/
+        normalised_url = $1
+      elsif url =~ /(.*)\/?$/
+        normalised_url = $1
+      end
+      normalised_url.nil? ? '' : normalised_url
+    end
 
 
 

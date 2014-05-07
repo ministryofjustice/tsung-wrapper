@@ -3,5 +3,5 @@ arrivalphases:
     sequence: 1
     duration: 10
     duration_unit: minute
-    arrival_interval: 10
+    arrival_interval: .1
     arrival_interval_unit: second
