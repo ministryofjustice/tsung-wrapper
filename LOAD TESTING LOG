@@ -17,7 +17,7 @@ TESTS
 ============
 
 
-name: 20140506-1444
+name: fp-50-50-30-20140506-1444  Front Page 50 per sec min, 50 per sec max, 30 mins
 ===================
 desc: hit the front page at 50 requests per second for 30 minutes
 xml:  xml/front_page_50_per_sec_for_30_mins.xml
@@ -47,13 +47,20 @@ result:
 
 
 
-name: 20140507-1109
-===================
+name: ms-1-1-5-20140507-1304
+============================
 desc: desc: a mixture of hitting front page (50%), registering (30%), and a full run printing pdf's at every stage, at the rate 
       of 1 request per second for 10 minutes
 xml:  xml/full_load_slow_5_mins.xml
 gen:  ruby lib/wrap.rb -e full_load_test -l 1_per_sec_for_5_mins -x load_test_1 > xml/full_load_1_per_sec_for_5_mins.xml
 result:
+      Perfect result in that every request got a 200 or 302 response.
+      Longest request took 17.45 seconds
+      Longest non-pdf request was /create/complete which took 11.3 seconds after 308 seconds
+      Number of requests taking more than 1 second: 627 of 3807  (16.5%)
 
-    All postcode and addresss lookups are returning error_no_http_status which I presume means time out.
+    
+
+
+
 
