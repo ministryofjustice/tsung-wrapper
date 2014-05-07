@@ -1,4 +1,4 @@
 request:
   name: Postcode Lookup
-  url: "/postcode/lookup?postcode=SW10+9LB HTTP/1.1"
+  url: "/postcode/lookup?postcode=SW10+9LB"
   http_method: GET		

@@ -43,12 +43,17 @@ gen:  ruby lib/wrap.rb -e full_load_test -l long_gradual -x load_test_1 > xml/fu
 result:
   
   We immediatley got timeouts on all address and postcode lookups.
+  OK, this was caused by an error in the snippet url, which generated and invalid url in the XML file
 
 
 
-name: 
+name: 20140507-1109
+===================
 desc: desc: a mixture of hitting front page (50%), registering (30%), and a full run printing pdf's at every stage, at the rate 
       of 1 request per second for 10 minutes
 xml:  xml/full_load_slow_5_mins.xml
 gen:  ruby lib/wrap.rb -e full_load_test -l 1_per_sec_for_5_mins -x load_test_1 > xml/full_load_1_per_sec_for_5_mins.xml
 result:
+
+    All postcode and addresss lookups are returning error_no_http_status which I presume means time out.
+

@@ -23,7 +23,7 @@
     </option>
   </options>
   <sessions>
-    <session name="hit_landing_page_only-20140507-115301" probability="50" type="ts_http">
+    <session name="hit_landing_page_only-20140507-140104" probability="50" type="ts_http">
       <!-- Hit Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
@@ -31,7 +31,7 @@
         <http url="https://staging-lpa.service.dsd.io" version="1.1" method="GET"/>
       </request>
     </session>
-    <session name="hit_landing_page_and_register-20140507-115301" probability="30" type="ts_http">
+    <session name="hit_landing_page_and_register-20140507-140104" probability="30" type="ts_http">
       <setdynvars sourcetype="random_string" length="12">
         <var name="username"/>
       </setdynvars>
@@ -79,7 +79,7 @@
         <http url="https://staging-lpa.service.dsd.io/user/about-you" version="1.1" method="GET"/>
       </request>
     </session>
-    <session name="full_run-20140507-115301" probability="20" type="ts_http">
+    <session name="full_run-20140507-140104" probability="20" type="ts_http">
       <setdynvars sourcetype="random_string" length="12">
         <var name="username"/>
       </setdynvars>
@@ -160,13 +160,13 @@
       <thinktime random="true" value="4"/>
       <request>
         <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
-        <http url="https://staging-lpa.service.dsd.io/postcode/lookup?postcode=SW10+9LB HTTP/1.1" version="1.1" method="GET"/>
+        <http url="https://staging-lpa.service.dsd.io/postcode/lookup?postcode=SW10+9LB" version="1.1" method="GET"/>
       </request>
       <!-- Address Lookup -->
       <thinktime random="true" value="4"/>
       <request>
         <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
-        <http url="https://staging-lpa.service.dsd.io/address/lookup?addressid=23911113 HTTP/1.1" version="1.1" method="GET"/>
+        <http url="https://staging-lpa.service.dsd.io/address/lookup?addressid=23911113" version="1.1" method="GET"/>
       </request>
       <!-- Fill Add Donor Form -->
       <thinktime random="true" value="5"/>
@@ -208,13 +208,13 @@
       <thinktime random="true" value="4"/>
       <request>
         <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
-        <http url="https://staging-lpa.service.dsd.io/postcode/lookup?postcode=SW10+9LB HTTP/1.1" version="1.1" method="GET"/>
+        <http url="https://staging-lpa.service.dsd.io/postcode/lookup?postcode=SW10+9LB" version="1.1" method="GET"/>
       </request>
       <!-- Address Lookup -->
       <thinktime random="true" value="4"/>
       <request>
         <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
-        <http url="https://staging-lpa.service.dsd.io/address/lookup?addressid=23911113 HTTP/1.1" version="1.1" method="GET"/>
+        <http url="https://staging-lpa.service.dsd.io/address/lookup?addressid=23911113" version="1.1" method="GET"/>
       </request>
       <!-- Fill in Add Donor Form -->
       <thinktime random="true" value="4"/>
@@ -244,13 +244,13 @@
       <thinktime random="true" value="4"/>
       <request>
         <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
-        <http url="https://staging-lpa.service.dsd.io/postcode/lookup?postcode=SW10+9LB HTTP/1.1" version="1.1" method="GET"/>
+        <http url="https://staging-lpa.service.dsd.io/postcode/lookup?postcode=SW10+9LB" version="1.1" method="GET"/>
       </request>
       <!-- Address Lookup -->
       <thinktime random="true" value="4"/>
       <request>
         <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
-        <http url="https://staging-lpa.service.dsd.io/address/lookup?addressid=23911113 HTTP/1.1" version="1.1" method="GET"/>
+        <http url="https://staging-lpa.service.dsd.io/address/lookup?addressid=23911113" version="1.1" method="GET"/>
       </request>
       <!-- POST Create Replacement Attorneys -->
       <thinktime random="true" value="4"/>
@@ -286,13 +286,13 @@
       <thinktime random="true" value="4"/>
       <request>
         <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
-        <http url="https://staging-lpa.service.dsd.io/postcode/lookup?postcode=SW10+9LB HTTP/1.1" version="1.1" method="GET"/>
+        <http url="https://staging-lpa.service.dsd.io/postcode/lookup?postcode=SW10+9LB" version="1.1" method="GET"/>
       </request>
       <!-- Address Lookup -->
       <thinktime random="true" value="4"/>
       <request>
         <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
-        <http url="https://staging-lpa.service.dsd.io/address/lookup?addressid=23911113 HTTP/1.1" version="1.1" method="GET"/>
+        <http url="https://staging-lpa.service.dsd.io/address/lookup?addressid=23911113" version="1.1" method="GET"/>
       </request>
       <!-- POST Create Add Certificate Provicer -->
       <thinktime random="true" value="4"/>
@@ -328,13 +328,13 @@
       <thinktime random="true" value="4"/>
       <request>
         <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
-        <http url="https://staging-lpa.service.dsd.io/postcode/lookup?postcode=SW10+9LB HTTP/1.1" version="1.1" method="GET"/>
+        <http url="https://staging-lpa.service.dsd.io/postcode/lookup?postcode=SW10+9LB" version="1.1" method="GET"/>
       </request>
       <!-- Address Lookup -->
       <thinktime random="true" value="4"/>
       <request>
         <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
-        <http url="https://staging-lpa.service.dsd.io/address/lookup?addressid=23911113 HTTP/1.1" version="1.1" method="GET"/>
+        <http url="https://staging-lpa.service.dsd.io/address/lookup?addressid=23911113" version="1.1" method="GET"/>
       </request>
       <!-- POST Create Add notified person -->
       <thinktime random="true" value="4"/>
