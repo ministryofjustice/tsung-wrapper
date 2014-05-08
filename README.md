@@ -21,6 +21,10 @@ Author: Stephen Richards <stephen.richards@digital.justice.gov.uk>
 	* [Log file format](#log-file-format)
 	* [Clearing the access log before a run](#clearing-the-access-log-before-a-run)
 * [Tips for Creating Complex Sessions](#tips-for-creating-complex-sessions)
+* [Analytical Utilities](#analytical-utilities)
+	* [Dump File Analyser](#dump-file-analyser)
+	* [Dump File Error Extractor](#dump-file-error-extractor)
+	* [Dump File URL Analyser](#dump-file-url-analyser)
 
 
 
@@ -441,6 +445,58 @@ I have found the best way to know exactly what requests to send to replicate a c
 5.	run ``ruby lib/nginx_analyser.rb`` - this will produce a CSV file which can be viewed in Excel or similar and show the url, http verb and any prameters posted
 6.	use this to make up the snippet files and session file.
 
+
+
+# Analytical Utilities
+
+The following three utilities are tools to provide analyses of the tsung.dump file created 
+when the dumptraffic option in the environment yml file is set to "protocol".
+
+
+## Dump File Analyser
+
+### Output
+
+Dump File analyser will summarise the tsung.dump file into periods of n seconds, and produce a csv file wit the name 
+```xxxx_summary.csv``` where ```xxx``` is the name of the input file.  Sample output is:
+
+
+|elapsed_time	| num_reqs | num_reqs_per_sec | min_req_time | max_req_time | avg_req_time | 200 | 302 | 502 | 504 |
+|-------------|---------:|-----------------:|-------------:|-------------:|-------------:|----:|----:|----:|----:|
+|0	          | 363	     | 6.05	            | 35.642	     | 1478.558	    | 258.5163	   | 319 | 44  |     |     |
+|60	          | 713	     | 11.8833	        | 35.765	     | 6675.726	    | 593.9687	   | 584 | 129 |     |     |
+|120	        | 919	     | 15.3167	        | 35.25	       | 10285.061	  | 1655.0151	   | 745 | 174 |     |     |
+|180					| 858			 | 14.3	            | 35.2	       | 11407.75	    | 3394.3218	   | 699 | 159 |     |     |
+
+
+### How to run:
+
+		```lib/dfa -f <input_file> -s <summarisation period in seconds>```
+
+
+## Dump File Error Extractor
+
+This file simple extracts all requests whose HTTP response code is neither 200 nor 302 to a separate file
+
+To run:
+
+		``` lib/dfee -f <input_file>```
+
+
+## Dump File URL Analyser
+
+### Ouput
+
+This file provides statistics categorised by URL, enabling you to see if there are any particular URLs which are always 
+responding with error status codes, or are taking much longer to respond than other requests.  Output is written to a file
+named ``` xxxx_urls.csv``` where xxxx is the name of the input file.
+
+
+|url        	| num_reqs | avg              | min          | max          | max elapsed  | 200 | 302 | 502 | 504 |
+|-------------|---------:|-----------------:|-------------:|-------------:|-------------:|----:|----:|----:|----:|
+| /	| 3586 |	5937.74	| 146.62	| 14722.21 | 	916 |	3089	| 0	| 497|	0
+| /activate	| 1283	| 8053.52	| 23.05	| 18648.83	|921	| 1137	| 0	| 146	| 0
+| /address/lookup	| 805	| 5269.81 |	23.16	| 20981.63	| 979	| 785	| 0	| 20	| 0
 
 
 

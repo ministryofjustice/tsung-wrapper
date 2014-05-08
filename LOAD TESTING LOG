@@ -92,6 +92,6 @@ name: full_run_1_per_second
 desc:   A full run, at the rate of 1 per second for 10 minutes
 xml:    xml/full_load_1_per_sec.xml
 gen:    ruby lib/wrap.rb -e full_load_test -l 1_per_sec_for_15_mins -x full_run > xml/full_load_1_per_sec.xml
-
+result: 
 
 
