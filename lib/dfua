@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+
+require 'optparse'
+require_relative 'dump_file_url_analyser'
+
+@options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage dfua -f <dumpfile> \n" +
+                "             analyse response times and errors by url"
+
+  opts.on("-f", "--file FILE", "Specify input file") do |file|
+    @options[:file] = file
+  end
+
+end.parse!
+    
+raise "You must specify an input file with the -f switch" if @options[:file].nil?
+
+
+dfee = TsungWrapper::DumpFileUrlAnalyser.new(@options[:file])
+dfee.run
+
