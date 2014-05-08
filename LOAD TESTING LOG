@@ -77,7 +77,26 @@ result:
 
 
 
+name: ms-2-5-15
+============================
 
+desc:   desc: a mixture of hitting front page (50%), registering (30%), and a full run printing pdf's at every stage, at 
+        the rate of 2 request per second for 5 minutes rising to 4 rps for 5 minutes and then 6 rps
+xml:    xml/full_load_2-4-6_per_sec_for_15_mins.xml
+gen:    ruby lib/wrap.rb -e full_load_test -l 2-4-6-for_5_mins_each -x load_test_1 > xml/full_load_2-4-6_per_sec_for_15_mins.xml
+result: 
+
+
+
+
+
+
+name: ms-15-25-15
+desc:   desc: a mixture of hitting front page (50%), registering (30%), and a full run printing pdf's at every stage, at the rate 
+        of 10 request per second increasing to 20 rps then 25 rsps after 5 minutes each
+xml:    xml/full_load_15_25_per_sec_for_10_mins.xml
+gen:    ruby lib/wrap.rb -e full_load_test -l 15_to_25_for_5_mins_each -x load_test_1 > xml/full_load_15_25_per_sec_for_10_mins.xml
+result: 
 
 
 
