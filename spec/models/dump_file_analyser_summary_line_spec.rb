@@ -28,11 +28,11 @@ module TsungWrapper
     end
 
 
-    describe '#add_source' do
+    describe '#add_source_line' do
       it 'should increment the variables' do
         line = DumpFileAnalyser::SourceLine.new('1398962662.958361;<0.100.0>;7;get;staging-lpa.service.dsd.io;/;200;13110;190.190;-;;;')
         sl = DumpFileAnalyser::SummaryLine.new(25, 5)
-        sl.add_source(line)
+        sl.add_source_line(line)
 
         sl.elapsed_time.should       == 25
         sl.interval.should           == 5
@@ -46,7 +46,7 @@ module TsungWrapper
 
       it 'should maintin mins and max values and https status code counts' do 
         sl = DumpFileAnalyser::SummaryLine.new(25, 5)
-        lines.each { |line| sl.add_source(DumpFileAnalyser::SourceLine.new(line) ) }
+        lines.each { |line| sl.add_source_line(DumpFileAnalyser::SourceLine.new(line) ) }
 
         sl.elapsed_time.should       == 25
         sl.interval.should           == 5
@@ -63,7 +63,7 @@ module TsungWrapper
     describe '#finalise' do
       it 'should summarize values and return itself' do
         sl = DumpFileAnalyser::SummaryLine.new(25, 5)
-        lines.each { |line| sl.add_source(DumpFileAnalyser::SourceLine.new(line) ) }
+        lines.each { |line| sl.add_source_line(DumpFileAnalyser::SourceLine.new(line) ) }
         final = sl.finalise
 
         final.should be_instance_of(DumpFileAnalyser::SummaryLine)
@@ -73,7 +73,7 @@ module TsungWrapper
         final.min_request_time.should         == 190.19
         final.max_request_time.should         == 238.42
         final.avg_request_time.should         == 210.3127
-        final.num_requests_per_second.should  == 1.6667
+        final.num_requests_per_second.should  == 0.6
         final.status_code_counts.should       == {'200' => 2, '302' => 1}
       end
     end

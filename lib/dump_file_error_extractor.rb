@@ -10,7 +10,7 @@ module TsungWrapper
       @ifile = File.open(filename, 'r')
       @ofile = File.open(format_ofile_name(filename), 'w')
       check_header_line
-      puts "extracting error responses to #{format_ofile_name(filename)}"
+      # puts "extracting error responses to #{format_ofile_name(filename)}"
     end
 
 
@@ -38,6 +38,8 @@ module TsungWrapper
      def check_header_line
       line = @ifile.readline.chomp
       if line != "#date;pid;id;http method;host;URL;HTTP status;size;duration;transaction;match;error;tag"
+        puts "++++++ DEBUG ++++++ #{__FILE__}::#{__LINE__} ++++\n"
+        puts line
         raise "Error: Unexpected first line - was it created with the dumptraffic=\"protocol\" option?:\n#{line}"
       end
       @ofile.puts line
