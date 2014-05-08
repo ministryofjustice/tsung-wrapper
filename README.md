@@ -471,7 +471,7 @@ Dump File analyser will summarise the tsung.dump file into periods of n seconds,
 
 ### How to run:
 
-		```lib/dfa -f <input_file> -s <summarisation period in seconds>```
+		lib/dfa -f <input_file> -s <summarisation period in seconds>
 
 
 ## Dump File Error Extractor
@@ -480,7 +480,7 @@ This file simple extracts all requests whose HTTP response code is neither 200 n
 
 To run:
 
-		``` lib/dfee -f <input_file>```
+		lib/dfee -f <input_file>
 
 
 ## Dump File URL Analyser
