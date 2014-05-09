@@ -89,9 +89,17 @@ result: All well for the first 5 minutes, but at second 300 started gettng 502 e
 
 name: full_run_1_per_second
 ===========================
-desc:   A full run, at the rate of 1 per second for 10 minutes
+desc:   A full run, at the rate of 1 new session per second for 10 minutes
 xml:    xml/full_load_1_per_sec.xml
 gen:    ruby lib/wrap.rb -e full_load_test -l 1_per_sec_for_15_mins -x full_run > xml/full_load_1_per_sec.xml
 result: 
 
+
+
+name: full_run_1_per_5 seconds
+==============================
+desc:   A full run, at the rate of 1 new session every 5 seconds
+xml:    xml/full_load_1_per_5_secs.xml
+gen:    ruby lib/wrap.rb -e full_load_test -l 1_per_5_secs_for_15_mins -x full_run > xml/full_load_1_per_5_secs.xml
+result: 
 
