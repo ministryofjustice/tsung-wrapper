@@ -48,7 +48,7 @@ yaml configuration files.  The tool can be used to just produce the XML file, or
 	</pre>
 
 
-* perl Template toolkit, which can be installed with:
+* perl Template toolkit, which can be installed with the command below (__When prompted 'What approach do you want?', enter sudo__):
 
 	``cpan Template``
 	
