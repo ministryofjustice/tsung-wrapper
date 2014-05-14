@@ -1,0 +1,7 @@
+arrivalphases:
+  - name: "Dot Cotton - 12 per second for 30 minutes"
+    sequence: 12
+    duration: 30
+    duration_unit: minute
+    arrival_interval: 1
+    arrival_interval_unit: second
