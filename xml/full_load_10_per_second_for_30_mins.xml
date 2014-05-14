@@ -23,7 +23,7 @@
     </option>
   </options>
   <sessions>
-    <session name="full_run-20140514-134444" probability="100" type="ts_http">
+    <session name="full_run-20140514-135058" probability="100" type="ts_http">
       <setdynvars sourcetype="random_string" length="12">
         <var name="username"/>
       </setdynvars>
