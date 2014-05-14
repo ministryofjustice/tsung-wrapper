@@ -1,0 +1,7 @@
+arrivalphases:
+  - name: "Phase 1: Full load at 10 requests per second for 30 mins"
+    sequence: 1
+    duration: 30
+    duration_unit: minute
+    arrival_interval: .1
+    arrival_interval_unit: second
