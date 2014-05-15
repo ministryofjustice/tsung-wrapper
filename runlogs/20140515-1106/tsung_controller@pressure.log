@@ -1,0 +1,34 @@
+
+=INFO REPORT==== 15-May-2014::11:06:00 ===
+    ts_config_server:(5:<0.55.0>) Config server started, logdir is "/home/groderick/.tsung/log/20140515-1106"
+ 
+=INFO REPORT==== 15-May-2014::11:06:00 ===
+              ts_mon:(5:<0.54.0>) starting monitor, global 
+
+=INFO REPORT==== 15-May-2014::11:06:00 ===
+           ts_config:(5:<0.55.0>) Reading config file: xml/very_very_heavy_load_120_sessions_per_second.xml
+
+=INFO REPORT==== 15-May-2014::11:06:00 ===
+      ts_config_http:(4:<0.55.0>) Get user agent: 80 "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21" 
+
+=INFO REPORT==== 15-May-2014::11:06:00 ===
+      ts_config_http:(4:<0.55.0>) Get user agent: 20 "Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4" 
+
+=INFO REPORT==== 15-May-2014::11:06:00 ===
+           ts_config:(5:<0.55.0>) Session name for id 1 is "full_run-20140515-120459"
+
+=INFO REPORT==== 15-May-2014::11:06:00 ===
+    ts_config_server:(4:<0.55.0>) SYSINFO:Tsung version: 1.5.1
+
+=INFO REPORT==== 15-May-2014::11:06:00 ===
+    ts_config_server:(4:<0.55.0>) SYSINFO:Erlang version: Erlang R14B04 (erts-5.8.5) [source] [64-bit] [smp:2:2] [rq:2] [async-threads:16] [kernel-poll:true]
+
+
+=INFO REPORT==== 15-May-2014::11:06:00 ===
+    ts_config_server:(4:<0.55.0>) SYSINFO:System architecture x86_64-pc-linux-gnu
+
+=INFO REPORT==== 15-May-2014::11:06:00 ===
+    ts_config_server:(4:<0.55.0>) SYSINFO:Current path: /usr/lib/erlang/lib/tsung-1.5.1/ebin/tsung.beam
+
+=INFO REPORT==== 15-May-2014::11:06:00 ===
+         ts_launcher:(2:<0.89.0>) WARNING !!! too few file descriptors available (1024), you should decrease maxusers (currently 9000)
