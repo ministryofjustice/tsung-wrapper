@@ -1,0 +1,35 @@
+arrivalphases:
+  - name: "Phase 1: 1 customer every minute (5 customers)"
+    sequence: 1
+    duration: 5
+    duration_unit: minute
+    arrival_interval: 1
+    arrival_interval_unit: minute
+
+  - name: "Phase 2: 1 new customer every 15 seconds (20 customers)"
+    sequence: 2
+    duration: 5
+    duration_unit: minute
+    arrival_interval: 30
+    arrival_interval_unit: second
+
+  - name: "Phase 3: 1 new customer every 5 seconds (60 customers)"
+    sequence: 3
+    duration: 5
+    duration_unit: minute
+    arrival_interval: 5
+    arrival_interval_unit: second
+
+  - name: "Phase 4: 1 new customer every 2 seconds (150 customers)"
+    sequence: 4
+    duration: 5
+    duration_unit: minute
+    arrival_interval: 2
+    arrival_interval_unit: second
+
+  - name: "Phase 5: 1 new customer every 1 seconds (300 customers)"
+    sequence: 5
+    duration: 5
+    duration_unit: minute
+    arrival_interval: 1
+    arrival_interval_unit: second

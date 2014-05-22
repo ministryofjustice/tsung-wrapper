@@ -1,0 +1,106 @@
+request:
+  name: POST new with my details
+  url: "/submission"
+  http_method: POST   
+  params:
+    utf8: "✓"
+    authenticity_token: "%%_csrf_token%%"
+    claim:
+      form_state: "form_state"
+      property:
+        house: 'Yes'
+        street: "Flat 34\r\n65 Finbourough Road\r\nLondon"
+        postcode: SW10 9XX
+      claimant_one:
+        title: Mr
+        full_name: Stephen Richards
+        street: "50 Tregunter Road\r\nLondon"
+        postcode: SW10 9LB
+      claimant_two:
+        title: ''
+        full_name: ''
+        street: ''
+        postcode: ''
+      claimant_contact:
+        title: ''
+        full_name: ''
+        company_name: ''
+        street: ''
+        postcode: ''
+        email: ''
+        phone: ''
+        fax: ''
+        dx_number: ''
+      defendant_one:
+        title: Mr
+        full_name: John Doe
+        street: ''
+        postcode: ''
+      defendant_two:
+        title: ''
+        full_name: ''
+        street: ''
+        postcode: ''
+      tenancy:
+        tenancy_type: assured
+        assured_shorthold_tenancy_type: one
+        start_date(3i): '4'
+        start_date(2i): '2'
+        start_date(1i): '2012'
+        original_assured_shorthold_tenancy_agreement_date(3i): ''
+        original_assured_shorthold_tenancy_agreement_date(2i): ''
+        original_assured_shorthold_tenancy_agreement_date(1i): ''
+        latest_agreement_date(3i): ''
+        latest_agreement_date(2i): ''
+        latest_agreement_date(1i): ''
+        applicable_statements_1: 'No'
+        applicable_statements_2: 'No'
+        applicable_statements_3: 'No'
+        applicable_statements_4: 'No'
+        applicable_statements_5: 'No'
+        assured_shorthold_tenancy_notice_served_by: ''
+        assured_shorthold_tenancy_notice_served_date(3i): ''
+        assured_shorthold_tenancy_notice_served_date(2i): ''
+        assured_shorthold_tenancy_notice_served_date(1i): ''
+        applicable_statements_6: 'No'
+        demotion_order_date(3i): ''
+        demotion_order_date(2i): ''
+        demotion_order_date(1i): ''
+        demotion_order_court: ''
+      notice:
+        served_by_name: Stephen Richards
+        served_method: In Person
+        date_served(3i): '01'
+        date_served(2i): jan
+        date_served(1i): '2014'
+        expiry_date(3i): '28'
+        expiry_date(2i): feb
+        expiry_date(1i): '2014'
+      license:
+        multiple_occupation: 'Yes'
+        issued_under_act_part: Part2
+        issued_by: RBKC
+        issued_date(3i): '6'
+        issued_date(2i): '6'
+        issued_date(1i): '2011'
+      deposit:
+        received: 'Yes'
+        as_money: 'Yes'
+        as_property: 'No'
+        ref_number: TENDEP12212
+      order:
+        possession: 'Yes'
+        cost: 'Yes'
+      possession:
+        hearing: 'Yes'
+      fee:
+        court_fee: '280.00'
+      legal_cost:
+        legal_costs: '550.00'
+      reference_number:
+        reference_number: PSR0133
+    multiplePanelRadio_claimants: '1'
+    multiplePanelRadio_defendants: '1'
+    defendant1address: 'yes'
+    Complete form: Complete form
+    ypos: '6226'

@@ -1,0 +1,10 @@
+
+
+
+
+name: Single User on localhost
+==============================
+desc: submit the page on localhost for just one user
+xml:  xml/cc/single_user_localhost.xml
+gen:  ruby lib/wrap.rb -xe development -p cc  -l single_user full_run > xml/cc/single_user_localhost.xml
+

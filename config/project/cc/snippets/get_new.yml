@@ -1,0 +1,8 @@
+request:
+  name: GET new
+  url: "/new"
+  http_method: GET    
+  extract_dynvars:
+    csrf_token: "<meta content=\"(.*)\" name=\"csrf-token\" />"
+
+

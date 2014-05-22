@@ -1,0 +1,4 @@
+request:
+  name: GET Landing Page
+  url: "/"
+  http_method: GET    
