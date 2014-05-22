@@ -19,7 +19,7 @@ module TsungWrapper
 		end
 
 		it 'should return error message if non-existent env specified' do 
-			output = capture_stdout("#{wrap} -e fantasy hit_landing_page  2>&1")
+			output = capture_stdout("#{wrap} -p lpa -e fantasy hit_landing_page  2>&1")
 			output.first.should == "ArgumentError: Configuration file for environment 'fantasy' does not exist.\n"
 		end
 			
