@@ -120,14 +120,18 @@ module TsungWrapper
 
 		def validate_options
 			OptionParser.new do |opts|
-				opts.banner = "Usage: wrap [-e environment] [-l load_profile] [-v] [-s] -x|-r session_name\n" + 
-										  "       wrap [-e environment] -c n"
+				opts.banner = "Usage: wrap [-e environment] -p project [-l load_profile] [-v] [-s] -x|-r session_name\n" + 
+										  "       wrap [-e environment] -p project -c n"
 				opts.separator ""
 			  opts.separator "Generate Tsung XML file for session <session_name>"
 			  opts.separator ""
 
 				opts.on("-e", "--environment  ENV", 'Use specified environment (default: development)') do |env|
 					@options[:env] = env
+				end
+
+				opts.on("-p", "--project PROJECT", "Look for configuration files in config/project/PROJECT") do |project|
+					@options[:project] = project
 				end
 
 				opts.on("-x", "--xml-out", "Generate XML config and write to STDOUT") do |xml|
@@ -159,7 +163,7 @@ module TsungWrapper
 				end.parse!
 			end
 
-
+			check_project_exists
 
 			TsungWrapper.env = @options[:env]
 			check_env_exists
@@ -185,6 +189,15 @@ module TsungWrapper
 			end
 			@session_name = ARGV.first
 		end
+
+
+
+		def check_project_exists
+			unless File.exist?(TsungWrapper.config_dir)
+				raise "Unable to find config directory #{TsungWrapper.config_dir}"
+			end
+		end
+
 
 
 		def check_env_exists

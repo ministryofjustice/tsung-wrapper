@@ -1,0 +1,490 @@
+<h1>tsung-wrapper</h1>
+
+<p>Author: Stephen Richards <a href="&#x6D;&#97;il&#x74;&#x6F;:&#x73;&#x74;ep&#104;&#x65;&#110;&#x2E;&#114;&#105;&#99;h&#x61;&#x72;&#100;&#x73;&#64;&#x64;&#105;&#103;&#x69;&#x74;&#97;&#x6C;&#46;&#106;&#117;&#x73;&#x74;&#x69;&#99;&#101;&#x2E;&#103;&#111;&#x76;&#46;&#x75;&#107;">&#x73;&#x74;ep&#104;&#x65;&#110;&#x2E;&#114;&#105;&#99;h&#x61;&#x72;&#100;&#x73;&#64;&#x64;&#105;&#103;&#x69;&#x74;&#97;&#x6C;&#46;&#106;&#117;&#x73;&#x74;&#x69;&#99;&#101;&#x2E;&#103;&#111;&#x76;&#46;&#x75;&#107;</a></p>
+
+<h2>Contents</h2>
+
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#dependencies">Dependencies</a></li>
+<li><a href="#running-tsung-wrapper">Running tsung-wrapper</a>
+<ul><li><a href="#usage">Usage</a></li>
+<li><a href="#usage-examples">Usage Examples</a></li></ul></li>
+<li><a href="#configuration-files">Configuration Files</a>
+<ul><li><a href="#the-environments-folder">The environments folder</a></li>
+<li><a href="#the-load_profiles-folder">The load_profiles folder</a></li>
+<li><a href="#the-scenarios-folder">The scenarios folder</a></li>
+<li><a href="#the-sessions-folder">The sessions folder</a> </li>
+<li><a href="#the-snippets-folder">The snippets folder</a></li>
+<li><a href="#the-dynvars-folder">The dynvars folder</a></li></ul></li>
+<li><a href="#development-server-configuration">Development Server Confiuration</a>
+<ul><li><a href="#log-file-format">Log file format</a></li>
+<li><a href="#clearing-the-access-log-before-a-run">Clearing the access log before a run</a></li></ul></li>
+<li><a href="#tips-for-creating-complex-sessions">Tips for Creating Complex Sessions</a></li>
+<li><a href="#analytical-utilities">Analytical Utilities</a>
+<ul><li><a href="#dump-file-analyser">Dump File Analyser</a></li>
+<li><a href="#dump-file-error-extractor">Dump File Error Extractor</a></li>
+<li><a href="#dump-file-url-analyser">Dump File URL Analyser</a></li></ul></li>
+</ul>
+
+<h2>Overview</h2>
+
+<p>This project enables the creation of complex XML files for load testing using Tsung, from a series of 
+yaml configuration files.  The tool can be used to just produce the XML file, or actually run the tsung session, and the stats run to produce the graphs.</p>
+
+<h2>Dependencies</h2>
+
+<ul>
+<li><p>erlang compiled with ssl</p>
+
+<p><code>sudo port install erlang +ssl</code></p></li>
+<li><p>tsung - Download from http://tsung.erlang-projects.org/dist/ and compile from source.  <strong>Despite what the documnetation on the tsung site says, do not install it using homebrew - you will not be able to use it on ssl sites</strong> </p>
+
+<pre>
+./configure
+make
+sudo make install
+</pre></li>
+<li><p>perl Template toolkit, which can be installed with:</p>
+
+<p><code>cpan Template</code></p></li>
+<li><p>Ruby</p></li>
+<li><p>Rubygems</p></li>
+<li><p>Bundler</p></li>
+<li><p>RVM</p></li>
+</ul>
+
+<h2>Running tsung-wrapper</h2>
+
+<p>The tsung-wrapper suite is run in three distinct phases:</p>
+
+<ul>
+<li>Running the lib/wrap.rb executable to produce an xml file which will be used by tsung
+to control the load testing</li>
+<li>Running tsung itself to send requests to the server in accordance with the instructions in the xml configuration file</li>
+<li>Running the stats program to produce the HTML reports and graphs.</li>
+</ul>
+
+<p>All three of the steps above can be run using the lib/wrap.rb executable.</p>
+
+<h3>Usage</h3>
+
+<pre><code>Usage: wrap [-e environment] -p project [-l load_profile] [-v] [-s] -x|-r session_name
+   wrap [-e environment] -p project -c n
+
+Generate Tsung XML file for session &lt;session_name&gt;
+
+-e, --environment  ENV           Use specified environment (default: development)
+-p, --project PROJECT            Look for configuration files in config/project/PROJECT
+-x, --xml-out                    Generate XML config and write to STDOUT
+-r, --run-tsung                  Generate XML config and pipe into tsung
+-l, --load-profile LOAD_PROFILE  Use specific load profile
+-s, --generate-stats             Generate Stats (requires that -r option is set
+-v, --verbose                    Set verbose mode ON
+-c, --clean-log-dir HOURS        Clean log dir of directories created before N hours ago
+</code></pre>
+
+<h3>Usage examples</h3>
+
+<p>These commands should be run from the root folder of the tsung-wrapper directory.</p>
+
+<ul>
+<li><p>Use the "development.yml" environment confiifuration file, with load profile "heavy.ymnl" and the session file "full<em>run.yml" and just produce the xml file and pipe it to tmp/heavy</em>full_run.xml</p>
+
+<p><code>ruby lib/wrap.rb -e development -l heavy -x full_run  &gt; tmp/heavy_full_run.xml</code></p></li>
+<li><p>Use the "dev<em>dump.yml" environment, "single</em>user.yml" load profile and session "full_run.yml" to produce the XMl file, run tsung using that file, and then generate the stats afterwards.</p>
+
+<p><code>ruby lib/wrap.rb -e dev_dump -l single_user -rs full_run</code></p></li>
+</ul>
+
+<p>In the latter case above, the tsung log files will be written to a folder in ~/.tsung/log - the actual name given to the folder will be displayed on the console.   </p>
+
+<h2>Configuration Files</h2>
+
+<p>Configuration files are located in the /config directory (for testing, they are located in /spec/config).  The contents of these files are what determines the contents of the XML file, which in turn determines how the load test is run.  The idea is that you have several standard config files, and you can pick and chooses between them to create whateve load testing session you want.</p>
+
+<p>The config directory contains the dtd file to be used, plus six folders: </p>
+
+<ul>
+<li><strong>environments</strong><br/>
+describes the environment to run (host, log level, user agents, etc</li>
+<li><strong>load_profiles</strong><br/>
+decsribes the load to use during the test.  This could be single user, used when developing a load test to see the user journey through the site, or a series of phases to progressively load the server</li>
+<li><strong>sessions</strong><br/>
+gives a name to a session, which comprises of a series of requests, each request being detailed in a snippet</li>
+<li><strong>scenarios</strong><br/>
+given a name to a scenario, which enables a number of different sessions to be run simultaneously</li>
+<li><strong>snippets</strong><br/>
+each snippet is a single GET or POST request, with or without parameters</li>
+<li><strong>matches</strong><br/>
+standardised tests that can be carried out on the response, and action taken depending on the result</li>
+<li><strong>dynvars</strong><br/>
+The definition of dynamic variables which can be used in requests, eg. to generate a random string to use as a username.</li>
+<li><strong>data</strong><br/>
+Any CSV files which are going to be used to supply test data should be placed in this folder.</li>
+</ul>
+
+<p>The following sections look at each of the configuration files in more detail.</p>
+
+<h3>The environments Folder</h3>
+
+<p>There should be a configuration file for each environment that you intend to run, e.g.</p>
+
+<ul>
+<li>development.yml</li>
+<li>test.yml</li>
+<li>staging.yml</li>
+<li>production.yml</li>
+</ul>
+
+<p>Each environment file contains global variables that will be used when building the Tsung XML configuration file.  A typical example might be:</p>
+
+<pre><code>    server_host: test_server_host
+    base_url: http://test_base_url.com
+    maxusers: 9000
+    server_port: 80
+    http_version: 1.1
+    load_profile: heavy
+    dumptraffic: protocol
+    loglevel: debug
+    default_thinktime: 4
+    default_matches:
+      - abort_unless_success_or_redirect
+
+    user_agents:
+      - name: Linux Firefox
+        user_agent_string: "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21"
+        probability: 80
+      - name: Windows Firefox
+        user_agent_string: "Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4"
+        probability: 20
+
+    file_dynvars:
+      - username_and_password
+</code></pre>
+
+<p>All of the above elements except default<em>thinktime and default</em>matches must be present.</p>
+
+<p>Most of the elements are self explanatory, but the following need a bit more explanation:</p>
+
+<ul>
+<li><strong>load_profile</strong>: which load profile to use.  This can be overridden by the command line swith -l at runtime.</li>
+<li><strong>dumptraffic</strong>: this can be one of the follwing values:
+<ul><li>true: dump the entire request and response to tsung.dump</li>
+<li>false: do not dump anything</li>
+<li>light: dump the first 44 bytes of the response to tsung.dump</li>
+<li>protocol: dump the details of the request and response status to tsung.dump</li></ul></li>
+</ul>
+
+<p>See http://tsung.erlang-projects.org/user_manual/conf-file.html for details.</p>
+
+<pre><code>The most useful setting is protocol.
+</code></pre>
+
+<p>* <strong>loglevel</strong>: determines what gets logged to the tsung<em>cxontroller</em><machine_name>.log.  Possible values are: 
+    * emergency 
+    * critical
+    * error
+    * warning
+    * notice
+    * info
+    * debug     </p>
+
+<ul>
+<li><strong>file_dynvars</strong>: If one or more CSV files are being used to supply data (for example usernames and passwords), then the name of the relevant dynvar file should be entered here.  In this case, the dynvars folder will be checked for a file names <code>username_and_password.yml</code> which is a dynvar of type file.</li>
+</ul>
+
+<p>See http://tsung.erlang-projects.org/user_manual/conf-file.html for details.  </p>
+
+<h3>The load_profiles folder</h3>
+
+<p>The files in this folder specify various load profiles.  The default load profile for each environment is specified in the 
+environment file, but may be overridden on the command line with the -l command line switch.</p>
+
+<p>A typical load_profile looks like this:</p>
+
+<pre><code>    arrivalphases:
+      - name: Average Load
+        sequence: 1
+        duration: 10
+        duration_unit: minute
+        arrival_interval: 30
+        arrival_interval_unit: second
+      - name: High Load
+        sequence: 2
+        duration: 10
+        duration_unit: minute
+        arrival_interval: 10
+        arrival_interval_unit: second
+      - name: Very High Load
+        sequence: 3
+        duration: 5
+        duration_unit: minute
+        arrival_interval: 2
+        arrival_interval_unit: second   
+</code></pre>
+
+<p>As you can see, each load profile is a colleciton of 1 or more "arrival phases".  Most arrival phases are like the one above, specifying a duration and the interval between new sessions being started.  However the syntax below can also be used if  you want to control the total number of users.  The configuration below specifies just one user session, which can be very useful in debugging when setting up a new session to use.</p>
+
+<pre><code>    arrivalphases:
+      - name: Single User
+        sequence: 1
+        duration: 6
+        duration_unit: second
+        max_users: 1
+        arrival_rate: 5
+        arrival_rate_unit: second
+</code></pre>
+
+<h3>The sessions Folder</h3>
+
+<p>This folder contains yaml files that describe the sessions that you want to run.</p>
+
+<p>There are two main bit of information that the session file will define:
+* the dynamic variables that will be used in the session
+* The requests that will be made</p>
+
+<p>A typical session file might look like this:</p>
+
+<pre><code>    session:
+      dynvars:
+        username: random_str_12
+        userid: random_number
+        today: erlang_function
+      snippets:
+        - hit_landing_page
+        - hit_register_page
+</code></pre>
+
+<p>In the above example, three dynamic variables are declared (username, userid, today), and the definition is taken from the follwoing files:</p>
+
+<ul>
+<li>config/dynvars/random<em>str</em>12.yml, </li>
+<li>config/dynvars/random_number.yml</li>
+<li>config/dynvars/erlang_funtion.yml</li>
+</ul>
+
+<p>See below for an explanation of the dynvars file.</p>
+
+<p>The snippets section simply lists the snippet files which are to be executed one after another, in this case:</p>
+
+<ul>
+<li>config/snippets/hit<em>landing</em>page.yml</li>
+<li>config/snippets/hit<em>register</em>page.yml</li>
+</ul>
+
+<h3>The scenarios folder</h3>
+
+<p>A scenario is a collection of sessions that are run simultaneously, with a percentage applied to each session in the scenario that governs
+the ratio between the sessions as they are started.</p>
+
+<p>A typical scenario file might look like this:</p>
+
+<pre><code>        scenario:
+            full_run: 75
+            login_only: 12
+            print_pdf: 13
+
+In the above scenario, 75% of the sessions started will be the session defined in ```full_run.yml```, 12%  will be that defined in 
+```login_only.yml``` and 13% that defined in ```print_pdf.yml```.
+
+The total numbe of percentages must add up to 100%.
+
+The command line accepts either scenario_name or session name as a parameter.  If looks for the name in the scenarios folder first, and if not there, then looks in the sessions folder.
+</code></pre>
+
+<h3>The snippets Folder</h3>
+
+<p>This folder contains the snippets.  Each snippet is one request, either GET or POST, that can be included in a session.</p>
+
+<p>And example is hit<em>register</em>page.yml, inluded as the second snippet in the session file described above.</p>
+
+<pre><code>request:
+  name: Select which type of LPA to create
+  thinktime: 5
+  url: '/create/lpa-type'
+  http_method: POST
+  params:
+    username: %%_username%%
+    lpa_type: Property and financial affairs
+    save: Save and continue
+ extract_dynvars:
+    activationurl: "id='activation_link' href='(.*)'"
+</code></pre>
+
+<p>Explanation of the entries in the above folder:</p>
+
+<ul>
+<li><strong>name</strong>: The name of the request which will be included as a comment in the xml file</li>
+<li><strong>thinktime</strong>: the value here specifies the average number of seconds that will be used as the thinktime between the last response and submitting this request (see http://tsung.erlang-projects.org/user<em>manual/conf-sessions.html#thinktimes for details). This is an optional entry, and if present, will override any default</em>thinktime value specified the environment file.</li>
+<li><strong>url</strong>: the url to be GETted or POSTed.  This will be appended to the base_url specified int he environment file.</li>
+<li><strong>http_method</strong>: self explanatory</li>
+<li><strong>params</strong>: This element is optional and specifies any arameters to be submitted as key-value pairs. Either the key or the value part of the parameter (or indeed the url) can include a dynamic parameter, signified as such by being wrapped in "%%_  %%" as is username above.  The value for dynamic variables are set either by being defined at the top of the sessions file, or by a previous request extracting the value with an extract_dynvars section.  </li>
+<li><p><strong>extract_dynvars</strong>: This element specifies that a dynamic variable is to be extracted from the response and used in a subsequent request.  In the example above, a dynamic variable entitled activationurl is extracted using the specified Regex and capture group (i.e. in the response:</p>
+
+<p><code>&lt;a id='activation_link' href='/activate?abd7337fec3'&gt;Click Here&lt;/a&gt;</code></p></li>
+</ul>
+
+<p>the string "/activate?abd7337fec3"  will be assigned to the variable activationurl, which can be referred to in a subsequent request as %%_actvationurl%%.</p>
+
+<h3>The dynvars Folder</h3>
+
+<p>Files in this folder specify dynamic variables which can be automatically generated during the session.  There are four types of dynamic variables that can be specified:</p>
+
+<ul>
+<li><p><strong>random string</strong>: A typical dynvar configuration file to define a random string might look like:</p>
+
+<pre>
+dynvar:
+  type: random_string
+  length: 12
+</pre>
+
+<p></p></li>
+<li><p><strong>random number</strong>:  A typical dynvar configuration file to define a random number  might look like:</p>
+
+<pre>
+dynvar:
+  type: random_number
+  start: 500
+  end: 99000
+</pre>
+
+<p></p></li>
+<li><p><strong>erlang_funtion</strong>: A typical dynvar configuration to define an erlang function that will be called to return the dynamic variable might look like: </p>
+
+<pre>
+dynvar:
+  code: |
+    fun({Pid,DynVars})->
+           {{Y, Mo, D},_}=calendar:now_to_datetime(erlang:now()),
+           DateAsString = io_lib:format('~2.10.0B%2F~2.10.0B%2F~4.10.0B', [D, Mo, Y]),
+           lists:flatten(DateAsString) end.
+  type: erlang
+</pre></li>
+<li><p><strong>file</strong>: A CSV file can be used to supply data to dynamic variables.  A typical configuration looks like this:</p>
+
+<pre>
+dynvar:
+  type: file
+  filename: usernames.csv
+  access: sequential
+  delimiter: ","
+  fieldnames:
+    - username
+    - password
+</pre>
+
+<p>The meanings of the various entries are as follows:</p>
+
+<ul><li><strong>type</strong>: identifies this dynvar as being sourced from a CSV file</li>
+<li><strong>path</strong>: the filename of the CSV file.  This is expected to be found in /config/data (/spec/config/data for test environment)</li>
+<li><strong>delimiter</strong>: the character used to delimit one field from another </li>
+<li><strong>access</strong>: the access method: either:
+<ul><li>sequential:  lines will be read one by one, starting at the beginning of the file</li>
+<li>random: lines are read in a random order</li></ul></li>
+<li><strong>varnames</strong>: the names of the variable parameters that will be read from the file.  In this case the contents of column 1 will be assigned to the dynamic variable "username" and the contents of column 2 will be assigned to dynamic variable "password".</li></ul></li>
+</ul>
+
+<h3>The data folder</h3>
+
+<p>The data folder contains any CSV files that are used to provide values for file_dynvars.  The fields should be enclosed in double quotes, and separated by a delimiter which is specified in the relavant configuration file in the <code>dynvars</code> folder.</p>
+
+<h2>Development Server Configuration</h2>
+
+<h3>Log File Format</h3>
+
+<p>It helps to have as much detail from the web server access logs as possible, so change the default format to include the request, and then you will see the parameters that are posted along with the request.</p>
+
+<p>Edit </p>
+
+<pre>/etc/nginx/nginx.conf</pre>
+
+<p>and update the logstash-json entry to read as follows:</p>
+
+<pre><code> log_format logstash_json '{ "@timestamp": "$time_iso8601", '
+                         '"@fields": { '
+                         '"remote_addr": "$remote_addr", '
+                         '"remote_user": "$remote_user", '
+                         '"body_bytes_sent": "$body_bytes_sent", '
+                         '"request_time": "$request_time", '
+                         '"status": "$status", '
+                         '"request": "$request", '
+                         '"request_method": "$request_method", '
+                         '"http_referrer": "$http_referer", '
+                         '"http_user_agent": "$http_user_agent" '
+                         '}, "@request": "$request_body" }';
+</code></pre>
+
+<p>and then restart the nginx server with the command:</p>
+
+<pre><code>    sudo service nginx restart
+</code></pre>
+
+<h3>Clearing the access log before a run</h3>
+
+<p>The access log can be emptied before a test run by the following command:</p>
+
+<pre><code>cat /dev/nul &gt; /var/log/nginx/[logfile]
+</code></pre>
+
+<h2>Tips for Creating Complex Sessions</h2>
+
+<p>I have found the best way to know exactly what requests to send to replicate a complex user session is as follows:</p>
+
+<ol>
+<li>Ensure the nginx access logs include request information as detailed above</li>
+<li>Clear the access log as described above</li>
+<li>Manually go through the session on the browser, as if you were a user</li>
+<li>copy the access log to the tsung-wrapper folder on your dev machine as <code>tmp/nginx.log</code></li>
+<li>run <code>ruby lib/nginx_analyser.rb</code> - this will produce a CSV file which can be viewed in Excel or similar and show the url, http verb and any prameters posted</li>
+<li>use this to make up the snippet files and session file.</li>
+</ol>
+
+<h1>Analytical Utilities</h1>
+
+<p>The following three utilities are tools to provide analyses of the tsung.dump file created 
+when the dumptraffic option in the environment yml file is set to "protocol".</p>
+
+<h2>Dump File Analyser</h2>
+
+<h3>Output</h3>
+
+<p>Dump File analyser will summarise the tsung.dump file into periods of n seconds, and produce a csv file wit the name 
+<code>xxxx_summary.csv</code> where <code>xxx</code> is the name of the input file.  Sample output is:</p>
+
+<p>|elapsed<em>time   | num</em>reqs | num<em>reqs</em>per<em>sec | min</em>req<em>time | max</em>req<em>time | avg</em>req_time | 200 | 302 | 502 | 504 |
+|-------------|---------:|-----------------:|-------------:|-------------:|-------------:|----:|----:|----:|----:|
+|0            | 363      | 6.05             | 35.642         | 1478.558     | 258.5163     | 319 | 44  |     |     |
+|60           | 713      | 11.8833          | 35.765         | 6675.726     | 593.9687     | 584 | 129 |     |     |
+|120            | 919        | 15.3167          | 35.25        | 10285.061    | 1655.0151      | 745 | 174 |     |     |
+|180                    | 858            | 14.3             | 35.2         | 11407.75       | 3394.3218    | 699 | 159 |     |     |</p>
+
+<h3>How to run:</h3>
+
+<pre><code>    lib/dfa -f &lt;input_file&gt; -s &lt;summarisation period in seconds&gt;
+</code></pre>
+
+<h2>Dump File Error Extractor</h2>
+
+<p>This file simple extracts all requests whose HTTP response code is neither 200 nor 302 to a separate file</p>
+
+<p>To run:</p>
+
+<pre><code>    lib/dfee -f &lt;input_file&gt;
+</code></pre>
+
+<h2>Dump File URL Analyser</h2>
+
+<h3>Ouput</h3>
+
+<p>This file provides statistics categorised by URL, enabling you to see if there are any particular URLs which are always 
+responding with error status codes, or are taking much longer to respond than other requests.  Output is written to a file
+named <code>xxxx_urls.csv</code> where xxxx is the name of the input file.</p>
+
+<p>|url            | num_reqs | avg              | min          | max          | max elapsed  | 200 | 302 | 502 | 504 |
+|-------------|---------:|-----------------:|-------------:|-------------:|-------------:|----:|----:|----:|----:|
+| / | 3586 |    5937.74 | 146.62    | 14722.21 |    916 |   3089    | 0 | 497|  0
+| /activate | 1283  | 8053.52   | 23.05 | 18648.83  |921    | 1137  | 0 | 146   | 0
+| /address/lookup   | 805   | 5269.81 | 23.16   | 20981.63  | 979   | 785   | 0 | 20    | 0</p>
+

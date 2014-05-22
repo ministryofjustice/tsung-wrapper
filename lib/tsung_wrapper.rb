@@ -9,7 +9,7 @@ module TsungWrapper
 		ENV['TSUNG_WRAPPER_ENV']
 	end
 
-
+	# set the environment
 	def self.env=(new_env)
 		ENV['TSUNG_WRAPPER_ENV'] = new_env
 	end
@@ -24,6 +24,17 @@ module TsungWrapper
 	end
 
 
+	def self.project=(project)
+		ENV['TSUNG_WRAPPER_PROJECT'] = project
+	end
+
+
+	def self.project
+		if ENV['TSUNG_WRAPPER_PROJECT'].nil?
+			raise "No Tsung Wrapper project set - use -p command line switch or set TSUNG_WRAPPER_PORJECT environment variable"
+		end
+		ENV['TSUNG_WRAPPER_PROJECT']
+	end
 
 
 	# return the file path of the project root
@@ -35,7 +46,7 @@ module TsungWrapper
 		if TsungWrapper.test_env?
 			File.expand_path(File.join(TsungWrapper.root, 'spec', 'config'))
 		else
-			File.expand_path(File.join(TsungWrapper.root, 'config'))
+			File.expand_path(File.join(TsungWrapper.root, 'config', 'project', TsungWrapper.project))
 		end
 	end
 

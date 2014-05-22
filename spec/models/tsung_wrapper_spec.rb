@@ -27,10 +27,11 @@ describe 'TsungWrapper module methods' do
 		context 'development environment' do
 			 it 'should return the locations for the dev environment' do
 				allow(TsungWrapper).to receive(:env).and_return('development')
+				TsungWrapper.project = 'cc'
 				TsungWrapper.env.should == 'development'
 				TsungWrapper.root.should == root
-				TsungWrapper.config_dir.should == "#{root}/config"
-				TsungWrapper.dtd.should == "#{root}/config/tsung-1.0.dtd"
+				TsungWrapper.config_dir.should == "#{root}/config/project/cc"
+				TsungWrapper.dtd.should == "#{root}/config/project/cc/tsung-1.0.dtd"
 			end
 
 			it 'test_env? and development_env? should return as expected ' do

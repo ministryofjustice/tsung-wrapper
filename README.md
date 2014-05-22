@@ -75,12 +75,13 @@ All three of the steps above can be run using the lib/wrap.rb executable.
 
 ### Usage
 
-    Usage: wrap [-e environment] [-l load_profile] [-v] [-s] -x|-r session_name
-       wrap [-e environment] -c n
+    Usage: wrap [-e environment] -p project [-l load_profile] [-v] [-s] -x|-r session_name
+       wrap [-e environment] -p project -c n
 
-	Generate Tsung XML file for session <session_name>
+    Generate Tsung XML file for session <session_name>
 
     -e, --environment  ENV           Use specified environment (default: development)
+    -p, --project PROJECT            Look for configuration files in config/project/PROJECT
     -x, --xml-out                    Generate XML config and write to STDOUT
     -r, --run-tsung                  Generate XML config and pipe into tsung
     -l, --load-profile LOAD_PROFILE  Use specific load profile
