@@ -31,7 +31,7 @@ module TsungWrapper
 
 	def self.project
 		if ENV['TSUNG_WRAPPER_PROJECT'].nil?
-			raise "No Tsung Wrapper project set - use -p command line switch or set TSUNG_WRAPPER_PORJECT environment variable"
+			raise "No Tsung Wrapper project set - use -p command line switch or set TSUNG_WRAPPER_PROJECT environment variable"
 		end
 		ENV['TSUNG_WRAPPER_PROJECT']
 	end

@@ -163,8 +163,8 @@ module TsungWrapper
 				end.parse!
 			end
 
-			check_project_exists
 
+			check_project_exists
 			TsungWrapper.env = @options[:env]
 			check_env_exists
 
@@ -193,6 +193,7 @@ module TsungWrapper
 
 
 		def check_project_exists
+			TsungWrapper.project = @options[:project]
 			unless File.exist?(TsungWrapper.config_dir)
 				raise "Unable to find config directory #{TsungWrapper.config_dir}"
 			end
