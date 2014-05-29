@@ -1,7 +1,7 @@
 session:
   snippets:
     - get_landing_page
-    - get_new
+    # - get_new
     - post_new_with_my_details
     
 

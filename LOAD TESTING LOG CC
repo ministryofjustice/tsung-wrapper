@@ -8,3 +8,12 @@ desc: submit the page on localhost for just one user
 xml:  xml/cc/single_user_localhost.xml
 gen:  ruby lib/wrap.rb -xe development -p cc  -l single_user full_run > xml/cc/single_user_localhost.xml
 
+
+
+
+name: Single User with full dump on localhost
+=============================================
+desc: submit the page on localhost for just one user
+xml:  xml/cc/single_user_full_dump_localhost.xml
+gen:  ruby lib/wrap.rb -xe full_dump -p cc  -l single_user full_run > xml/cc/single_user__full_dump_localhost.xml
+

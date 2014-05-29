@@ -4,7 +4,7 @@ request:
   http_method: POST   
   params:
     utf8: "✓"
-    authenticity_token: "%%_csrf_token%%"
+    # authenticity_token: "%%_csrf_token%%"
     claim:
       form_state: "form_state"
       property:
