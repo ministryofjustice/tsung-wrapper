@@ -19,14 +19,17 @@ TsungWrapper.env = 'test'
 
 module TsungWrapperSpecHelper
 
-	# utility for dumping actual and expected to files in ~/tmp so that we can use diffmerge to look at the differences
-	def dump_to_file(data, filename)
-	  filename = "#{ENV['HOME']}/tmp/#{filename}.xml"
-	  File.open(filename, 'w') do |fp|
-	    fp.puts data
+	# helper method to output actual and expected to files in ~/tmp so diffmerge can be used to compare them
+	def diffmerge(actual, expected)
+	  home = ENV['HOME']
+	  File.open(File.join(home, 'tmp', 'actual.html'), 'w') do |fp|
+	    fp.print actual
 	  end
+	  File.open(File.join(home, 'tmp', 'expected.html'), 'w') do |fp|
+	    fp.print expected
+	  end
+	  puts "**** HTML written to actual.html and expected.html in #{home}/tmp for comparison in diffmerge"
 	end
-
 end
 
 

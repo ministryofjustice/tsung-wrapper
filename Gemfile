@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 ruby "2.1.0"
 
 gem 'builder'
+gem 'activesupport'     # to give query uri support
 
 group :development, :test do
 	gem 'awesome_print'

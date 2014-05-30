@@ -24,8 +24,6 @@ module TsungWrapper
           expected = simple_session
           wrapper = Wrapper.new('hit_landing_page', 'test')
           actual = wrapper.wrap
-          dump_to_file(actual, 'actual')
-          dump_to_file(expected, 'expected')
           actual.should == expected
         end
       end
@@ -46,7 +44,6 @@ module TsungWrapper
           expected = session_with_file_dynvar
           wrapper = Wrapper.new('file_dynvar_session', 'test')
           wrapper.wrap.should == expected
-          dump_to_file(wrapper.wrap, 'actual')
         end
       end
     end
