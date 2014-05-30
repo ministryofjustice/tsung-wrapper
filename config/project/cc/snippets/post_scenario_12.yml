@@ -1,0 +1,96 @@
+---
+request:
+  name: 
+  url: "/submission"
+  http_method: POST
+  params:
+    utf8: "✓"
+    claim:
+      :property:
+        :street: |-
+          Mucho Gracias Road
+          London
+        :postcode: SW1H 9AJ
+        :house: 'Yes'
+      :javascript:
+        :number_of_claimants: '1'
+        :claimant_two_same_address: 
+        :any_legal_costs: 
+        :separate_correspondence_address: 
+        :other_contact_details: 
+        :add_reference_number: 
+        :number_of_defendants: '1'
+        :defendant_one_living_in_property: 'No'
+        :defendent_two_living_in_property: 
+      :claimant_one:
+        :title: Mr
+        :full_name: John Smith
+        :street: |-
+          2 Brown St
+          Cwmbran
+        :postcode: SW1W 0LU
+      :claimant_two:
+        :title: 
+        :full_name: 
+        :street: 
+        :postcode: 
+      :legal_cost:
+        :legal_costs: 
+      :claimant_contact:
+        :title: 
+        :full_name: 
+        :company_name: 
+        :street: 
+        :postcode: 
+        :email: 
+        :phone: 
+        :fax: 
+        :dx_number: 
+      :reference_number:
+        :reference_number: 
+      :defendant_one:
+        :title: Mr
+        :full_name: John Kapur
+        :street: |-
+          Endof Road
+          London
+        :postcode: SW1X 2PT
+      :defendant_two:
+        :title: 
+        :full_name: 
+        :street: 
+        :postcode: 
+      :tenancy:
+        :tenancy_type: Assured
+        :assured_shorthold_tenancy_type: one
+        :original_assured_shorthold_tenancy_agreement_date: 
+        :start_date: '2010-01-01'
+        :latest_agreement_date: 
+        :agreement_reissued_for_same_property: 
+        :agreement_reissued_for_same_landlord_and_tenant: 
+        :assured_shorthold_tenancy_notice_served_by: 
+        :assured_shorthold_tenancy_notice_served_date: 
+        :demotion_order_date: 
+        :demotion_order_court: 
+        :previous_tenancy_type: 
+      :notice:
+        :served_by_name: Somebody
+        :served_method: By post
+        :date_served: '2014-02-02'
+        :expiry_date: '2014-02-02'
+      :license:
+        :multiple_occupation: 'No'
+        :issued_under_act_part: 
+        :issued_by: 
+        :issued_date: 
+      :deposit:
+        :received: 'No'
+        :information_given_date: 
+        :ref_number: 
+        :as_money: 'No'
+        :as_property: 'No'
+      :order:
+        :possession: 'Yes'
+        :cost: 'No'
+      :possession:
+        :hearing: 'No'

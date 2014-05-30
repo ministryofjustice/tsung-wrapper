@@ -1,0 +1,94 @@
+---
+request:
+  name: 
+  url: "/submission"
+  http_method: POST
+  params:
+    utf8: "✓"
+    claim:
+      :property:
+        :street: "280 Coventry Rd\nBirmingham "
+        :postcode: B10 0XA
+        :house: 'Yes'
+      :javascript:
+        :number_of_claimants: '1'
+        :claimant_two_same_address: 
+        :any_legal_costs: 'Yes'
+        :separate_correspondence_address: 'Yes'
+        :other_contact_details: 'Yes'
+        :add_reference_number: 'No'
+        :number_of_defendants: '2'
+        :defendant_one_living_in_property: 'Yes'
+        :defendent_two_living_in_property: 'Yes'
+      :claimant_one:
+        :title: Mr
+        :full_name: Joe Peters
+        :street: |-
+          553 Stratford Road
+          Birmingham
+        :postcode: B11 4LP
+      :claimant_two:
+        :title: 
+        :full_name: 
+        :street: 
+        :postcode: 
+      :legal_cost:
+        :legal_costs: '600'
+      :claimant_contact:
+        :title: Mr
+        :full_name: Brent Hunt
+        :company_name: Brent Hunt Inc
+        :street: |-
+          SGH Martineau LLP, 1 Colmore Circus Queensway
+          Birmingham
+        :postcode: B4 6AA
+        :email: brent.hunt@sghmartineau.com
+        :phone: 0800 763 1675
+        :fax: 
+        :dx_number: 
+      :reference_number:
+        :reference_number: 
+      :defendant_one:
+        :title: Miss
+        :full_name: Annice Abreu
+        :street: 
+        :postcode: 
+      :defendant_two:
+        :title: Mr
+        :full_name: Dumisani Afolayan
+        :street: 
+        :postcode: 
+      :tenancy:
+        :tenancy_type: Assured
+        :assured_shorthold_tenancy_type: one
+        :original_assured_shorthold_tenancy_agreement_date: 
+        :start_date: '2004-02-29'
+        :latest_agreement_date: 
+        :agreement_reissued_for_same_property: 
+        :agreement_reissued_for_same_landlord_and_tenant: 
+        :assured_shorthold_tenancy_notice_served_by: 
+        :assured_shorthold_tenancy_notice_served_date: 
+        :demotion_order_date: 
+        :demotion_order_court: 
+        :previous_tenancy_type: 
+      :notice:
+        :served_by_name: Brent Hunt
+        :served_method: By post
+        :date_served: '2013-09-30'
+        :expiry_date: '2013-11-30'
+      :license:
+        :multiple_occupation: 'No'
+        :issued_under_act_part: 
+        :issued_by: 
+        :issued_date: 
+      :deposit:
+        :received: 'Yes'
+        :information_given_date: '2004-02-27'
+        :ref_number: U527VwvpAZ
+        :as_money: 'Yes'
+        :as_property: 'No'
+      :order:
+        :possession: 'Yes'
+        :cost: 'Yes'
+      :possession:
+        :hearing: 'Yes'

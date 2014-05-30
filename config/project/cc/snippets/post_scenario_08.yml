@@ -1,0 +1,96 @@
+---
+request:
+  name: 
+  url: "/submission"
+  http_method: POST
+  params:
+    utf8: "✓"
+    claim:
+      :property:
+        :street: |-
+          Unit 11, Swansea Fforest Fach Park
+          Swansea
+        :postcode: SA5 4BB
+        :house: 'Yes'
+      :javascript:
+        :number_of_claimants: '1'
+        :claimant_two_same_address: 
+        :any_legal_costs: 'Yes'
+        :separate_correspondence_address: 'Yes'
+        :other_contact_details: 'Yes'
+        :add_reference_number: 'No'
+        :number_of_defendants: '2'
+        :defendant_one_living_in_property: 'Yes'
+        :defendent_two_living_in_property: 'Yes'
+      :claimant_one:
+        :title: Mrs
+        :full_name: Meredith Williams
+        :street: |-
+          38 Pentrefelin St
+          Carmarthen
+        :postcode: SA31 1RJ
+      :claimant_two:
+        :title: 
+        :full_name: 
+        :street: 
+        :postcode: 
+      :legal_cost:
+        :legal_costs: '450'
+      :claimant_contact:
+        :title: Mr
+        :full_name: Dilan Lloyd
+        :company_name: Beor Wilson Lloyd
+        :street: |-
+          12 Calvert Terrace
+          Swansea
+        :postcode: SA1 6AP
+        :email: enquiries@bwl-law.co.uk
+        :phone: '1792655178'
+        :fax: 
+        :dx_number: 
+      :reference_number:
+        :reference_number: 
+      :defendant_one:
+        :title: Mr
+        :full_name: Gavin Morgan
+        :street: 
+        :postcode: 
+      :defendant_two:
+        :title: Mr
+        :full_name: Owen Harris
+        :street: 
+        :postcode: 
+      :tenancy:
+        :tenancy_type: Assured
+        :assured_shorthold_tenancy_type: one
+        :original_assured_shorthold_tenancy_agreement_date: 
+        :start_date: '1999-04-08'
+        :latest_agreement_date: 
+        :agreement_reissued_for_same_property: 
+        :agreement_reissued_for_same_landlord_and_tenant: 
+        :assured_shorthold_tenancy_notice_served_by: 
+        :assured_shorthold_tenancy_notice_served_date: 
+        :demotion_order_date: 
+        :demotion_order_court: 
+        :previous_tenancy_type: 
+      :notice:
+        :served_by_name: Dilan Lloyd
+        :served_method: By post
+        :date_served: '2013-12-13'
+        :expiry_date: '2014-02-13'
+      :license:
+        :multiple_occupation: 'No'
+        :issued_under_act_part: 
+        :issued_by: 
+        :issued_date: 
+      :deposit:
+        :received: 'No'
+        :information_given_date: 
+        :ref_number: 
+        :as_money: 'No'
+        :as_property: 'Yes'
+      :order:
+        :possession: 'Yes'
+        :cost: 'Yes'
+      :possession:
+        :hearing: 'Yes'

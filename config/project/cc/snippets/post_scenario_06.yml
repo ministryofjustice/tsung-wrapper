@@ -1,0 +1,94 @@
+---
+request:
+  name: 
+  url: "/submission"
+  http_method: POST
+  params:
+    utf8: "✓"
+    claim:
+      :property:
+        :street: |-
+          78 Town Close Road
+          Norwich
+        :postcode: NR1 3HP
+        :house: 'Yes'
+      :javascript:
+        :number_of_claimants: '1'
+        :claimant_two_same_address: 
+        :any_legal_costs: 'No'
+        :separate_correspondence_address: 'No'
+        :other_contact_details: 'Yes'
+        :add_reference_number: 'Yes'
+        :number_of_defendants: '1'
+        :defendant_one_living_in_property: 'Yes'
+        :defendent_two_living_in_property: 
+      :claimant_one:
+        :title: 
+        :full_name: Affinity Sutton
+        :street: |-
+          Maple House, 157-159 Masons Hall
+          London
+        :postcode: BR2 9HY
+      :claimant_two:
+        :title: 
+        :full_name: 
+        :street: 
+        :postcode: 
+      :legal_cost:
+        :legal_costs: 
+      :claimant_contact:
+        :title: 
+        :full_name: 
+        :company_name: 
+        :street: 
+        :postcode: 
+        :email: amyturner@affinitysutton.co.uk
+        :phone: '3001005392'
+        :fax: 
+        :dx_number: 
+      :reference_number:
+        :reference_number: T003900DF07
+      :defendant_one:
+        :title: Ms
+        :full_name: Linette Barlow
+        :street: 
+        :postcode: 
+      :defendant_two:
+        :title: 
+        :full_name: 
+        :street: 
+        :postcode: 
+      :tenancy:
+        :tenancy_type: Assured
+        :assured_shorthold_tenancy_type: one
+        :original_assured_shorthold_tenancy_agreement_date: 
+        :start_date: '2011-10-02'
+        :latest_agreement_date: 
+        :agreement_reissued_for_same_property: 
+        :agreement_reissued_for_same_landlord_and_tenant: 
+        :assured_shorthold_tenancy_notice_served_by: 
+        :assured_shorthold_tenancy_notice_served_date: 
+        :demotion_order_date: 
+        :demotion_order_court: 
+        :previous_tenancy_type: 
+      :notice:
+        :served_by_name: Amy Turner
+        :served_method: By post
+        :date_served: '2014-01-04'
+        :expiry_date: '2014-03-04'
+      :license:
+        :multiple_occupation: 'No'
+        :issued_under_act_part: 
+        :issued_by: 
+        :issued_date: 
+      :deposit:
+        :received: 'Yes'
+        :information_given_date: '2011-09-04'
+        :ref_number: FJXWTYE5XZ
+        :as_money: 'Yes'
+        :as_property: 'No'
+      :order:
+        :possession: 'Yes'
+        :cost: 'Yes'
+      :possession:
+        :hearing: 'Yes'

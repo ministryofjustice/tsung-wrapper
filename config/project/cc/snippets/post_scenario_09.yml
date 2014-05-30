@@ -1,0 +1,98 @@
+---
+request:
+  name: 
+  url: "/submission"
+  http_method: POST
+  params:
+    utf8: "✓"
+    claim:
+      :property:
+        :street: |-
+          107 Addiscombe Rd
+          Croydon
+        :postcode: CR0 6SG
+        :house: 'Yes'
+      :javascript:
+        :number_of_claimants: '2'
+        :claimant_two_same_address: 'No'
+        :any_legal_costs: 'No'
+        :separate_correspondence_address: 'No'
+        :other_contact_details: 'Yes'
+        :add_reference_number: 'No'
+        :number_of_defendants: '1'
+        :defendant_one_living_in_property: 'No'
+        :defendent_two_living_in_property: 
+      :claimant_one:
+        :title: Mr
+        :full_name: James Cox
+        :street: |-
+          104 Burbage Rd
+          London
+        :postcode: SE24 9HE
+      :claimant_two:
+        :title: Mr
+        :full_name: Adam Howard
+        :street: |-
+          108 Landor Rd
+          London
+        :postcode: SW9 9NU
+      :legal_cost:
+        :legal_costs: 
+      :claimant_contact:
+        :title: 
+        :full_name: 
+        :company_name: 
+        :street: 
+        :postcode: 
+        :email: Adamhoward@gmail.com
+        :phone: 
+        :fax: 
+        :dx_number: 
+      :reference_number:
+        :reference_number: 
+      :defendant_one:
+        :title: Mr
+        :full_name: Malcom Greene
+        :street: |-
+          23c Ecclesbourne Rd
+          Thornton Heath, London
+        :postcode: CR7 7BN
+      :defendant_two:
+        :title: 
+        :full_name: 
+        :street: 
+        :postcode: 
+      :tenancy:
+        :tenancy_type: Assured
+        :assured_shorthold_tenancy_type: one
+        :original_assured_shorthold_tenancy_agreement_date: 
+        :start_date: '2010-12-20'
+        :latest_agreement_date: 
+        :agreement_reissued_for_same_property: 
+        :agreement_reissued_for_same_landlord_and_tenant: 
+        :assured_shorthold_tenancy_notice_served_by: 
+        :assured_shorthold_tenancy_notice_served_date: 
+        :demotion_order_date: 
+        :demotion_order_court: 
+        :previous_tenancy_type: 
+      :notice:
+        :served_by_name: Royal mail
+        :served_method: By post
+        :date_served: '2013-09-08'
+        :expiry_date: '2013-11-08'
+      :license:
+        :multiple_occupation: 'No'
+        :issued_under_act_part: 
+        :issued_by: 
+        :issued_date: 
+      :deposit:
+        :received: 'Yes'
+        :information_given_date: '2010-12-19'
+        :ref_number: gEpngBa8cW
+        :as_money: 'Yes'
+        :as_property: 'No'
+      :order:
+        :possession: 'Yes'
+        :cost: 'Yes'
+      :possession:
+        :hearing: 'Yes'

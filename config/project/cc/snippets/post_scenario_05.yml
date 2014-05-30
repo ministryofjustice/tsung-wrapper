@@ -1,0 +1,96 @@
+---
+request:
+  name: 
+  url: "/submission"
+  http_method: POST
+  params:
+    utf8: "✓"
+    claim:
+      :property:
+        :street: |-
+          10a Pelham St
+          Wolverhampton
+        :postcode: WV3 0BJ
+        :house: 'Yes'
+      :javascript:
+        :number_of_claimants: '1'
+        :claimant_two_same_address: 
+        :any_legal_costs: 'No'
+        :separate_correspondence_address: 'Yes'
+        :other_contact_details: 'Yes'
+        :add_reference_number: 'Yes'
+        :number_of_defendants: '1'
+        :defendant_one_living_in_property: 'Yes'
+        :defendent_two_living_in_property: 
+      :claimant_one:
+        :title: 
+        :full_name: Wolverhampton City Council
+        :street: |-
+          Civic Centre, St. Peter's Square
+          Wolverhampton
+        :postcode: WV1 1SH
+      :claimant_two:
+        :title: 
+        :full_name: 
+        :street: 
+        :postcode: 
+      :legal_cost:
+        :legal_costs: 
+      :claimant_contact:
+        :title: 
+        :full_name: 
+        :company_name: Wolverhampton Homes
+        :street: |-
+          29 Market Street
+          Wolverhampton
+        :postcode: WV1 3AG
+        :email: 
+        :phone: '1902556789'
+        :fax: 
+        :dx_number: 
+      :reference_number:
+        :reference_number: T054PB7
+      :defendant_one:
+        :title: Mr
+        :full_name: Donald Nelson
+        :street: 
+        :postcode: 
+      :defendant_two:
+        :title: 
+        :full_name: 
+        :street: 
+        :postcode: 
+      :tenancy:
+        :tenancy_type: Demoted
+        :assured_shorthold_tenancy_type: 
+        :original_assured_shorthold_tenancy_agreement_date: 
+        :start_date: 
+        :latest_agreement_date: 
+        :agreement_reissued_for_same_property: 
+        :agreement_reissued_for_same_landlord_and_tenant: 
+        :assured_shorthold_tenancy_notice_served_by: 
+        :assured_shorthold_tenancy_notice_served_date: 
+        :demotion_order_date: '2013-04-20'
+        :demotion_order_court: Wolverhampton Combined Court
+        :previous_tenancy_type: secure
+      :notice:
+        :served_by_name: Wendy Moore
+        :served_method: By post
+        :date_served: '2014-01-13'
+        :expiry_date: '2014-03-13'
+      :license:
+        :multiple_occupation: 'No'
+        :issued_under_act_part: 
+        :issued_by: 
+        :issued_date: 
+      :deposit:
+        :received: 'Yes'
+        :information_given_date: '2011-02-11'
+        :ref_number: ZyTCKVJ3Xx
+        :as_money: 'Yes'
+        :as_property: 'No'
+      :order:
+        :possession: 'Yes'
+        :cost: 'Yes'
+      :possession:
+        :hearing: 'Yes'

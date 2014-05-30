@@ -1,0 +1,92 @@
+---
+request:
+  name: 
+  url: "/submission"
+  http_method: POST
+  params:
+    utf8: "✓"
+    claim:
+      :property:
+        :street: "45 St Martins Precinct Church St\nReading "
+        :postcode: RG4 8BA
+        :house: 'Yes'
+      :javascript:
+        :number_of_claimants: '2'
+        :claimant_two_same_address: 'Yes'
+        :any_legal_costs: 'No'
+        :separate_correspondence_address: 'No'
+        :other_contact_details: 'No'
+        :add_reference_number: 'No'
+        :number_of_defendants: '2'
+        :defendant_one_living_in_property: 'No'
+        :defendent_two_living_in_property: 'Yes'
+      :claimant_one:
+        :title: Mr
+        :full_name: Frank Coleman
+        :street: |-
+          13 Princess Square
+          Bracknell
+        :postcode: RG12 1LS
+      :claimant_two:
+        :title: Miss
+        :full_name: Heather Cox
+        :street: 
+        :postcode: 
+      :legal_cost:
+        :legal_costs: 
+      :claimant_contact:
+        :title: 
+        :full_name: 
+        :company_name: 
+        :street: 
+        :postcode: 
+        :email: 
+        :phone: 
+        :fax: 
+        :dx_number: 
+      :reference_number:
+        :reference_number: 
+      :defendant_one:
+        :title: Mr
+        :full_name: Kenneth Butler
+        :street: 13 Market St, Bracknell
+        :postcode: RG13 2JD
+      :defendant_two:
+        :title: Ms
+        :full_name: Donna Lee
+        :street: 
+        :postcode: 
+      :tenancy:
+        :tenancy_type: Assured
+        :assured_shorthold_tenancy_type: one
+        :original_assured_shorthold_tenancy_agreement_date: 
+        :start_date: '2012-09-16'
+        :latest_agreement_date: 
+        :agreement_reissued_for_same_property: 
+        :agreement_reissued_for_same_landlord_and_tenant: 
+        :assured_shorthold_tenancy_notice_served_by: 
+        :assured_shorthold_tenancy_notice_served_date: 
+        :demotion_order_date: 
+        :demotion_order_court: 
+        :previous_tenancy_type: 
+      :notice:
+        :served_by_name: Heather Cox
+        :served_method: By email
+        :date_served: '2013-09-30'
+        :expiry_date: '2013-11-30'
+      :license:
+        :multiple_occupation: 'No'
+        :issued_under_act_part: 
+        :issued_by: 
+        :issued_date: 
+      :deposit:
+        :received: 'Yes'
+        :information_given_date: '2012-09-12'
+        :ref_number: BRMHyKbxX7
+        :as_money: 'Yes'
+        :as_property: 'No'
+      :order:
+        :possession: 'Yes'
+        :cost: 'No'
+      :possession:
+        :hearing: 'Yes'
