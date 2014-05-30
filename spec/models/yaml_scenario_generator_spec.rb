@@ -8,7 +8,6 @@ module TsungWrapper
     context 'generate_a_scenario_file' do
       it 'should generate a correct yaml file from a scenario hash read from a CSV file' do
         yaml = YamlScenarioGenerator.new(scenario_hash).to_yaml
-        diffmerge(yaml, expected_yaml)
         yaml.should == expected_yaml
       end
     end
