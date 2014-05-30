@@ -23,7 +23,7 @@
     </option>
   </options>
   <sessions>
-    <session name="full_run-20140530-085556" probability="100" type="ts_http">
+    <session name="full_run-20140530-085745" probability="100" type="ts_http">
       <!-- GET Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
