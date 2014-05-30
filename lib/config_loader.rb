@@ -19,7 +19,7 @@ module TsungWrapper
 													:default_thinktime
 												]
 
-		attr_reader  	:user_agents, :default_matches
+		attr_reader  	:user_agents, :default_matches, :base_url_and_port
 		attr_accessor :load_profile
 
 		attr_reader *@@automatic_attrs
@@ -53,6 +53,7 @@ module TsungWrapper
 		  @load_profile = LoadProfile.new(config['load_profile'])
 		  @dumptraffic = "false" if @dumptraffic.nil?
 		  @loglevel = "notice" if @loglevel.nil?
+		  @base_url_and_port = @base_url + ':' + @server_port.to_s
 		end
 
 		def ignore_thinktimes?

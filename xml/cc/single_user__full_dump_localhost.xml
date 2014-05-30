@@ -10,7 +10,6 @@
     <server host="test_server_host" port="3000" type="tcp"/>
   </servers>
   <load>
-
     <!-- Scenario 1: Single User -->
     <arrivalphase phase="1" duration="6" unit="second">
       <users maxnumber="1" arrivalrate="5" unit="second"/>
@@ -24,7 +23,7 @@
     </option>
   </options>
   <sessions>
-    <session name="full_run-20140529-170921" probability="100" type="ts_http">
+    <session name="full_run-20140530-085556" probability="100" type="ts_http">
       <!-- GET Landing Page -->
       <thinktime random="true" value="4"/>
       <request>

@@ -121,13 +121,13 @@ def session_with_file_dynvar
       <request>
         <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
         <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-        <http url="http://test_base_url.com" version="1.1" method="GET"/>
+        <http url="http://test_base_url.com:80" version="1.1" method="GET"/>
       </request>
       <!-- Login -->
       <request subst="true">
         <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
         <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-        <http url="http://test_base_url.com/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
+        <http url="http://test_base_url.com:80/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
       </request>
     </session>
   </sessions>
@@ -143,7 +143,7 @@ def login_with_dynvar_and_match_response_xml
 <request subst="true">
   <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
   <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-  <http url="http://test_base_url.com/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
+  <http url="http://test_base_url.com:80/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
 </request>
 EOXML
 end
@@ -182,13 +182,13 @@ def simple_session_minimal_load
       <request>
         <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
         <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-        <http url="http://test_base_url.com" version="1.1" method="GET"/>
+        <http url="http://test_base_url.com:80" version="1.1" method="GET"/>
       </request>
       <!-- Hit Register Page -->
       <request>
         <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
         <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-        <http url="http://test_base_url.com/user/register" version="1.1" method="GET"/>
+        <http url="http://test_base_url.com:80/user/register" version="1.1" method="GET"/>
       </request>
     </session>
   </sessions>
@@ -238,13 +238,13 @@ def simple_session
       <request>
         <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
         <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-        <http url="http://test_base_url.com" version="1.1" method="GET"/>
+        <http url="http://test_base_url.com:80" version="1.1" method="GET"/>
       </request>
       <!-- Hit Register Page -->
       <request>
         <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
         <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-        <http url="http://test_base_url.com/user/register" version="1.1" method="GET"/>
+        <http url="http://test_base_url.com:80/user/register" version="1.1" method="GET"/>
       </request>
     </session>
   </sessions>
@@ -305,13 +305,13 @@ str = <<-EOXML
       <request>
         <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
         <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-        <http url="http://test_base_url.com" version="1.1" method="GET"/>
+        <http url="http://test_base_url.com:80" version="1.1" method="GET"/>
       </request>
       <!-- Login -->
       <request subst="true">
         <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
         <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-        <http url="http://test_base_url.com/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
+        <http url="http://test_base_url.com:80/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
       </request>
     </session>
   </sessions>

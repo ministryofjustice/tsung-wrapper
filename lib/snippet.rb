@@ -167,11 +167,11 @@ module TsungWrapper
 		def make_url(config, snippet)
 			url = nil
 			if snippet.url.nil?
-				url = config.base_url
+				url = config.base_url_and_port
 			elsif snippet.has_url_dynvar?
 				url = snippet.url
 			else
-				protocol, resource = config.base_url.split('://')
+				protocol, resource = config.base_url_and_port.split('://')
 				resource = resource + '/' + snippet.url
 				url = protocol + '://' + resource.gsub('//', '/')
 			end

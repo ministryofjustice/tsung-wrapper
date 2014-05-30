@@ -302,7 +302,7 @@ def hit_register_page_with_thinktime_snippet_xml
 <!-- Hit Register Page With Thinktime -->
 <thinktime random="true" value="5"/>
 <request>
-  <http url="http://test_base_url.com/user/register" version="1.1" method="GET"/>
+  <http url="http://test_base_url.com:80/user/register" version="1.1" method="GET"/>
 </request>
 EOXML
 end
@@ -312,7 +312,7 @@ def hit_landing_page_snippet_xml
   str = <<-EOXML
 <!-- Hit Landing Page -->
 <request>
-  <http url="http://test_base_url.com" version="1.1" method="GET"/>
+  <http url="http://test_base_url.com:80" version="1.1" method="GET"/>
 </request>
 EOXML
 end
@@ -329,7 +329,7 @@ def login_snippet_xml
   str = <<-EOXML
 <!-- Login -->
 <request>
-  <http url="http://test_base_url.com/user/login" version="1.1" contents="#{content_string}" content_type="application/x-www-form-urlencoded" method="POST"/>
+  <http url="http://test_base_url.com:80/user/login" version="1.1" contents="#{content_string}" content_type="application/x-www-form-urlencoded" method="POST"/>
 </request>
 EOXML
 end
@@ -349,7 +349,7 @@ def hit_register_page_with_thinktime_snippet_xml
 <!-- Hit Register Page With Thinktime -->
 <thinktime random="true" value="5"/>
 <request>
-  <http url="http://test_base_url.com/user/register" version="1.1" method="GET"/>
+  <http url="http://test_base_url.com:80/user/register" version="1.1" method="GET"/>
 </request>
 EOXML
 end
@@ -359,7 +359,7 @@ def login_with_autokey_snippet_xml
   str = <<-EOXML
 <!-- Hit Landing Page With Auto Key -->
 <request>
-  <http url="http://test_base_url.com/?setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe+FLPTVHZho3zK0mu41ouPmxLXJlZYi" version="1.1" method="GET"/>
+  <http url="http://test_base_url.com:80/?setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe+FLPTVHZho3zK0mu41ouPmxLXJlZYi" version="1.1" method="GET"/>
 </request>
 EOXML
 end
@@ -370,7 +370,7 @@ def login_using_dynvars_xml
   str = <<-EOXML
 <!-- Login -->
 <request subst="true">
-  <http url="http://test_base_url.com/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
+  <http url="http://test_base_url.com:80/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
 </request>
 EOXML
 end
@@ -383,7 +383,7 @@ def register_user_and_store_authurl_xml
 <request subst="true">
   <dyn_variable name="activationurl" re="id='activation_link' href='(.*)'"/>
   <dyn_variable name="page_title" re="&amp;lt;title&amp;gt;(.*)&amp;lt;/title&amp;gt;"/>
-  <http url="http://test_base_url.com/user/register" version="1.1" contents="email=%%_username%%&amp;email_confirm=%%_username%%&amp;password=Passw0rd&amp;password_confirm=Passw0rd&amp;confirmUnderstanding=1&amp;submit=I+understand&amp;setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe%2BFLPTVHZho3zK0mu41ouPmxLXJlZYi" content_type="application/x-www-form-urlencoded" method="POST"/>
+  <http url="http://test_base_url.com:80/user/register" version="1.1" contents="email=%%_username%%&amp;email_confirm=%%_username%%&amp;password=Passw0rd&amp;password_confirm=Passw0rd&amp;confirmUnderstanding=1&amp;submit=I+understand&amp;setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe%2BFLPTVHZho3zK0mu41ouPmxLXJlZYi" content_type="application/x-www-form-urlencoded" method="POST"/>
 </request>
 EOXML
 end
@@ -396,7 +396,7 @@ def login_with_dynvar_and_match_response_xml
 <request subst="true">
   <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
   <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-  <http url="http://test_base_url.com/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
+  <http url="http://test_base_url.com:80/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
 </request>
 EOXML
 end
