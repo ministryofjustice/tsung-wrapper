@@ -63,29 +63,47 @@ request:
       :tenancy:
         :tenancy_type: Demoted
         :assured_shorthold_tenancy_type: 
-        :original_assured_shorthold_tenancy_agreement_date: 
-        :start_date: 
-        :latest_agreement_date: 
+        :original_assured_shorthold_tenancy_agreement_date(1i): ''
+        :original_assured_shorthold_tenancy_agreement_date(2i): ''
+        :original_assured_shorthold_tenancy_agreement_date(3i): ''
+        :start_date(1i): ''
+        :start_date(2i): ''
+        :start_date(3i): ''
+        :latest_agreement_date(1i): ''
+        :latest_agreement_date(2i): ''
+        :latest_agreement_date(3i): ''
         :agreement_reissued_for_same_property: 
         :agreement_reissued_for_same_landlord_and_tenant: 
         :assured_shorthold_tenancy_notice_served_by: 
-        :assured_shorthold_tenancy_notice_served_date: 
-        :demotion_order_date: '2013-04-20'
+        :assured_shorthold_tenancy_notice_served_date(1i): ''
+        :assured_shorthold_tenancy_notice_served_date(2i): ''
+        :assured_shorthold_tenancy_notice_served_date(3i): ''
+        :demotion_order_date(1i): '2013'
+        :demotion_order_date(2i): '04'
+        :demotion_order_date(3i): '20'
         :demotion_order_court: Wolverhampton Combined Court
         :previous_tenancy_type: secure
       :notice:
         :served_by_name: Wendy Moore
         :served_method: By post
-        :date_served: '2014-01-13'
-        :expiry_date: '2014-03-13'
+        :date_served(1i): '2014'
+        :date_served(2i): '01'
+        :date_served(3i): '13'
+        :expiry_date(1i): '2014'
+        :expiry_date(2i): '03'
+        :expiry_date(3i): '13'
       :license:
         :multiple_occupation: 'No'
         :issued_under_act_part: 
         :issued_by: 
-        :issued_date: 
+        :issued_date(1i): ''
+        :issued_date(2i): ''
+        :issued_date(3i): ''
       :deposit:
         :received: 'Yes'
-        :information_given_date: '2011-02-11'
+        :information_given_date(1i): '2011'
+        :information_given_date(2i): '02'
+        :information_given_date(3i): '11'
         :ref_number: ZyTCKVJ3Xx
         :as_money: 'Yes'
         :as_property: 'No'

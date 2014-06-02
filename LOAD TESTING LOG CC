@@ -17,3 +17,14 @@ desc: submit the page on localhost for just one user
 xml:  xml/cc/single_user_full_dump_localhost.xml
 gen:  ruby lib/wrap.rb -xe full_dump -p cc  -l single_user full_run > xml/cc/single_user__full_dump_localhost.xml
 
+
+name: Sinfgle User with full dump on localhost Scenario 01
+==========================================================
+xml:  xml/cc/single_user_full_dump_localhost_01.xml
+gen:  ruby lib/wrap.rb -xe full_dump -p cc  -l single_user scenario_01_session > xml/cc/single_user__full_dump_localhost_01.xml
+
+
+name: all scenarios - single user - localhost dump protocol
+===========================================================
+xml:  xml/cc/single_user_all_scenarios.xml
+gen:  ruby lib/wrap.rb -xe development -p cc -l single_user all_scenarios > xml/cc/single_user_all_scenarios.xml

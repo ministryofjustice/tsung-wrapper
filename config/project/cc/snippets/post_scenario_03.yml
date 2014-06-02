@@ -61,29 +61,47 @@ request:
       :tenancy:
         :tenancy_type: Assured
         :assured_shorthold_tenancy_type: one
-        :original_assured_shorthold_tenancy_agreement_date: 
-        :start_date: '2004-02-29'
-        :latest_agreement_date: 
+        :original_assured_shorthold_tenancy_agreement_date(1i): ''
+        :original_assured_shorthold_tenancy_agreement_date(2i): ''
+        :original_assured_shorthold_tenancy_agreement_date(3i): ''
+        :start_date(1i): '2004'
+        :start_date(2i): '02'
+        :start_date(3i): '29'
+        :latest_agreement_date(1i): ''
+        :latest_agreement_date(2i): ''
+        :latest_agreement_date(3i): ''
         :agreement_reissued_for_same_property: 
         :agreement_reissued_for_same_landlord_and_tenant: 
         :assured_shorthold_tenancy_notice_served_by: 
-        :assured_shorthold_tenancy_notice_served_date: 
-        :demotion_order_date: 
+        :assured_shorthold_tenancy_notice_served_date(1i): ''
+        :assured_shorthold_tenancy_notice_served_date(2i): ''
+        :assured_shorthold_tenancy_notice_served_date(3i): ''
+        :demotion_order_date(1i): ''
+        :demotion_order_date(2i): ''
+        :demotion_order_date(3i): ''
         :demotion_order_court: 
         :previous_tenancy_type: 
       :notice:
         :served_by_name: Brent Hunt
         :served_method: By post
-        :date_served: '2013-09-30'
-        :expiry_date: '2013-11-30'
+        :date_served(1i): '2013'
+        :date_served(2i): 09
+        :date_served(3i): '30'
+        :expiry_date(1i): '2013'
+        :expiry_date(2i): '11'
+        :expiry_date(3i): '30'
       :license:
         :multiple_occupation: 'No'
         :issued_under_act_part: 
         :issued_by: 
-        :issued_date: 
+        :issued_date(1i): ''
+        :issued_date(2i): ''
+        :issued_date(3i): ''
       :deposit:
         :received: 'Yes'
-        :information_given_date: '2004-02-27'
+        :information_given_date(1i): '2004'
+        :information_given_date(2i): '02'
+        :information_given_date(3i): '27'
         :ref_number: U527VwvpAZ
         :as_money: 'Yes'
         :as_property: 'No'

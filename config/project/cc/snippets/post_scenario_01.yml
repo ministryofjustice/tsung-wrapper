@@ -61,29 +61,47 @@ request:
       :tenancy:
         :tenancy_type: Assured
         :assured_shorthold_tenancy_type: one
-        :original_assured_shorthold_tenancy_agreement_date: 
-        :start_date: '2002-01-01'
-        :latest_agreement_date: 
+        :original_assured_shorthold_tenancy_agreement_date(1i): ''
+        :original_assured_shorthold_tenancy_agreement_date(2i): ''
+        :original_assured_shorthold_tenancy_agreement_date(3i): ''
+        :start_date(1i): '2002'
+        :start_date(2i): '01'
+        :start_date(3i): '01'
+        :latest_agreement_date(1i): ''
+        :latest_agreement_date(2i): ''
+        :latest_agreement_date(3i): ''
         :agreement_reissued_for_same_property: 
         :agreement_reissued_for_same_landlord_and_tenant: 
         :assured_shorthold_tenancy_notice_served_by: 
-        :assured_shorthold_tenancy_notice_served_date: 
-        :demotion_order_date: 
+        :assured_shorthold_tenancy_notice_served_date(1i): ''
+        :assured_shorthold_tenancy_notice_served_date(2i): ''
+        :assured_shorthold_tenancy_notice_served_date(3i): ''
+        :demotion_order_date(1i): ''
+        :demotion_order_date(2i): ''
+        :demotion_order_date(3i): ''
         :demotion_order_court: 
         :previous_tenancy_type: 
       :notice:
         :served_by_name: Robert Linley
         :served_method: In person
-        :date_served: '2014-01-13'
-        :expiry_date: '2014-03-13'
+        :date_served(1i): '2014'
+        :date_served(2i): '01'
+        :date_served(3i): '13'
+        :expiry_date(1i): '2014'
+        :expiry_date(2i): '03'
+        :expiry_date(3i): '13'
       :license:
         :multiple_occupation: 'No'
         :issued_under_act_part: 
         :issued_by: 
-        :issued_date: 
+        :issued_date(1i): ''
+        :issued_date(2i): ''
+        :issued_date(3i): ''
       :deposit:
         :received: 'Yes'
-        :information_given_date: '2002-01-15'
+        :information_given_date(1i): '2002'
+        :information_given_date(2i): '01'
+        :information_given_date(3i): '15'
         :ref_number: xtNHhYqYmL
         :as_money: 'Yes'
         :as_property: 'No'

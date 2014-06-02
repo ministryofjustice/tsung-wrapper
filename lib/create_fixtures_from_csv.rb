@@ -28,6 +28,7 @@ class DataScenarioGenerator
       end
       write_session_yaml(index)
     end
+    write_scenario_yaml
   end
 
 
@@ -44,6 +45,30 @@ class DataScenarioGenerator
     }
     File.open(session_name, 'w') do |fp|
       fp.write(session_hash.to_yaml)
+    end
+  end
+
+
+
+  def write_scenario_yaml
+    session_files        = Dir["#{TsungWrapper.config_dir}/sessions/scenario_*_session.yml"]
+    num_sessions         = session_files.size
+    percentage           = 100/num_sessions
+    percentage_written   = 0
+    num_sessions_written = 0
+    session_hash         = {}
+    session_files.each do |f|
+      if num_sessions_written == num_sessions - 1
+        percentage = 100 - percentage_written
+      end
+      session_name               = File.basename(f).gsub(/\.yml$/, '')
+      session_hash[session_name] = percentage 
+      percentage_written        += percentage
+      num_sessions_written      += 1
+    end
+    hash = { 'scenario' => session_hash }
+    File.open(File.join(TsungWrapper.config_dir, 'scenarios', 'all_scenarios.yml'), 'w') do |fp|
+      fp.write(hash.to_yaml)
     end
   end
 
@@ -89,10 +114,47 @@ class DataScenarioGenerator
       field = row[2]
       value = sanitizeValue(model, field, row[index])
       scenario[:claim][model.to_sym] ||= {}
-      scenario[:claim][model.to_sym][field.to_sym] = value
+      if is_date_field?(field)
+        scenario[:claim][model.to_sym][date_field_name(:year, field)] = date_value(:year, value)
+        scenario[:claim][model.to_sym][date_field_name(:month, field)] = date_value(:month, value)
+        scenario[:claim][model.to_sym][date_field_name(:day, field)] = date_value(:day, value)
+      else
+        scenario[:claim][model.to_sym][field.to_sym] = value
+      end
     end
     scenario
   end
+
+
+  def is_date_field?(field)
+    field =~ /^date/ || field =~ /date$/
+  end
+
+  def date_field_name(part, field)
+    case part
+    when :year
+      suffix = '1i'
+    when :month
+      suffix = '2i'
+    when :day
+      suffix = '3i'
+    end
+    "#{field}(#{suffix})".to_sym
+  end  
+
+  def date_value(part, value)
+    parts = value.nil? ? ['', '', ''] : value.split('-')
+    case part
+    when :year
+      parts[0]
+    when :month
+      parts[1]
+    when :day
+      parts[2]
+    end
+  end
+
+
 
   def validRows
     valid_rows = []

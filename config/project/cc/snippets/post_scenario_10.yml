@@ -67,29 +67,47 @@ request:
       :tenancy:
         :tenancy_type: Assured
         :assured_shorthold_tenancy_type: multiple
-        :original_assured_shorthold_tenancy_agreement_date: '1995-01-01'
-        :start_date: 
-        :latest_agreement_date: '2011-01-01'
+        :original_assured_shorthold_tenancy_agreement_date(1i): '1995'
+        :original_assured_shorthold_tenancy_agreement_date(2i): '01'
+        :original_assured_shorthold_tenancy_agreement_date(3i): '01'
+        :start_date(1i): ''
+        :start_date(2i): ''
+        :start_date(3i): ''
+        :latest_agreement_date(1i): '2011'
+        :latest_agreement_date(2i): '01'
+        :latest_agreement_date(3i): '01'
         :agreement_reissued_for_same_property: 'Yes'
         :agreement_reissued_for_same_landlord_and_tenant: 'Yes'
         :assured_shorthold_tenancy_notice_served_by: Mr Brown
-        :assured_shorthold_tenancy_notice_served_date: '2013-12-01'
-        :demotion_order_date: 
+        :assured_shorthold_tenancy_notice_served_date(1i): '2013'
+        :assured_shorthold_tenancy_notice_served_date(2i): '12'
+        :assured_shorthold_tenancy_notice_served_date(3i): '01'
+        :demotion_order_date(1i): ''
+        :demotion_order_date(2i): ''
+        :demotion_order_date(3i): ''
         :demotion_order_court: 
         :previous_tenancy_type: 
       :notice:
         :served_by_name: Somebody
         :served_method: In person
-        :date_served: '2014-02-02'
-        :expiry_date: '2014-02-02'
+        :date_served(1i): '2014'
+        :date_served(2i): '02'
+        :date_served(3i): '02'
+        :expiry_date(1i): '2014'
+        :expiry_date(2i): '02'
+        :expiry_date(3i): '02'
       :license:
         :multiple_occupation: 'Yes'
         :issued_under_act_part: Part2
         :issued_by: Local LA
-        :issued_date: '2014-02-02'
+        :issued_date(1i): '2014'
+        :issued_date(2i): '02'
+        :issued_date(3i): '02'
       :deposit:
         :received: 'Yes'
-        :information_given_date: 
+        :information_given_date(1i): ''
+        :information_given_date(2i): ''
+        :information_given_date(3i): ''
         :ref_number: X1234
         :as_money: 'Yes'
         :as_property: 'Yes'
