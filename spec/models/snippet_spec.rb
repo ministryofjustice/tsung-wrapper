@@ -293,36 +293,26 @@ module TsungWrapper
 		end
 
     context 'use_http_basic_auth' do
-      let(:snippet_without_basic_auth)    { Snippet.new('hit_landing_page', builder, config) }
+      let(:snippet)                       { Snippet.new('hit_landing_page', builder, config) }
       let(:config_with_basic_auth)        { ConfigLoader.new('test_with_basic_auth') } 
-      let(:snippet_with_basic_auth)       { Snippet.new('hit_landing_page_with_basic_auth', builder, config_with_basic_auth) }
 
       describe '#http_basic_auth?' do
-        it 'should return false if the config and snippet do not use auth' do
+        it 'should return false if the config does not use auth' do
           config.stub(:http_basic_auth?).and_return(false)
-          snippet_without_basic_auth.http_basic_auth?.should be_false
+          snippet.http_basic_auth?.should be_false
         end
 
-        it 'should return false if the config uses http auth but the snippet does not' do
+        it 'should return true if config uses http basic auth' do
           config.stub(:http_basic_auth?).and_return(true)
-          snippet_without_basic_auth.http_basic_auth?.should be_false
-        end
-
-        it 'should return false if the config does not use http auth but the snippet does' do
-          config_with_basic_auth.stub(:http_basic_auth?).and_return(false)
-          snippet_with_basic_auth.http_basic_auth?.should be_false
-        end
-
-        it 'should return true if both config and snippet use http basic auth' do
-          config.stub(:http_basic_auth?).and_return(true)
-          snippet_with_basic_auth.http_basic_auth?.should be_true
+          snippet.http_basic_auth?.should be_true
         end
       end
 
 
       describe '#to_xml' do
         it 'should emit xml with www_authenticate header if config and snippet use basic auth' do
-          snippet_with_basic_auth.to_xml
+          snippet = Snippet.new('hit_landing_page', builder, config_with_basic_auth)
+          snippet.to_xml
           xml.should == hit_landing_page_with_basic_auth_xml
         end
       end

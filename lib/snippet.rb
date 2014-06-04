@@ -27,7 +27,6 @@ module TsungWrapper
 			@url_dynvar      = false
 			@has_dynvars     = params_contain_dynvars? || url_contains_dynvars?
 			@matches         = load_matches
-			@use_basic_auth	 = snippet['request']['use_http_basic_auth'] == true
 		end
 
 
@@ -50,7 +49,7 @@ module TsungWrapper
 
 		# returns true if the environment config specifies basic auth and the snippet says use_basic_auth
 		def http_basic_auth?
-			@use_basic_auth == true && @config.http_basic_auth?
+			@config.http_basic_auth?
 		end
 
 

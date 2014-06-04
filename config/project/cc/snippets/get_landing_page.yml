@@ -1,5 +1,5 @@
 request:
   name: GET Landing Page
-  url: "/"
+  url: ""
   http_method: GET    
   use_http_basic_auth: yes
