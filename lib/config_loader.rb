@@ -19,7 +19,7 @@ module TsungWrapper
 													:default_thinktime
 												]
 
-		attr_reader  	:user_agents, :default_matches, :base_url_and_port
+		attr_reader  	:user_agents, :default_matches, :base_url_and_port, :username, :password
 		attr_accessor :load_profile
 
 		attr_reader *@@automatic_attrs
@@ -53,7 +53,26 @@ module TsungWrapper
 		  @load_profile = LoadProfile.new(config['load_profile'])
 		  @dumptraffic = "false" if @dumptraffic.nil?
 		  @loglevel = "notice" if @loglevel.nil?
-		  @base_url_and_port = @base_url + ':' + @server_port.to_s
+		  @base_url_and_port = combine_url_and_port(@base_url, @server_port)
+
+		  if config.key? 'http_basic_auth'
+		  	@username = config['http_basic_auth']['username']
+		  	@password = config['http_basic_auth']['password']
+		  else
+		  	@username = @password = nil
+		  end
+		end
+
+
+		def combine_url_and_port(url, port)
+			url =~ /^(https?:\/\/[^\/]+)(\/.*)?/
+			"#{$1}:#{port.to_s}#{$2}"
+		end
+
+
+
+		def http_basic_auth?
+			!@username.nil? && !@password.nil?
 		end
 
 		def ignore_thinktimes?

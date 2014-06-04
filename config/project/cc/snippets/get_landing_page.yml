@@ -2,3 +2,4 @@ request:
   name: GET Landing Page
   url: "/"
   http_method: GET    
+  use_http_basic_auth: yes

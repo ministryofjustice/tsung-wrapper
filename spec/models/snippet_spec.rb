@@ -292,6 +292,43 @@ module TsungWrapper
 			end
 		end
 
+    context 'use_http_basic_auth' do
+      let(:snippet_without_basic_auth)    { Snippet.new('hit_landing_page', builder, config) }
+      let(:config_with_basic_auth)        { ConfigLoader.new('test_with_basic_auth') } 
+      let(:snippet_with_basic_auth)       { Snippet.new('hit_landing_page_with_basic_auth', builder, config_with_basic_auth) }
+
+      describe '#http_basic_auth?' do
+        it 'should return false if the config and snippet do not use auth' do
+          config.stub(:http_basic_auth?).and_return(false)
+          snippet_without_basic_auth.http_basic_auth?.should be_false
+        end
+
+        it 'should return false if the config uses http auth but the snippet does not' do
+          config.stub(:http_basic_auth?).and_return(true)
+          snippet_without_basic_auth.http_basic_auth?.should be_false
+        end
+
+        it 'should return false if the config does not use http auth but the snippet does' do
+          config_with_basic_auth.stub(:http_basic_auth?).and_return(false)
+          snippet_with_basic_auth.http_basic_auth?.should be_false
+        end
+
+        it 'should return true if both config and snippet use http basic auth' do
+          config.stub(:http_basic_auth?).and_return(true)
+          snippet_with_basic_auth.http_basic_auth?.should be_true
+        end
+      end
+
+
+      describe '#to_xml' do
+        it 'should emit xml with www_authenticate header if config and snippet use basic auth' do
+          snippet_with_basic_auth.to_xml
+          xml.should == hit_landing_page_with_basic_auth_xml
+        end
+      end
+      
+    end
+
 	end
 
 end
@@ -302,7 +339,8 @@ def hit_register_page_with_thinktime_snippet_xml
 <!-- Hit Register Page With Thinktime -->
 <thinktime random="true" value="5"/>
 <request>
-  <http url="http://test_base_url.com:80/user/register" version="1.1" method="GET"/>
+  <http url="http://test_base_url.com:80/user/register" version="1.1" method="GET">
+  </http>
 </request>
 EOXML
 end
@@ -312,10 +350,24 @@ def hit_landing_page_snippet_xml
   str = <<-EOXML
 <!-- Hit Landing Page -->
 <request>
-  <http url="http://test_base_url.com:80" version="1.1" method="GET"/>
+  <http url="http://test_base_url.com:80" version="1.1" method="GET">
+  </http>
 </request>
 EOXML
 end
+
+
+def hit_landing_page_with_basic_auth_xml
+   str = <<-EOXML
+<!-- Hit Landing Page -->
+<request>
+  <http url="http://test_base_url.com:80" version="1.1" method="GET">
+    <www_authenticate userid="monkey" passwd="business"/>
+  </http>
+</request>
+EOXML
+end
+
 
 def login_snippet_xml
   params = {
@@ -329,7 +381,8 @@ def login_snippet_xml
   str = <<-EOXML
 <!-- Login -->
 <request>
-  <http url="http://test_base_url.com:80/user/login" version="1.1" contents="#{content_string}" content_type="application/x-www-form-urlencoded" method="POST"/>
+  <http url="http://test_base_url.com:80/user/login" version="1.1" contents="#{content_string}" content_type="application/x-www-form-urlencoded" method="POST">
+  </http>
 </request>
 EOXML
 end
@@ -349,7 +402,8 @@ def hit_register_page_with_thinktime_snippet_xml
 <!-- Hit Register Page With Thinktime -->
 <thinktime random="true" value="5"/>
 <request>
-  <http url="http://test_base_url.com:80/user/register" version="1.1" method="GET"/>
+  <http url="http://test_base_url.com:80/user/register" version="1.1" method="GET">
+  </http>
 </request>
 EOXML
 end
@@ -359,7 +413,8 @@ def login_with_autokey_snippet_xml
   str = <<-EOXML
 <!-- Hit Landing Page With Auto Key -->
 <request>
-  <http url="http://test_base_url.com:80/?setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe+FLPTVHZho3zK0mu41ouPmxLXJlZYi" version="1.1" method="GET"/>
+  <http url="http://test_base_url.com:80/?setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe+FLPTVHZho3zK0mu41ouPmxLXJlZYi" version="1.1" method="GET">
+  </http>
 </request>
 EOXML
 end
@@ -370,7 +425,8 @@ def login_using_dynvars_xml
   str = <<-EOXML
 <!-- Login -->
 <request subst="true">
-  <http url="http://test_base_url.com:80/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
+  <http url="http://test_base_url.com:80/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST">
+  </http>
 </request>
 EOXML
 end
@@ -383,7 +439,8 @@ def register_user_and_store_authurl_xml
 <request subst="true">
   <dyn_variable name="activationurl" re="id='activation_link' href='(.*)'"/>
   <dyn_variable name="page_title" re="&amp;lt;title&amp;gt;(.*)&amp;lt;/title&amp;gt;"/>
-  <http url="http://test_base_url.com:80/user/register" version="1.1" contents="confirmUnderstanding=1&amp;email=%%_username%%&amp;email_confirm=%%_username%%&amp;password=Passw0rd&amp;password_confirm=Passw0rd&amp;setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe%2BFLPTVHZho3zK0mu41ouPmxLXJlZYi&amp;submit=I+understand" content_type="application/x-www-form-urlencoded" method="POST"/>
+  <http url="http://test_base_url.com:80/user/register" version="1.1" contents="confirmUnderstanding=1&amp;email=%%_username%%&amp;email_confirm=%%_username%%&amp;password=Passw0rd&amp;password_confirm=Passw0rd&amp;setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe%2BFLPTVHZho3zK0mu41ouPmxLXJlZYi&amp;submit=I+understand" content_type="application/x-www-form-urlencoded" method="POST">
+  </http>
 </request>
 EOXML
 end
@@ -396,7 +453,8 @@ def login_with_dynvar_and_match_response_xml
 <request subst="true">
   <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
   <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-  <http url="http://test_base_url.com:80/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
+  <http url="http://test_base_url.com:80/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST">
+  </http>
 </request>
 EOXML
 end
@@ -407,7 +465,8 @@ def activate_account_xml
   str = <<-EOXML
 <!-- Activate Account -->
 <request subst="true">
-  <http url="%%_activationurl%%" version="1.1" method="GET"/>
+  <http url="%%_activationurl%%" version="1.1" method="GET">
+  </http>
 </request>
 EOXML
 end

@@ -1,0 +1,7 @@
+# this is a snippet that will generate an XML request element in the Tsung config file
+
+request:
+  name: Hit Landing Page
+  url: 
+  http_method: GET
+  use_http_basic_auth: yes

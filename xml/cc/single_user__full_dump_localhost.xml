@@ -28,7 +28,7 @@
       <thinktime random="true" value="4"/>
       <request>
         <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
-        <http url="http://localhost:3000/" version="1.1" method="GET"/>
+        <http url="http://localhost:3000" version="1.1" method="GET"/>
       </request>
       <!-- POST new with my details -->
       <thinktime random="true" value="4"/>

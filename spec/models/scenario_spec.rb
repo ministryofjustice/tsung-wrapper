@@ -86,13 +86,15 @@ def hit_landing_page_scenario_xml
     <request>
       <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
       <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-      <http url="http://test_base_url.com:80" version="1.1" method="GET"/>
+      <http url="http://test_base_url.com:80" version="1.1" method="GET">
+      </http>
     </request>
     <!-- Hit Register Page -->
     <request>
       <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
       <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-      <http url="http://test_base_url.com:80/user/register" version="1.1" method="GET"/>
+      <http url="http://test_base_url.com:80/user/register" version="1.1" method="GET">
+      </http>
     </request>
   </session>
 </sessions>
@@ -123,13 +125,15 @@ def scenario_xml
     <request>
       <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
       <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-      <http url="http://test_base_url.com:80" version="1.1" method="GET"/>
+      <http url="http://test_base_url.com:80" version="1.1" method="GET">
+      </http>
     </request>
     <!-- Login -->
     <request subst="true">
       <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
       <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-      <http url="http://test_base_url.com:80/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST"/>
+      <http url="http://test_base_url.com:80/user/login" version="1.1" contents="email=%%_username%%%40test.com&amp;password=%%_password%%&amp;submit=Sign+in" content_type="application/x-www-form-urlencoded" method="POST">
+      </http>
     </request>
   </session>
   <session name="hit_landing_page-20140409-140305" probability="80" type="ts_http">
@@ -137,13 +141,15 @@ def scenario_xml
     <request>
       <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
       <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-      <http url="http://test_base_url.com:80" version="1.1" method="GET"/>
+      <http url="http://test_base_url.com:80" version="1.1" method="GET">
+      </http>
     </request>
     <!-- Hit Register Page -->
     <request>
       <match do="dump" when="nomatch" name="dump_non_200_response">HTTP/1.1 200</match>
       <match do="continue" when="match" name="match_200_response">HTTP/1.1 200</match>
-      <http url="http://test_base_url.com:80/user/register" version="1.1" method="GET"/>
+      <http url="http://test_base_url.com:80/user/register" version="1.1" method="GET">
+      </http>
     </request>
   </session>
 </sessions>

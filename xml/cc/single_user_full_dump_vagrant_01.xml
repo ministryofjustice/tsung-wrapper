@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tsung SYSTEM "/Users/stephen/src/tsung-wrapper/config/project/cc/tsung-1.0.dtd">
+<tsung loglevel="debug" dumptraffic="protocol" version="1.0">
+  <!-- Client Side Setup -->
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="9000"/>
+  </clients>
+  <!-- Server Side Setup -->
+  <servers>
+    <server host="test_server_host" port="443" type="tcp"/>
+  </servers>
+  <load>
+    <!-- Scenario 1: Single User -->
+    <arrivalphase phase="1" duration="6" unit="second">
+      <users maxnumber="1" arrivalrate="5" unit="second"/>
+    </arrivalphase>
+  </load>
+  <options>
+    <!-- Define User Agents -->
+    <option type="ts_http" name="user_agent">
+      <user_agent probability="80">Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21</user_agent>
+      <user_agent probability="20">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</user_agent>
+    </option>
+  </options>
+  <sessions>
+    <session name="full_run-20140604-103113" probability="100" type="ts_http">
+      <!-- GET Landing Page -->
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://civilclaims.local/accelerated-posession-eviction:443/" version="1.1" method="GET">
+        </http>
+      </request>
+      <!-- POST new with my details -->
+      <thinktime random="true" value="4"/>
+      <request>
+        <match do="abort" when="match" name="abort_unless_success_or_redirect">HTTP/1.1 [^2|^3][0-9]{2}</match>
+        <http url="https://civilclaims.local/accelerated-posession-eviction:443/submission" version="1.1" contents="Complete+form=Complete+form&amp;claim%5Bclaimant_contact%5D%5Bcompany_name%5D=&amp;claim%5Bclaimant_contact%5D%5Bdx_number%5D=&amp;claim%5Bclaimant_contact%5D%5Bemail%5D=&amp;claim%5Bclaimant_contact%5D%5Bfax%5D=&amp;claim%5Bclaimant_contact%5D%5Bfull_name%5D=&amp;claim%5Bclaimant_contact%5D%5Bphone%5D=&amp;claim%5Bclaimant_contact%5D%5Bpostcode%5D=&amp;claim%5Bclaimant_contact%5D%5Bstreet%5D=&amp;claim%5Bclaimant_contact%5D%5Btitle%5D=&amp;claim%5Bclaimant_one%5D%5Bfull_name%5D=Stephen+Richards&amp;claim%5Bclaimant_one%5D%5Bpostcode%5D=SW10+9LB&amp;claim%5Bclaimant_one%5D%5Bstreet%5D=50+Tregunter+Road%0D%0ALondon&amp;claim%5Bclaimant_one%5D%5Btitle%5D=Mr&amp;claim%5Bclaimant_two%5D%5Bfull_name%5D=&amp;claim%5Bclaimant_two%5D%5Bpostcode%5D=&amp;claim%5Bclaimant_two%5D%5Bstreet%5D=&amp;claim%5Bclaimant_two%5D%5Btitle%5D=&amp;claim%5Bdefendant_one%5D%5Bfull_name%5D=John+Doe&amp;claim%5Bdefendant_one%5D%5Bpostcode%5D=&amp;claim%5Bdefendant_one%5D%5Bstreet%5D=&amp;claim%5Bdefendant_one%5D%5Btitle%5D=Mr&amp;claim%5Bdefendant_two%5D%5Bfull_name%5D=&amp;claim%5Bdefendant_two%5D%5Bpostcode%5D=&amp;claim%5Bdefendant_two%5D%5Bstreet%5D=&amp;claim%5Bdefendant_two%5D%5Btitle%5D=&amp;claim%5Bdeposit%5D%5Bas_money%5D=Yes&amp;claim%5Bdeposit%5D%5Bas_property%5D=No&amp;claim%5Bdeposit%5D%5Breceived%5D=Yes&amp;claim%5Bdeposit%5D%5Bref_number%5D=TENDEP12212&amp;claim%5Bfee%5D%5Bcourt_fee%5D=280.00&amp;claim%5Bform_state%5D=form_state&amp;claim%5Blegal_cost%5D%5Blegal_costs%5D=550.00&amp;claim%5Blicense%5D%5Bissued_by%5D=RBKC&amp;claim%5Blicense%5D%5Bissued_date%281i%29%5D=2011&amp;claim%5Blicense%5D%5Bissued_date%282i%29%5D=6&amp;claim%5Blicense%5D%5Bissued_date%283i%29%5D=6&amp;claim%5Blicense%5D%5Bissued_under_act_part%5D=Part2&amp;claim%5Blicense%5D%5Bmultiple_occupation%5D=Yes&amp;claim%5Bnotice%5D%5Bdate_served%281i%29%5D=2014&amp;claim%5Bnotice%5D%5Bdate_served%282i%29%5D=jan&amp;claim%5Bnotice%5D%5Bdate_served%283i%29%5D=01&amp;claim%5Bnotice%5D%5Bexpiry_date%281i%29%5D=2014&amp;claim%5Bnotice%5D%5Bexpiry_date%282i%29%5D=feb&amp;claim%5Bnotice%5D%5Bexpiry_date%283i%29%5D=28&amp;claim%5Bnotice%5D%5Bserved_by_name%5D=Stephen+Richards&amp;claim%5Bnotice%5D%5Bserved_method%5D=In+Person&amp;claim%5Border%5D%5Bcost%5D=Yes&amp;claim%5Border%5D%5Bpossession%5D=Yes&amp;claim%5Bpossession%5D%5Bhearing%5D=Yes&amp;claim%5Bproperty%5D%5Bhouse%5D=Yes&amp;claim%5Bproperty%5D%5Bpostcode%5D=SW10+9XX&amp;claim%5Bproperty%5D%5Bstreet%5D=Flat+34%0D%0A65+Finbourough+Road%0D%0ALondon&amp;claim%5Breference_number%5D%5Breference_number%5D=PSR0133&amp;claim%5Btenancy%5D%5Bapplicable_statements_1%5D=No&amp;claim%5Btenancy%5D%5Bapplicable_statements_2%5D=No&amp;claim%5Btenancy%5D%5Bapplicable_statements_3%5D=No&amp;claim%5Btenancy%5D%5Bapplicable_statements_4%5D=No&amp;claim%5Btenancy%5D%5Bapplicable_statements_5%5D=No&amp;claim%5Btenancy%5D%5Bapplicable_statements_6%5D=No&amp;claim%5Btenancy%5D%5Bassured_shorthold_tenancy_notice_served_by%5D=&amp;claim%5Btenancy%5D%5Bassured_shorthold_tenancy_notice_served_date%281i%29%5D=&amp;claim%5Btenancy%5D%5Bassured_shorthold_tenancy_notice_served_date%282i%29%5D=&amp;claim%5Btenancy%5D%5Bassured_shorthold_tenancy_notice_served_date%283i%29%5D=&amp;claim%5Btenancy%5D%5Bassured_shorthold_tenancy_type%5D=one&amp;claim%5Btenancy%5D%5Bdemotion_order_court%5D=&amp;claim%5Btenancy%5D%5Bdemotion_order_date%281i%29%5D=&amp;claim%5Btenancy%5D%5Bdemotion_order_date%282i%29%5D=&amp;claim%5Btenancy%5D%5Bdemotion_order_date%283i%29%5D=&amp;claim%5Btenancy%5D%5Blatest_agreement_date%281i%29%5D=&amp;claim%5Btenancy%5D%5Blatest_agreement_date%282i%29%5D=&amp;claim%5Btenancy%5D%5Blatest_agreement_date%283i%29%5D=&amp;claim%5Btenancy%5D%5Boriginal_assured_shorthold_tenancy_agreement_date%281i%29%5D=&amp;claim%5Btenancy%5D%5Boriginal_assured_shorthold_tenancy_agreement_date%282i%29%5D=&amp;claim%5Btenancy%5D%5Boriginal_assured_shorthold_tenancy_agreement_date%283i%29%5D=&amp;claim%5Btenancy%5D%5Bstart_date%281i%29%5D=2012&amp;claim%5Btenancy%5D%5Bstart_date%282i%29%5D=2&amp;claim%5Btenancy%5D%5Bstart_date%283i%29%5D=4&amp;claim%5Btenancy%5D%5Btenancy_type%5D=assured&amp;defendant1address=yes&amp;multiplePanelRadio_claimants=1&amp;multiplePanelRadio_defendants=1&amp;utf8=%E2%9C%93&amp;ypos=6226" content_type="application/x-www-form-urlencoded" method="POST">
+        </http>
+      </request>
+    </session>
+  </sessions>
+</tsung>

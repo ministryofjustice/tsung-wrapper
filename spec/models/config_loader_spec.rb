@@ -61,6 +61,74 @@ module TsungWrapper
 			end			
 		end
 
+
+		describe 'private method combine_url_and_port' do
+			let(:config)  { ConfigLoader.new('test') }
+
+			it 'should add port to https url with actions' do
+				config.send(:combine_url_and_port, 'https://my_base_url/action/action', 443).should == 'https://my_base_url:443/action/action'
+			end
+
+			it 'should add port to the https url when no actions after the base url' do
+				config.send(:combine_url_and_port, 'https://my_base_url', 443).should == 'https://my_base_url:443'
+			end
+
+			it 'should  add port to the https url when there are no actions and the base url end in /' do
+				config.send(:combine_url_and_port, 'https://my_base_url/', 443).should == 'https://my_base_url:443/'
+			end
+
+			it 'should add port to http url with actions' do
+				config.send(:combine_url_and_port, 'http://my_base_url/action/action', 443).should == 'http://my_base_url:443/action/action'
+			end
+
+			it 'should add port to the http url when no actions after the base url' do
+				config.send(:combine_url_and_port, 'http://my_base_url', 443).should == 'http://my_base_url:443'
+			end
+
+			it 'should  add port to the http url when there are no actions and the base url end in /' do
+				config.send(:combine_url_and_port, 'http://my_base_url/', 443).should == 'http://my_base_url:443/'
+			end
+		end
+
+
+		context 'http_basic_auth' do
+			
+			let(:config_without_auth) 	{ ConfigLoader.new('test') }
+			let(:config_with_auth)			{ ConfigLoader.new('test_with_basic_auth') }
+
+			describe '#http_basic_auth?' do
+				
+				it 'should be false if there is no basic auth' do
+					config_without_auth.http_basic_auth?.should be_false
+				end
+
+				it 'should return true if basic auth is enabled' do
+					config_with_auth.http_basic_auth?.should be_true
+				end
+			end
+
+
+			describe 'username' do
+				it 'should return nil if there is no auth' do
+					config_without_auth.username.should be_nil
+				end
+
+				it 'should return username if there is auth' do
+					config_with_auth.username.should == 'monkey'
+				end
+			end
+
+			describe 'password' do
+				it 'should return nil if there is no auth' do
+					config_without_auth.password.should be_nil
+				end
+
+				it 'should return username if there is auth' do
+					config_with_auth.password.should == 'business'
+				end
+			end
+		end
+
 	end
 end
 

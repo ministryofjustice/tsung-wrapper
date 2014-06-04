@@ -27,6 +27,7 @@ module TsungWrapper
 			@url_dynvar      = false
 			@has_dynvars     = params_contain_dynvars? || url_contains_dynvars?
 			@matches         = load_matches
+			@use_basic_auth	 = snippet['request']['use_http_basic_auth'] == true
 		end
 
 
@@ -44,6 +45,12 @@ module TsungWrapper
 					generate_http_without_params
 				end
 			end
+		end
+
+
+		# returns true if the environment config specifies basic auth and the snippet says use_basic_auth
+		def http_basic_auth?
+			@use_basic_auth == true && @config.http_basic_auth?
 		end
 
 
@@ -138,12 +145,16 @@ module TsungWrapper
 												:version => @config.http_version, 
 												:contents => self.content_string,
 												:content_type => "application/x-www-form-urlencoded",
-												:method => self.http_method)
+												:method => self.http_method) do
+				add_basic_auth										
+			end
 		end
 
 
 		def generate_http_without_params
-			@builder.http(:url => make_url(@config, self), :version => @config.http_version, :method => self.http_method)
+			@builder.http(:url => make_url(@config, self), :version => @config.http_version, :method => self.http_method) do
+				add_basic_auth
+			end
 		end
 
 
@@ -157,7 +168,11 @@ module TsungWrapper
 		end
 
 
-
+		def add_basic_auth
+			if http_basic_auth?
+				@builder.www_authenticate(:userid => @config.username, :passwd => @config.password)
+			end
+		end
 
 
 
