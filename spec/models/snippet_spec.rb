@@ -403,7 +403,7 @@ def login_with_autokey_snippet_xml
   str = <<-EOXML
 <!-- Hit Landing Page With Auto Key -->
 <request>
-  <http url="http://test_base_url.com:80/?setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe+FLPTVHZho3zK0mu41ouPmxLXJlZYi" version="1.1" method="GET">
+  <http url="http://test_base_url.com:80?setAutoKey=I5iOAmnnQaq5JPI8JHYcdXQPlI09bQnHoeAxb7xYjTe+FLPTVHZho3zK0mu41ouPmxLXJlZYi" version="1.1" method="GET">
   </http>
 </request>
 EOXML

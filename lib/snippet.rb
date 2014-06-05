@@ -194,7 +194,7 @@ module TsungWrapper
 			
 			if snippet.is_get? && snippet.has_params?
 				params = snippet.content_string.to_s.gsub('%2B', '+')
-				url = url + '/' unless url =~ /\/$/
+				# url = url + '/' unless url =~ /\/$/
 				url = url + '?' + params
 			end
 			url
