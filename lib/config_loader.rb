@@ -64,13 +64,6 @@ module TsungWrapper
 		end
 
 
-		def combine_url_and_port(url, port)
-			url =~ /^(https?:\/\/[^\/]+)(\/.*)?/
-			"#{$1}:#{port.to_s}#{$2}"
-		end
-
-
-
 		def http_basic_auth?
 			!@username.nil? && !@password.nil?
 		end
@@ -88,6 +81,13 @@ module TsungWrapper
 			@load_profile.builder = builder
 		end
 		
+
+		private
+
+		def combine_url_and_port(url, port)
+			url =~ /^(https?:\/\/[^\/]+)(\/.*)?/
+			"#{$1}:#{port.to_s}#{$2}"
+		end
 
 	end
 

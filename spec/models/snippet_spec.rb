@@ -290,7 +290,88 @@ module TsungWrapper
 				match.source.should ==  'all'                       
 				match.pattern.should == "HTTP/1.1 200" 
 			end
-		end
+    end
+		
+
+
+    describe 'private method make_url' do
+      let(:snippet)         { Snippet.new('login_with_think_time', builder, config) }
+
+      it 'should append slash and snippet url to config base url' do
+        config.stub(:base_url_and_port).and_return('https://myurl:443')
+        snippet.instance_variable_set(:@url, 'action1/action2')
+        snippet.send(:make_url).should == 'https://myurl:443/action1/action2'
+      end
+
+      it 'should not append slash before actionsif base url already ends in a slash' do
+        config.stub(:base_url_and_port).and_return('https://myurl:443/')
+        snippet.instance_variable_set(:@url, 'action1/action2')
+        snippet.send(:make_url).should == 'https://myurl:443/action1/action2'
+      end
+
+
+      it 'should return the bare url without trailing slash if the snippet url is nil' do 
+        config.stub(:base_url_and_port).and_return('https://myurl:443')
+        snippet.instance_variable_set(:@url, nil)
+        snippet.send(:make_url).should == 'https://myurl:443'
+      end
+
+      it 'should return the bare url without trailing slash if the snippet url is empty string' do 
+        config.stub(:base_url_and_port).and_return('https://myurl:443')
+        snippet.instance_variable_set(:@url, '')
+        snippet.send(:make_url).should == 'https://myurl:443'
+      end
+
+      it 'should return the bare url with trailing slash if the snippet url is nil' do 
+        config.stub(:base_url_and_port).and_return('https://myurl:443/')
+        snippet.instance_variable_set(:@url, nil)
+        snippet.send(:make_url).should == 'https://myurl:443/'
+      end
+
+      it 'should return the bare url with trailing slash if the snippet url is empty string' do 
+        config.stub(:base_url_and_port).and_return('https://myurl:443/')
+        snippet.instance_variable_set(:@url, '')
+        snippet.send(:make_url).should == 'https://myurl:443/'
+      end
+
+      it 'should append parameters to bare url without trailing slash if no action' do
+        config.stub(:base_url_and_port).and_return('https://myurl:443')
+        snippet.instance_variable_set(:@url, '')
+        snippet.stub(:is_get?).and_return(true)
+        snippet.stub(:has_params?).and_return(true)
+        snippet.stub(:content_string).and_return('param1=stephen&param2=richards')
+        snippet.send(:make_url).should == 'https://myurl:443?param1=stephen&param2=richards'
+      end
+
+      it 'should append parameters to bare url with trailing slash if no action' do
+        config.stub(:base_url_and_port).and_return('https://myurl:443/')
+        snippet.instance_variable_set(:@url, '')
+        snippet.stub(:is_get?).and_return(true)
+        snippet.stub(:has_params?).and_return(true)
+        snippet.stub(:content_string).and_return('param1=stephen&param2=richards')
+        snippet.send(:make_url).should == 'https://myurl:443/?param1=stephen&param2=richards'
+      end
+
+      it 'should append actions and parameters to bare url with trailing slash' do
+        config.stub(:base_url_and_port).and_return('https://myurl:443/')
+        snippet.instance_variable_set(:@url, '/action1/action2')
+        snippet.stub(:is_get?).and_return(true)
+        snippet.stub(:has_params?).and_return(true)
+        snippet.stub(:content_string).and_return('param1=stephen&param2=richards')
+        snippet.send(:make_url).should == 'https://myurl:443/action1/action2?param1=stephen&param2=richards'
+      end
+
+      it 'should append actions and parameters to bare url without trailing slash' do
+        config.stub(:base_url_and_port).and_return('https://myurl:443')
+        snippet.instance_variable_set(:@url, '/action1/action2')
+        snippet.stub(:is_get?).and_return(true)
+        snippet.stub(:has_params?).and_return(true)
+        snippet.stub(:content_string).and_return('param1=stephen&param2=richards')
+        snippet.send(:make_url).should == 'https://myurl:443/action1/action2?param1=stephen&param2=richards'
+      end
+
+      
+    end
 
     context 'use_http_basic_auth' do
       let(:snippet)                       { Snippet.new('hit_landing_page', builder, config) }
