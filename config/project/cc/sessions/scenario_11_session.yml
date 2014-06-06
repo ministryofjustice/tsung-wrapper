@@ -3,3 +3,4 @@ session:
   snippets:
   - get_landing_page
   - post_scenario_11
+  - download_pdf

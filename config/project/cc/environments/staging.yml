@@ -6,7 +6,7 @@ server_port: 443
 http_version: 1.1
 load_profile: single_user
 loglevel: debug
-dumptraffic: true
+dumptraffic: protocol
 default_thinktime: 4
 default_matches:
   - abort_unless_success_or_redirect

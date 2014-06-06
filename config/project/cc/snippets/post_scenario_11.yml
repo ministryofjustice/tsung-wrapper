@@ -95,7 +95,7 @@ request:
         :date_served(3i): '02'
         :expiry_date(1i): '2014'
         :expiry_date(2i): '02'
-        :expiry_date(3i): '02'
+        :expiry_date(3i): '03'
       :license:
         :multiple_occupation: 'Yes'
         :issued_under_act_part: Part2

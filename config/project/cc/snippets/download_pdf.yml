@@ -1,0 +1,7 @@
+request:
+  name: GET download PDF
+  url: "/accelerated-possession-eviction/download"
+  http_method: GET    
+  
+
+

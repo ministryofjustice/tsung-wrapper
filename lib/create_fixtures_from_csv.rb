@@ -39,7 +39,8 @@ class DataScenarioGenerator
       'session' => {
         'snippets' => [
             'get_landing_page',
-            snippet_name
+            snippet_name,
+            'download_pdf'
         ]
       }
     }

@@ -47,6 +47,6 @@ gen:  ruby lib/wrap.rb -xe vagrant -p cc -l single_user full_run > xml/cc/single
 name: single user all scenarios full dump staging machine
 ==========================================================
 xml:  xml/cc/single_user_full_dump_staging_all_scenarios.xml
-gen:  ruby lib/wrap.rb -xe staging -p cc -l single_user all_scenarios > xml/cc/single_user_full_dump_staging_all_scenarios.xml
+gen:  ruby lib/wrap.rb -xe staging -p cc -l 12_user all_scenarios > xml/cc/12_user_full_dump_staging_all_scenarios.xml
 
 
