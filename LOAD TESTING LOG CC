@@ -50,3 +50,9 @@ xml:  xml/cc/single_user_full_dump_staging_all_scenarios.xml
 gen:  ruby lib/wrap.rb -xe staging -p cc -l 12_user all_scenarios > xml/cc/12_user_full_dump_staging_all_scenarios.xml
 
 
+name: phased load all scenarios staging machine
+====================================================================
+xml:  xml/cc/staging_phased.xml
+gen:  ruby lib/wrap.rb -xe staging -p cc -l phased all_scenarios > xml/cc/staging_phased.xml
+
+

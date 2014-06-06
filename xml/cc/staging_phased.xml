@@ -10,9 +10,37 @@
     <server host="test_server_host" port="443" type="tcp"/>
   </servers>
   <load>
-    <!-- Scenario 1: Single User -->
-    <arrivalphase phase="1" duration="30" unit="second">
-      <users maxnumber="12" arrivalrate="2" unit="second"/>
+    <!-- Scenario 1: Phase 1: 1 customer every second  -->
+    <arrivalphase phase="1" duration="5" unit="minute">
+      <users interarrival="1" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 2: Phase 2: 2 customers per second -->
+    <arrivalphase phase="2" duration="5" unit="minute">
+      <users interarrival="0.5" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 3: Phase 3: 4 customers per second -->
+    <arrivalphase phase="3" duration="5" unit="minute">
+      <users interarrival="0.025" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 4: Phase 4: 8 customers per second -->
+    <arrivalphase phase="4" duration="5" unit="minute">
+      <users interarrival="0.0125" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 5: Phase 5: 16 customers per second -->
+    <arrivalphase phase="5" duration="5" unit="minute">
+      <users interarrival="0.0625" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 6: Phase 6: 32 customers per seconds -->
+    <arrivalphase phase="6" duration="5" unit="minute">
+      <users interarrival="0.003125" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 7: Phase 7: 64 customers per second -->
+    <arrivalphase phase="7" duration="5" unit="minute">
+      <users interarrival="0.015625" unit="second"/>
+    </arrivalphase>
+    <!-- Scenario 8: Phase 8: 128 customers per second -->
+    <arrivalphase phase="8" duration="5" unit="minute">
+      <users interarrival="0.0078125" unit="second"/>
     </arrivalphase>
   </load>
   <options>
@@ -23,7 +51,7 @@
     </option>
   </options>
   <sessions>
-    <session name="scenario_01_session-20140606-144510" probability="8" type="ts_http">
+    <session name="scenario_01_session-20140606-150311" probability="8" type="ts_http">
       <!-- GET Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
@@ -49,7 +77,7 @@
         </http>
       </request>
     </session>
-    <session name="scenario_02_session-20140606-144510" probability="8" type="ts_http">
+    <session name="scenario_02_session-20140606-150311" probability="8" type="ts_http">
       <!-- GET Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
@@ -75,7 +103,7 @@
         </http>
       </request>
     </session>
-    <session name="scenario_03_session-20140606-144510" probability="8" type="ts_http">
+    <session name="scenario_03_session-20140606-150311" probability="8" type="ts_http">
       <!-- GET Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
@@ -101,7 +129,7 @@
         </http>
       </request>
     </session>
-    <session name="scenario_04_session-20140606-144510" probability="8" type="ts_http">
+    <session name="scenario_04_session-20140606-150311" probability="8" type="ts_http">
       <!-- GET Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
@@ -127,7 +155,7 @@
         </http>
       </request>
     </session>
-    <session name="scenario_05_session-20140606-144510" probability="8" type="ts_http">
+    <session name="scenario_05_session-20140606-150311" probability="8" type="ts_http">
       <!-- GET Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
@@ -153,7 +181,7 @@
         </http>
       </request>
     </session>
-    <session name="scenario_06_session-20140606-144510" probability="8" type="ts_http">
+    <session name="scenario_06_session-20140606-150311" probability="8" type="ts_http">
       <!-- GET Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
@@ -179,7 +207,7 @@
         </http>
       </request>
     </session>
-    <session name="scenario_07_session-20140606-144510" probability="8" type="ts_http">
+    <session name="scenario_07_session-20140606-150311" probability="8" type="ts_http">
       <!-- GET Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
@@ -205,7 +233,7 @@
         </http>
       </request>
     </session>
-    <session name="scenario_08_session-20140606-144510" probability="8" type="ts_http">
+    <session name="scenario_08_session-20140606-150311" probability="8" type="ts_http">
       <!-- GET Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
@@ -231,7 +259,7 @@
         </http>
       </request>
     </session>
-    <session name="scenario_09_session-20140606-144510" probability="8" type="ts_http">
+    <session name="scenario_09_session-20140606-150311" probability="8" type="ts_http">
       <!-- GET Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
@@ -257,7 +285,7 @@
         </http>
       </request>
     </session>
-    <session name="scenario_10_session-20140606-144510" probability="8" type="ts_http">
+    <session name="scenario_10_session-20140606-150311" probability="8" type="ts_http">
       <!-- GET Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
@@ -283,7 +311,7 @@
         </http>
       </request>
     </session>
-    <session name="scenario_11_session-20140606-144510" probability="8" type="ts_http">
+    <session name="scenario_11_session-20140606-150311" probability="8" type="ts_http">
       <!-- GET Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
@@ -309,7 +337,7 @@
         </http>
       </request>
     </session>
-    <session name="scenario_12_session-20140606-144510" probability="12" type="ts_http">
+    <session name="scenario_12_session-20140606-150311" probability="12" type="ts_http">
       <!-- GET Landing Page -->
       <thinktime random="true" value="4"/>
       <request>
