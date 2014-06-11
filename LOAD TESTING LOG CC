@@ -56,3 +56,13 @@ xml:  xml/cc/staging_phased.xml
 gen:  ruby lib/wrap.rb -xe staging -p cc -l phased all_scenarios > xml/cc/staging_phased.xml
 
 
+
+name: steady 1 new session every 5 seconds with 2 inute think time
+====================================================================
+xml:  xml/cc/staging_high_normal.xml
+gen:  ruby lib/wrap.rb -xe staging_2min_think_time -p cc -l high_normal all_scenarios > xml/cc/staging_high_normal.xml
+
+
+
+
+
