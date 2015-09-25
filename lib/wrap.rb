@@ -1,5 +1,6 @@
 # command line script to wrap session configuration files to produce Tsung XML configs
 
+
 require 'optparse'
 require 'tempfile'
 require 'yaml'

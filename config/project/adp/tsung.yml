@@ -1,0 +1,10 @@
+tsung_config:
+  # location of logs for each tsung run, and the directory that will be cleaned with -c option
+  log_dir: <%= File.expand_path(File.join(TsungWrapper.root, 'log')) %>
+
+  # location of the tsung_stats.pl if not in the path
+  tsung_stats: /usr/local/Cellar/tsung/1.5.0/lib/tsung/bin/tsung_stats.pl
+
+  # location of any perl libraries that aren't being auto-loadee
+  perl_libs:
+    - /Users/stephen/perl5/lib/perl5/darwin-thread-multi-2level

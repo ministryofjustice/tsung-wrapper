@@ -1,0 +1,6 @@
+
+match:
+  when: match                        # match or nomatch
+  source: all                        # all (header + body) or body
+  do: abort                          # continue | abort | log | dump | loop (requires sleep_loop and max_loop)
+  pattern: "HTTP/1.1 [^2|^3][0-9]{2}"

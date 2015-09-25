@@ -39,6 +39,8 @@ yaml configuration files.  The tool can be used to just produce the XML file, or
 	
 	``sudo port install erlang +ssl``
 
+	Alternatively, on a Mac, you can install Erlang using Homebrew (you will need Xcode installed).
+
 * tsung - Download from http://tsung.erlang-projects.org/dist/ and compile from source.  __Despite what the documnetation on the tsung site says, do not install it using homebrew - you will not be able to use it on ssl sites__ 
 
 	<pre>
