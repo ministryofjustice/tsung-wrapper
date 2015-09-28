@@ -7,5 +7,5 @@ request:
     # authenticity_token: "%%_csrf_token%%"
     user:
       email: "advocate@example.com"
-      passowrd: "liverbird"
+      password: "liverbird"
       

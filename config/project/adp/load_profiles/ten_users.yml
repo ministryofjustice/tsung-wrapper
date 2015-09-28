@@ -1,0 +1,8 @@
+arrivalphases:
+  - name: Ten Users
+    sequence: 1
+    duration: 6
+    duration_unit: second
+    max_users: 10
+    arrival_rate: 5
+    arrival_rate_unit: second

@@ -1,0 +1,173 @@
+request:
+  name: POST login as advocate
+  url: "/advocates/claims"
+  http_method: POST   
+  params:
+    utf8: "✓"
+    # authenticity_token: "%%_csrf_token%%"
+    claim:
+      case_type_id: 10
+      trial_fixed_notice_at_dd:
+      trial_fixed_notice_at_mm:
+      trial_fixed_notice_at_yyyy:
+      trial_fixed_at_dd:
+      trial_fixed_at_mm:
+      trial_fixed_at_yyyy:
+      trial_cracked_at_dd:
+      trial_cracked_at_mm:
+      trial_cracked_at_yyyy:
+      trial_cracked_at_third:
+      court_id: 4
+      case_number: "%%_casenumber%%"
+      advocate_category: Junior alone
+      offence_id: 19
+      first_day_of_trial_dd: 13
+      first_day_of_trial_mm: 05
+      first_day_of_trial_yyyy: 2015
+      estimated_trial_length: 3
+      actual_trial_length: 3
+      trial_concluded_at_dd: 15
+      trial_concluded_at_mm: 05
+      trial_concluded_at_yyyy: 2015
+      defendants_attributes:
+        '0':
+          first_name: Stepriponikas
+          middle_name:
+          last_name: Bonstart
+          date_of_birth_dd: 15
+          date_of_birth_mm: 05
+          date_of_birth_yyyy: 1966
+          order_for_judicial_apportionment: 0
+          representation_orders_attributes:
+            '0':
+              granting_body: Magistrates' Court
+              representation_order_date_dd: 14
+              representation_order_date_mm: 02
+              representation_order_date_yyyy: 2015
+              maat_reference: 0207835222
+              _destroy: false
+            '1':
+              granting_body: Crown Court
+              representation_order_date_dd: 13
+              representation_order_date_mm: 03
+              representation_order_date_yyyy: 2015
+              maat_reference: 0783523220
+              _destroy: false
+          _destroy: false,
+      additional_information: This is a claim entered by Tsung
+      basic_fees_attributes:
+        '0':
+          quantity: 1
+          amount: 450.00
+          fee_type_id: 1
+          dates_attended_attributes:
+            '0':
+              date_dd: 14 
+              date_mm: 05 
+              date_yyyy: 2015
+              date_to_dd: 15
+              date_to_mm: 05
+              date_to_yyyy: 2015 
+              _destroy: false
+            '1':
+              date_dd: 13
+              date_mm: 05
+              date_yyyy: 2015
+              date_to_dd:
+              date_to_mm:
+              date_to_yyyy:
+              _destroy: false
+        '1': 
+          quantity:
+          amount: 0.00
+          fee_type_id: 2
+        '2': 
+          quantity:
+          amount: 0.00
+          fee_type_id: 2
+        '3': 
+          quantity:
+          amount: 0.00
+          fee_type_id: 2
+        '4': 
+          quantity:
+          amount: 0.00
+          fee_type_id: 2
+        '5':
+          quantity: 2
+          amount: 400.00
+          fee_type_id: 6
+        '6': 
+          quantity:
+          amount: 0.00
+          fee_type_id: 2
+        '7': 
+          quantity:
+          amount: 0.00
+          fee_type_id: 2
+        '8': 
+          quantity:
+          amount: 0.00
+          fee_type_id: 2
+        '9': 
+          quantity:
+          amount: 0.00
+          fee_type_id: 2
+        '10':
+          quantity: 10
+          amount: 1.50
+          fee_type_id: 11
+      misc_fees_attributes:
+        '0':
+          fee_type_id: 32
+          quantity: 2
+          amount: 500.00
+          _destroy: false
+          dates_attended_attributes:
+            '0':
+              date_dd: 13
+              date_mm: 05
+              date_yyyy: 2015
+              date_to_dd:
+              date_to_mm:
+              date_to_yyyy:
+              _destroy: false
+        '1':
+          fee_type_id: 37
+          quantity: 3
+          amount: 450.00
+          _destroy: false
+          dates_attended_attributes:
+            '0':
+              date_dd: 14
+              date_mm: 05
+              date_yyyy: 2015
+              date_to_dd: 15
+              date_to_mm: 05
+              date_to_yyyy: 2015
+              _destroy: false
+      fixed_fees_attributes:
+        '0':
+          fee_type_id: 
+          quantity:
+          amount:
+          _destroy: false
+      expenses_attributes:
+        '0':
+          expense_type_id:
+          location:
+          quantity:
+          rate:
+          _destroy: false
+      apply_vat: 0
+      document_ids:
+        - "" 
+        - 98
+      evidence_checklist_ids:
+        - 1
+        - 2
+        - ""
+      offence_category:
+        description: "Administering chloroform, laudanum etc."
+      offence_class:
+        description: 19

@@ -1,11 +1,10 @@
 # command line script to wrap session configuration files to produce Tsung XML configs
-
-
 require 'optparse'
 require 'tempfile'
 require 'yaml'
 require 'erb'
 require 'fileutils'
+require 'ap'
 
 require_relative 'tsung_wrapper'
 require_relative 'wrapper'

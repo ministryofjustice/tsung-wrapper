@@ -1,0 +1,8 @@
+session:
+  dynvars:
+    casenumber: random_string_9
+  snippets:
+    - get_landing_page
+    - login_as_advocate
+    - create_guilty_plea_claim
+   

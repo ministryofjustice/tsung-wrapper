@@ -223,8 +223,9 @@ module TsungWrapper
 
 
     def contains_dynvar?(param_value)
+
       result = false
-      result = true if param_value =~ /%%_.*?%%/        # question mark after asterisk to stop it tbeing greedy
+      result = true if param_value.to_s =~ /%%_.*?%%/        # question mark after asterisk to stop it tbeing greedy
       result
     end
   end
