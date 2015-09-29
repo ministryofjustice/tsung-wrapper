@@ -42,12 +42,12 @@ class TsungRunner
 
 
   def run_load_test
-    puts ">>>>>>  You must run the server with CSRF protection disabled (set environment variable DISABLE_CSRF=1 <<<<<"
     project_list = get_project_list
     @project = display_menu_and_choose("Select the project you want to load test:", project_list)
     project_dir = "#{@config_dir}/project/#{@project}"
     xml_file = display_menu_and_choose("Select the XML file to run:", get_resource_list_from_files('xml', 'xml'))
     command = "tsung -f #{project_dir}/xml/#{xml_file}.xml -l #{project_dir}/log start"
+    puts "Executing command: #{command}"
     pipe = IO.popen(command)
     lines = pipe.readlines
     lines.each { |l| puts l }

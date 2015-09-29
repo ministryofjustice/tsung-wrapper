@@ -1,6 +1,6 @@
 session:
   dynvars:
-    casenumber: random_string_9
+    casenumber: casenumber_from_csv
   snippets:
     - get_landing_page
     - login_as_advocate

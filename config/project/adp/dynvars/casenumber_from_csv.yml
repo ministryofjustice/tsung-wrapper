@@ -1,0 +1,8 @@
+dynvar:
+  type: file
+  filename: case_numbers.csv
+  access: sequential
+  delimiter: ","
+  varnames:
+    - casenumber
+
