@@ -1,0 +1,8 @@
+arrivalphases:
+  - name: Two per second for 5 minutes
+    sequence: 1
+    duration: 5
+    duration_unit: minute
+    max_users: 1000
+    arrival_rate: 0.5
+    arrival_rate_unit: second

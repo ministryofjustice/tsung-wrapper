@@ -1,0 +1,93 @@
+arrivalphases:
+  - name: "Phase 1: 2 claim every second "
+    sequence: 1
+    duration: 2
+    duration_unit: minute
+    arrival_interval: 0.5
+    arrival_interval_unit: second
+
+  - name: "Phase 2: 4 claims per second"
+    sequence: 2
+    duration: 2
+    duration_unit: minute
+    arrival_interval: 0.25
+    arrival_interval_unit: second
+
+  - name: "Phase 3: 6 claims per second"
+    sequence: 3
+    duration: 2
+    duration_unit: minute
+    arrival_interval: .1667
+    arrival_interval_unit: second
+
+  - name: "Phase 4: 7 claims per second"
+    sequence: 4
+    duration: 2
+    duration_unit: minute
+    arrival_interval: .1428
+    arrival_interval_unit: second
+
+  - name: "Phase 5: 8 claims per second"
+    sequence: 5
+    duration: 2
+    duration_unit: minute
+    arrival_interval: 0.125
+    arrival_interval_unit: second
+
+  - name: "Phase 6: 9 claims per second"
+    sequence: 6
+    duration: 2
+    duration_unit: minute
+    arrival_interval: 0.111
+    arrival_interval_unit: second
+
+  - name: "Phase 7: 10 claims per second"
+    sequence: 7
+    duration: 2
+    duration_unit: minute
+    arrival_interval: 0.1
+    arrival_interval_unit: second
+
+  - name: "Phase 8: 11 claims per second"
+    sequence: 8
+    duration: 2
+    duration_unit: minute
+    arrival_interval: 0.0909
+    arrival_interval_unit: second
+
+  - name: "Phase 9: 12 claims per second"
+    sequence: 9
+    duration: 2
+    duration_unit: minute
+    arrival_interval: 0.0833
+    arrival_interval_unit: second
+
+  - name: "Phase 10: 13 claims per second"
+    sequence: 10
+    duration: 2
+    duration_unit: minute
+    arrival_interval: 0.0769
+    arrival_interval_unit: second
+
+  - name: "Phase 11: 14 claims per second"
+    sequence: 11
+    duration: 2
+    duration_unit: minute
+    arrival_interval: 0.0714
+    arrival_interval_unit: second
+
+  - name: "Phase 12: 15 claims per second"
+    sequence: 12
+    duration: 2
+    duration_unit: minute
+    arrival_interval: 0.0666
+    arrival_interval_unit: second
+
+  - name: "Phase 13: 16 claims per second"
+    sequence: 13
+    duration: 2
+    duration_unit: minute
+    arrival_interval: 0.0625
+    arrival_interval_unit: second
+
+    

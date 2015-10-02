@@ -1,0 +1,4 @@
+request:
+  name: GET claim 1
+  url: case_workers/claims/1
+  http_method: GET    

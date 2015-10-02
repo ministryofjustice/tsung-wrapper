@@ -1,0 +1,10 @@
+request:
+  name: POST login as advocate
+  url: "/users/sign_in"
+  http_method: POST   
+  params:
+    utf8: "✓"
+    # authenticity_token: "%%_csrf_token%%"
+    user:
+      email: "caseworkeradmin@example.com"
+      password: "liverbird"

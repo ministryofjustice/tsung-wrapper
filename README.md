@@ -68,47 +68,14 @@ yaml configuration files.  The tool can be used to just produce the XML file, or
 
 The tsung-wrapper suite is run in three distinct phases:
 
-* Running the lib/wrap.rb executable to produce an xml file which will be used by tsung
-to control the load testing
-* Running tsung itself to send requests to the server in accordance with the instructions in the xml configuration file
-* Running the stats program to produce the HTML reports and graphs.
-
-All three of the steps above can be run using the lib/wrap.rb executable.
-
-### Usage
-
-    Usage: wrap [-e environment] -p project [-l load_profile] [-v] [-s] -x|-r session_name
-       wrap [-e environment] -p project -c n
-
-    Generate Tsung XML file for session <session_name>
-
-    -e, --environment  ENV           Use specified environment (default: development)
-    -p, --project PROJECT            Look for configuration files in config/project/PROJECT
-    -x, --xml-out                    Generate XML config and write to STDOUT
-    -r, --run-tsung                  Generate XML config and pipe into tsung
-    -l, --load-profile LOAD_PROFILE  Use specific load profile
-    -s, --generate-stats             Generate Stats (requires that -r option is set
-    -v, --verbose                    Set verbose mode ON
-    -c, --clean-log-dir HOURS        Clean log dir of directories created before N hours ago
+* Running the lib/wrap.rb executable to produce an xml file which reads the specified config files to produce an XML file which details how the load test is to run
+* Running tsung itself to send requests to the server in accordance with the instructions in the XML file
+* Analysing the output from tsung to produce a meaningfule spreadsheet.
 
 
-### Usage examples
+The ruby script tsung_runner.rb in the root directory which can talk you through these phases
 
-These commands should be run from the root folder of the tsung-wrapper directory.
-
-
-* Use the "development.yml" environment confiifuration file, with load profile "heavy.ymnl" and the session file "full_run.yml" and just produce the xml file and pipe it to tmp/heavy_full_run.xml
-
-
-	``ruby lib/wrap.rb -e development -l heavy -x full_run  > tmp/heavy_full_run.xml``
-
-    
-* Use the "dev_dump.yml" environment, "single_user.yml" load profile and session "full_run.yml" to produce the XMl file, run tsung using that file, and then generate the stats afterwards.
-
-	``ruby lib/wrap.rb -e dev_dump -l single_user -rs full_run``
-	
-In the latter case above, the tsung log files will be written to a folder in ~/.tsung/log - the actual name given to the folder will be displayed on the console.   
-
+   ``ruby tsung_runner.rb``
 
 
 

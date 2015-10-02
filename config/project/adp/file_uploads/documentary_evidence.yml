@@ -1,0 +1,43 @@
+login:
+  username_field_name: "user[email]"
+  username_value: advocate@example.com
+  password_field_name: "user[password]"
+  password_value: liverbird
+  cookie_jar: cookie.txt
+  url: https://demo-adp.dsd.io/users/sign_in
+data_directory: config/project/adp/file_uploads/data
+upload_url: https://demo-adp.dsd.io/documents
+iterations: 100
+num_children: 2
+filenames:
+  - 
+    name: AF1_1.docx
+    type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  - 
+    name: AF1_2.docx
+    type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  - 
+    name: AF2.docx
+    type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  - 
+    name: Indictment.pdf
+    type: application/pdf
+  - 
+    name: LAC.pdf
+    type: application/pdf
+  -
+    name: Reporder.pdf
+    type: application/pdf
+  -
+    name: Supdocs1.pdf
+    type: application/pdf
+  -
+    name: Supdocs2.pdf
+    type: application/pdf
+  -
+    name: Supdocs3.pdf
+    type: application/pdf
+  -
+    name: Supdocs4.pdf
+    type: application/pdf
+

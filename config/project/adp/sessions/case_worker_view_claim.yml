@@ -1,0 +1,5 @@
+session:
+  snippets:
+    - get_landing_page
+    - login_as_case_worker
+    - view_claim

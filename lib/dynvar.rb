@@ -101,7 +101,7 @@ module TsungWrapper
 			@attrs     = [ :fileid,  :order, :delimiter]
 			@type      = 'file'
 			@filename  = @config['filename']
-			@fileid    = Digest::MD5.hexdigest(@filename)[0..5]
+			@fileid    = 'a' + Digest::MD5.hexdigest(@filename)[0..6]  							# Undocumented feature of Tsung: fileid can't start with a number
 			@order     = translate_file_access
 			@delimiter = @config['delimiter']
 		end

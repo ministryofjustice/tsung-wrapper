@@ -53,8 +53,25 @@ class TsungRunner
     lines.each { |l| puts l }
   end
 
-  def analyse_results
-    puts "This feature is not yet implemented"
+  def analyse_results 
+    project_list = get_project_list
+    @project = display_menu_and_choose("Select the project you want to load test:", project_list)
+    project_dir = "#{@config_dir}/project/#{@project}"
+    dirs = reverse_sort(Dir["#{project_dir}/log/*"])
+    dir = display_menu_and_choose("Select the log file you want to analyse: ", dirs)
+    intervals = [5, 10, 15, 20, 30]
+    interval = display_menu_and_choose("Select the interval in seconds to summarise by: ", intervals.map{ |n| "Every #{n} seconds"})
+    interval =~ /^Every (\S+) seconds$/
+    command = "lib/dfa -f #{dir}/tsung.dump -s #{$1}"
+    system command
+    summary_file = File.expand_path("#{dir}/tsung.dump.summary.csv")
+    puts "Results have been summarised and are available in file #{summary_file}"
+    
+  end
+
+
+  def reverse_sort(array)
+    array.sort{ |a, b| b <=> a }
   end
 
   def generate_xml
@@ -105,7 +122,7 @@ class TsungRunner
       menu.prompt = "Select task:"
       menu.choice("Generate session XML")       { task = :generate_xml }
       menu.choice("Run load lest")              { task = :run_load_test }
-      menu.choice("Anyalyse results")           { task = :analyse }
+      menu.choice("Anyalyse results")           { task = :analyse_results }
       menu.choice("Remove log directories")     { task = :delete_logs }
     end
     task
