@@ -324,7 +324,7 @@ Files in this folder specify dynamic variables which can be automatically genera
 	</pre>	  
 
 	
-* __erlang_funtion__: A typical dynvar configuration to define an erlang function that will be called to return the dynamic variable might look like: 
+* __erlang_function__: A typical dynvar configuration to define an erlang function that will be called to return the dynamic variable might look like: 
 
 	<pre>
 	dynvar:
