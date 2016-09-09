@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE tsung SYSTEM "/Users/stephen/src/tsung-wrapper/config/project/adp/tsung-1.0.dtd">
+<!DOCTYPE tsung SYSTEM "/Users/stephenrichards/moj/tsung-wrapper/config/project/adp/tsung-1.0.dtd">
 <tsung loglevel="debug" dumptraffic="protocol" version="1.0">
   <!-- Client Side Setup -->
   <clients>
@@ -16,6 +16,7 @@
     </arrivalphase>
   </load>
   <options>
+    <option name="file_server" id="a179b048" value="/Users/stephenrichards/moj/tsung-wrapper/config/project/adp/data/case_numbers.csv"/>
     <!-- Define User Agents -->
     <option type="ts_http" name="user_agent">
       <user_agent probability="80">Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050513 Galeon/1.3.21</user_agent>
@@ -23,8 +24,8 @@
     </option>
   </options>
   <sessions>
-    <session name="create_guilty_plea-20150928-152823" probability="100" type="ts_http">
-      <setdynvars sourcetype="random_string" length="9">
+    <session name="create_guilty_plea-20160909-170330" probability="100" type="ts_http">
+      <setdynvars sourcetype="file" fileid="a179b048" delimiter="," order="iter">
         <var name="casenumber"/>
       </setdynvars>
       <!-- GET Landing Page -->
