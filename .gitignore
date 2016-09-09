@@ -3,3 +3,4 @@ log/*
 coverage
 coverage/*
 config/project/adp/log
+/.idea
