@@ -1,4 +1,4 @@
-server_host: demo_server_host
+server_host: staging_server_host
 base_url: https://staging-adp.dsd.io/
 maxusers: 9000
 server_port: 443
