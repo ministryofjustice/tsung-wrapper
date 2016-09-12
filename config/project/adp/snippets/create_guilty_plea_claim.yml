@@ -6,6 +6,7 @@ request:
     utf8: "✓"
     # authenticity_token: "%%_csrf_token%%"
     claim:
+      form_id: "%%_form_id%%"
       case_type_id: 10
       trial_fixed_notice_at_dd:
       trial_fixed_notice_at_mm:
