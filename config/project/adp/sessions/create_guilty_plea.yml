@@ -1,6 +1,7 @@
 session:
   dynvars:
     casenumber: casenumber_from_csv
+    form_id: form_id_from_csv
   snippets:
     - get_landing_page
     - login_as_advocate

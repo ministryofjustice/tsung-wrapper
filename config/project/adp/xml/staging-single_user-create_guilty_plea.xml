@@ -10,57 +10,9 @@
     <server host="demo_server_host" port="443" type="tcp"/>
   </servers>
   <load>
-    <!-- Scenario 1: Phase 1: 2 claim every second  -->
-    <arrivalphase phase="1" duration="2" unit="minute">
-      <users interarrival="0.5" unit="second"/>
-    </arrivalphase>
-    <!-- Scenario 2: Phase 2: 4 claims per second -->
-    <arrivalphase phase="2" duration="2" unit="minute">
-      <users interarrival="0.25" unit="second"/>
-    </arrivalphase>
-    <!-- Scenario 3: Phase 3: 6 claims per second -->
-    <arrivalphase phase="3" duration="2" unit="minute">
-      <users interarrival="0.1667" unit="second"/>
-    </arrivalphase>
-    <!-- Scenario 4: Phase 4: 7 claims per second -->
-    <arrivalphase phase="4" duration="2" unit="minute">
-      <users interarrival="0.1428" unit="second"/>
-    </arrivalphase>
-    <!-- Scenario 5: Phase 5: 8 claims per second -->
-    <arrivalphase phase="5" duration="2" unit="minute">
-      <users interarrival="0.125" unit="second"/>
-    </arrivalphase>
-    <!-- Scenario 6: Phase 6: 9 claims per second -->
-    <arrivalphase phase="6" duration="2" unit="minute">
-      <users interarrival="0.111" unit="second"/>
-    </arrivalphase>
-    <!-- Scenario 7: Phase 7: 10 claims per second -->
-    <arrivalphase phase="7" duration="2" unit="minute">
-      <users interarrival="0.1" unit="second"/>
-    </arrivalphase>
-    <!-- Scenario 8: Phase 8: 11 claims per second -->
-    <arrivalphase phase="8" duration="2" unit="minute">
-      <users interarrival="0.0909" unit="second"/>
-    </arrivalphase>
-    <!-- Scenario 9: Phase 9: 12 claims per second -->
-    <arrivalphase phase="9" duration="2" unit="minute">
-      <users interarrival="0.0833" unit="second"/>
-    </arrivalphase>
-    <!-- Scenario 10: Phase 10: 13 claims per second -->
-    <arrivalphase phase="10" duration="2" unit="minute">
-      <users interarrival="0.0769" unit="second"/>
-    </arrivalphase>
-    <!-- Scenario 11: Phase 11: 14 claims per second -->
-    <arrivalphase phase="11" duration="2" unit="minute">
-      <users interarrival="0.0714" unit="second"/>
-    </arrivalphase>
-    <!-- Scenario 12: Phase 12: 15 claims per second -->
-    <arrivalphase phase="12" duration="2" unit="minute">
-      <users interarrival="0.0666" unit="second"/>
-    </arrivalphase>
-    <!-- Scenario 13: Phase 13: 16 claims per second -->
-    <arrivalphase phase="13" duration="2" unit="minute">
-      <users interarrival="0.0625" unit="second"/>
+    <!-- Scenario 1: Single User -->
+    <arrivalphase phase="1" duration="6" unit="second">
+      <users maxnumber="1" arrivalrate="5" unit="second"/>
     </arrivalphase>
   </load>
   <options>
@@ -73,7 +25,7 @@
     </option>
   </options>
   <sessions>
-    <session name="create_guilty_plea-20160912-120919" probability="100" type="ts_http">
+    <session name="create_guilty_plea-20160912-114326" probability="100" type="ts_http">
       <setdynvars sourcetype="file" fileid="a179b048" delimiter="," order="iter">
         <var name="casenumber"/>
       </setdynvars>
